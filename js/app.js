@@ -78,6 +78,7 @@ const app = createApp({
         selectedCampus: sharedState.selectedCampus
       });
       ShareService.cleanUrl();
+      this.showNotification('Horario restaurado desde URL compartida', 'success');
     }
     
     window.addEventListener('horarios:selections-changed', (event) => {
@@ -97,6 +98,32 @@ const app = createApp({
     
     toggleAdvancedOptions() {
       this.showAdvancedOptions = !this.showAdvancedOptions;
+    },
+    
+    showNotification(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.className = `toast align-items-center text-white bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'} border-0`;
+      toast.setAttribute('role', 'alert');
+      toast.setAttribute('aria-live', 'assertive');
+      toast.setAttribute('aria-atomic', 'true');
+      toast.style.position = 'fixed';
+      toast.style.top = '20px';
+      toast.style.right = '20px';
+      toast.style.zIndex = '9999';
+      toast.innerHTML = `
+        <div class="d-flex">
+          <div class="toast-body">${message}</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+      `;
+      document.body.appendChild(toast);
+      
+      const bsToast = new bootstrap.Toast(toast);
+      bsToast.show();
+      
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
     }
   },
   

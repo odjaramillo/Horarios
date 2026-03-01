@@ -4,7 +4,13 @@ export default {
   generateShareUrl(state) {
     const payload = this._encodeState(state);
     const baseUrl = window.location.origin + window.location.pathname;
-    return `${baseUrl}?s=${payload}`;
+    const url = `${baseUrl}?s=${payload}`;
+    
+    if (url.length > 2000) {
+      console.warn('[Share] URL too long, consider fewer selections');
+    }
+    
+    return url;
   },
 
   _encodeState(state) {
@@ -21,7 +27,6 @@ export default {
     if (state.selectedItems && state.selectedItems.length > 0) {
       state.selectedItems.forEach(item => {
         payload.p.push({
-          t: item.selectionType || 's',
           i: item.subjectId || item.id,
           y: item.selectionType || 'p'
         });
@@ -46,6 +51,11 @@ export default {
 
       if (!payload.v || !payload.p) {
         console.warn('[ShareService] Invalid payload format');
+        return null;
+      }
+
+      if (payload.v !== '1.0') {
+        console.warn('[Share] Version incompatible');
         return null;
       }
 

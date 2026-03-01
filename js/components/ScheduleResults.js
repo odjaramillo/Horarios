@@ -7,8 +7,8 @@ export default {
   props: {
     generatedSchedules: Object,
     selectedItems: {
-      type: Object,
-      default: () => ({ priority: [], candidate: [] })
+      type: Array,
+      default: () => []
     },
     onlyOpenSections: {
       type: Boolean,
@@ -501,7 +501,7 @@ closeSaveModal() {
     },
 
     async handleShare() {
-      const allItems = [...(this.selectedItems.priority || []), ...(this.selectedItems.candidate || [])];
+      const allItems = this.selectedItems || [];
       
       const state = {
         selectedItems: allItems,
