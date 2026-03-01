@@ -1,10 +1,15 @@
 import { decodeHtmlEntities } from '../utils/HtmlUtils.js';
 
 export default {
+  _courses: [],
+  
   async loadCourses() {
     try {
       // Cargar datos desde archivos JSON (pueden contener datos HTML convertidos o datos originales de API)
       const allCourses = await this.loadJsonData();
+      
+      // Store courses internally
+      this._courses = allCourses;
       
       // Log statistics
       const htmlCount = allCourses.filter(c => c.dataSource === 'html').length;
@@ -280,5 +285,23 @@ export default {
         room: mt.room
       };
     }).filter(meeting => meeting !== null);
+  },
+
+  /**
+   * Get all loaded courses
+   * @return {Array} All courses
+   */
+  getAllCourses() {
+    return this._courses || [];
+  },
+
+  /**
+   * Get course by subject ID
+   * @param {String} subjectId - Subject ID (e.g., "ISIS1101")
+   * @return {Object|null} Course or null
+   */
+  getSubjectById(subjectId) {
+    if (!this._courses || !subjectId) return null;
+    return this._courses.find(c => c.subjectId === subjectId || c.id === subjectId) || null;
   }
 };

@@ -6,6 +6,7 @@ import SelectionPanel from './components/SelectionPanel.js';
 import ScheduleResults from './components/ScheduleResults.js';
 import UIStateService from './services/UIStateService.js';
 import ShareService from './services/ShareService.js';
+import CourseService from './services/CourseService.js';
 
 const app = createApp({
   components: {
@@ -70,15 +71,27 @@ const app = createApp({
     }
 
     const sharedState = ShareService.decodeFromUrl();
-    if (sharedState) {
-      console.log('[App] Restoring from shared URL');
-      this.uiState.updateViewState({
-        selectedItems: sharedState.selectedItems,
-        onlyOpenSections: sharedState.onlyOpenSections,
-        selectedCampus: sharedState.selectedCampus
-      });
-      ShareService.cleanUrl();
-      this.showNotification('Horario restaurado desde URL compartida', 'success');
+    if (sharedState && sharedState.selectedItems && sharedState.selectedItems.length > 0) {
+      console.log('[App] Restoring from shared URL:', sharedState);
+      
+      // Check if CourseService has data loaded
+      const hasCourseData = CourseService.getAllCourses && CourseService.getAllCourses().length > 0;
+      
+      if (hasCourseData) {
+        this._restoreFromSharedState(sharedState);
+      } else {
+        // Wait for course data to load, then restore
+        console.log('[App] Waiting for course data to load...');
+        const checkInterval = setInterval(() => {
+          if (CourseService.getAllCourses().length > 0) {
+            clearInterval(checkInterval);
+            this._restoreFromSharedState(sharedState);
+          }
+        }, 500);
+        
+        // Timeout after 10 seconds
+        setTimeout(() => clearInterval(checkInterval), 10000);
+      }
     }
     
     window.addEventListener('horarios:selections-changed', (event) => {
@@ -124,6 +137,37 @@ const app = createApp({
       setTimeout(() => {
         toast.remove();
       }, 5000);
+    },
+    
+    _restoreFromSharedState(sharedState) {
+      console.log('[App] _restoreFromSharedState called with:', sharedState);
+      
+      // Decode the selectedItems from URL format to app format
+      const items = sharedState.selectedItems || [];
+      const restoredItems = items.map(item => {
+        const course = CourseService.getSubjectById(item.subjectId);
+        if (!course) {
+          console.warn('[App] Course not found:', item.subjectId);
+          return null;
+        }
+        return {
+          type: 'subject',
+          selectionType: item.selectionType || 'priority',
+          item: course,
+          subjectInfo: null
+        };
+      }).filter(item => item !== null);
+      
+      console.log('[App] Restored items:', restoredItems);
+      
+      this.uiState.updateViewState({
+        selectedItems: restoredItems,
+        onlyOpenSections: sharedState.onlyOpenSections ?? true,
+        selectedCampus: sharedState.selectedCampus ?? ''
+      });
+      
+      ShareService.cleanUrl();
+      this.showNotification(`Horario restaurado: ${restoredItems.length} materias`, 'success');
     }
   },
   
