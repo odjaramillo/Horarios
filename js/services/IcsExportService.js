@@ -19,6 +19,10 @@ export default {
    * @return {String} ICS file content
    */
   _generateIcs(scheduleItems) {
+    if (!scheduleItems || scheduleItems.length === 0) {
+      throw new Error('No hay materias para exportar');
+    }
+
     const lines = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
@@ -53,7 +57,7 @@ export default {
 
     lines.push('END:VCALENDAR');
 
-    return lines.join('\r\n');
+    return lines.join('\r\n') + '\r\n';
   },
 
   /**
@@ -80,13 +84,13 @@ export default {
 
     lines.push('BEGIN:VEVENT');
     lines.push(`UID:${uid}`);
-    lines.push(`DTSTAMP:${this._formatDateTime(new Date(), '0000')}`);
+    lines.push(`DTSTAMP:${this._formatDateTime(new Date(), '0000')}Z`);
     lines.push(`DTSTART:${dtStart}`);
     lines.push(`DTEND:${dtEnd}`);
     lines.push(`RRULE:FREQ=WEEKLY;BYDAY=${byday};UNTIL=${this._formatDate(dates.end)}`);
-    lines.push(`SUMMARY:${summary}`);
-    lines.push(`DESCRIPTION:${description}`);
-    lines.push(`LOCATION:${location}`);
+    lines.push(`SUMMARY:${this._escapeText(summary)}`);
+    lines.push(`DESCRIPTION:${this._escapeText(description)}`);
+    lines.push(`LOCATION:${this._escapeText(location)}`);
     lines.push('STATUS:CONFIRMED');
     lines.push('END:VEVENT');
 
@@ -231,6 +235,16 @@ export default {
     const div = document.createElement('div');
     div.innerHTML = text;
     return div.textContent || div.innerText || '';
+  },
+
+  /**
+   * Escapes special characters for RFC 5545 compliance
+   * @param {String} text - Text to escape
+   * @return {String} Escaped text
+   */
+  _escapeText(text) {
+    if (!text) return '';
+    return text.replace(/[\\;,\n]/g, (match) => '\\' + match);
   },
 
   /**
