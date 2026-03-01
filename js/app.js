@@ -56,6 +56,18 @@ const app = createApp({
         this.selectedCampus = value;
       },
       immediate: true
+    },
+    selectedItems: {
+      handler(items) {
+        // Auto-save to localStorage when selections change
+        if (items && Array.isArray(items)) {
+          this.uiState.saveSelections(items, {
+            onlyOpenSections: this.onlyOpenSections,
+            selectedCampus: this.selectedCampus
+          });
+        }
+      },
+      deep: true
     }
   },
   
