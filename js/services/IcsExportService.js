@@ -8,7 +8,16 @@ export default {
    * @param {String} filename - Output filename
    */
   downloadIcs(scheduleItems, filename = 'horario-ucab.ics') {
+    console.log('[ICS] Starting export with', scheduleItems?.length, 'items');
+    
+    if (!scheduleItems || scheduleItems.length === 0) {
+      throw new Error('No hay materias para exportar');
+    }
+    
     const icsContent = this._generateIcs(scheduleItems);
+    console.log('[ICS] Generated content length:', icsContent.length);
+    console.log('[ICS] First 500 chars:', icsContent.substring(0, 500));
+    
     this._downloadFile(icsContent, filename);
     console.log('[ICS] Downloaded:', filename);
   },
@@ -28,10 +37,26 @@ export default {
       'VERSION:2.0',
       'PRODID:-//Horarios UCAB//ES',
       'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH'
+      'METHOD:PUBLISH',
+      'X-WR-CALNAME:Horario UCAB'
     ];
 
+    // Add VTIMEZONE for America/Caracas
+    lines.push(
+      'BEGIN:VTIMEZONE',
+      'TZID:America/Caracas',
+      'X-LIC-LOCATION:America/Caracas',
+      'BEGIN:STANDARD',
+      'TZOFFSETFROM:-0400',
+      'TZOFFSETTO:-0400',
+      'TZNAME:VET',
+      'DTSTART:19700101T000000',
+      'END:STANDARD',
+      'END:VTIMEZONE'
+    );
+
     const semesterDates = this._getSemesterDates();
+    console.log('[ICS] Semester dates:', semesterDates);
 
     scheduleItems.forEach(course => {
       if (!course.section || !course.section.meetingsFaculty) return;
@@ -76,17 +101,35 @@ export default {
     const description = `NRC: ${course.section.courseReferenceNumber} | Sección: ${course.section.sequenceNumber}`;
     const location = this._extractLocation(meeting);
 
-    const startDate = this._getStartDateForDay(dates[0]);
-    const dtStart = this._formatDateTime(startDate, mt.beginTime);
-    const dtEnd = this._formatDateTime(startDate, mt.endTime);
+    // Use first day of semester as start date, adjusted for the day of week
+    const firstSemesterDay = dates.start;
+    const dayOfWeek = firstSemesterDay.getDay(); // 0 = Sunday
+    
+    // Day abbreviations in ICS order (Monday = 1)
+    const icsDayMap = { 1: 'MO', 2: 'TU', 3: 'WE', 4: 'TH', 5: 'FR', 6: 'SA' };
+    
+    // Find the first occurrence of each day in the semester
+    const adjustedDates = days.map(dayAbbr => {
+      const targetDayNum = { MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 }[dayAbbr];
+      let daysToAdd = targetDayNum - dayOfWeek;
+      if (daysToAdd < 0) daysToAdd += 7;
+      
+      const date = new Date(firstSemesterDay);
+      date.setDate(firstSemesterDay.getDate() + daysToAdd);
+      return date;
+    });
+
+    const startDate = adjustedDates[0];
+    const dtStart = this._formatDateTimeWithTz(startDate, mt.beginTime);
+    const dtEnd = this._formatDateTimeWithTz(startDate, mt.endTime);
 
     const byday = days.join(',');
 
     lines.push('BEGIN:VEVENT');
     lines.push(`UID:${uid}`);
-    lines.push(`DTSTAMP:${this._formatDateTime(new Date(), '0000')}Z`);
-    lines.push(`DTSTART:${dtStart}`);
-    lines.push(`DTEND:${dtEnd}`);
+    lines.push(`DTSTAMP:${this._formatDateTimeWithTz(new Date(), '0000')}`);
+    lines.push(`DTSTART;TZID=America/Caracas:${dtStart}`);
+    lines.push(`DTEND;TZID=America/Caracas:${dtEnd}`);
     lines.push(`RRULE:FREQ=WEEKLY;BYDAY=${byday};UNTIL=${this._formatDate(dates.end)}`);
     lines.push(`SUMMARY:${this._escapeText(summary)}`);
     lines.push(`DESCRIPTION:${this._escapeText(description)}`);
@@ -137,6 +180,21 @@ export default {
     const result = new Date(now);
     result.setDate(now.getDate() + daysToAdd);
     return result;
+  },
+
+  /**
+   * Formats date and time for ICS with TZID (YYYYMMDDTHHMMSS)
+   * @param {Date} date - Date object
+   * @param {String} time - Time in HHMM format
+   * @return {String} Formatted datetime
+   */
+  _formatDateTimeWithTz(date, time) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = time.substring(0, 2);
+    const minutes = time.substring(2);
+    return `${year}${month}${day}T${hours}${minutes}00`;
   },
 
   /**
