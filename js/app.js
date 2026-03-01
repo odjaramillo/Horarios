@@ -4,6 +4,7 @@ import SubjectSelector from './components/SubjectSelector.js';
 import SectionSelector from './components/SectionSelector.js';
 import SelectionPanel from './components/SelectionPanel.js';
 import ScheduleResults from './components/ScheduleResults.js';
+import UIStateService from './services/UIStateService.js';
 
 const app = createApp({
   components: {
@@ -16,10 +17,43 @@ const app = createApp({
   
   data() {
     return {
-      currentView: 'hybrid-selector', // Default to hybrid mode
+      currentView: 'hybrid-selector',
       generatedSchedules: null,
-      showAdvancedOptions: false
+      showAdvancedOptions: false,
+      uiState: UIStateService
     };
+  },
+  
+  watch: {
+    generatedSchedules: {
+      handler(schedules) {
+        if (schedules) {
+          this.uiState.saveSelectedSchedule(schedules);
+        }
+      },
+      deep: true
+    }
+  },
+  
+  mounted() {
+    this.uiState.init();
+    
+    const savedSelections = this.uiState.loadSelections();
+    if (savedSelections && savedSelections.items) {
+      console.log('[App] Restoring selections from localStorage');
+      this.uiState.updateViewState({
+        selectedItems: savedSelections.items
+      });
+    }
+    
+    window.addEventListener('horarios:selections-changed', (event) => {
+      console.log('[App] Detected external selections change');
+      if (event.detail) {
+        this.uiState.updateViewState({
+          selectedItems: event.detail.items
+        });
+      }
+    });
   },
   
   methods: {

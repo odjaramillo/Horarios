@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Persistence - Horarios UCAB</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 { color: #333; }
+    .test-section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-result {
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+    }
+    .pass { background: #d4edda; color: #155724; }
+    .fail { background: #f8d7da; color: #721c24; }
+    .info { background: #d1ecf1; color: #0c5460; }
+    button {
+      background: #4a90d9;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover { background: #357abd; }
+    button.danger { background: #dc3545; }
+    button.danger:hover { background: #c82333; }
+    pre {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    .console-output {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Test de Persistencia - Horarios UCAB</h1>
+  
+  <div class="test-section">
+    <h2>1. Verificar localStorage disponible</h2>
+    <div id="test-storage" class="test-result info">Ejecutando...</div>
+  </div>
+  
+  <div class="test-section">
+    <h2>2. Test saveSelections / loadSelections</h2>
+    <button onclick="testSaveLoad()">Ejecutar test</button>
+    <div id="test-save-load" class="test-result info">Presiona el botón para ejecutar</div>
+  </div>
+  
+  <div class="test-section">
+    <h2>3. Test Version Mismatch</h2>
+    <button onclick="testVersionMismatch()">Ejecutar test</button>
+    <div id="test-version" class="test-result info">Presiona el botón para ejecutar</div>
+  </div>
+  
+  <div class="test-section">
+    <h2>4. Test Sync entre pestañas</h2>
+    <button onclick="testStorageEvent()">Simular cambio en otra pestaña</button>
+    <div id="test-sync" class="test-result info">Presiona el botón para ejecutar</div>
+  </div>
+  
+  <div class="test-section">
+    <h2>5. Test saveSelectedSchedule / loadSelectedSchedule</h2>
+    <button onclick="testSchedule()">Ejecutar test</button>
+    <div id="test-schedule" class="test-result info">Presiona el botón para ejecutar</div>
+  </div>
+  
+  <div class="test-section">
+    <h2>Limpiar datos de prueba</h2>
+    <button class="danger" onclick="clearAll()">Limpiar todo</button>
+  </div>
+  
+  <div class="test-section">
+    <h2>Console Output</h2>
+    <div class="console-output" id="console-output"></div>
+  </div>
+
+  <script type="module">
+    import UIStateService from './js/services/UIStateService.js';
+    
+    window.testSaveLoad = async () => {
+      const resultEl = document.getElementById('test-save-load');
+      
+      try {
+        const testItems = {
+          priority: [
+            { id: 'test-1', name: 'Matemática I', code: 'MAT101' },
+            { id: 'test-2', name: 'Física I', code: 'FIS101' }
+          ],
+          candidate: [
+            { id: 'test-3', name: 'Química I', code: 'QUI101' }
+          ]
+        };
+        
+        const options = { onlyOpenSections: true, selectedCampus: 'sartu' };
+        
+        UIStateService.saveSelections(testItems, options);
+        
+        const loaded = UIStateService.loadSelections();
+        
+        if (!loaded) {
+          resultEl.className = 'test-result fail';
+          resultEl.textContent = 'FAIL: No se cargaron los datos';
+          return;
+        }
+        
+        const itemCount = loaded.items.priority.length + loaded.items.candidate.length;
+        if (itemCount !== 3) {
+          resultEl.className = 'test-result fail';
+          resultEl.textContent = `FAIL: Se esperaban 3 items, se encontraron ${itemCount}`;
+          return;
+        }
+        
+        if (loaded.version !== '1.0') {
+          resultEl.className = 'test-result fail';
+          resultEl.textContent = 'FAIL: Versión incorrecta';
+          return;
+        }
+        
+        resultEl.className = 'test-result pass';
+        resultEl.textContent = `PASS: Guardado y cargado correctamente (${itemCount} items)`;
+      } catch (error) {
+        resultEl.className = 'test-result fail';
+        resultEl.textContent = `FAIL: ${error.message}`;
+      }
+    };
+    
+    window.testVersionMismatch = () => {
+      const resultEl = document.getElementById('test-version');
+      
+      try {
+        localStorage.setItem(UIStateService.SELECTION_STORAGE_KEYS.SELECTIONS, JSON.stringify({
+          items: { priority: [], candidate: [] },
+          version: '0.9',
+          timestamp: Date.now()
+        }));
+        
+        const loaded = UIStateService.loadSelections();
+        
+        if (loaded === null) {
+          resultEl.className = 'test-result pass';
+          resultEl.textContent = 'PASS: Versión incompatible correctamente rechazada';
+        } else {
+          resultEl.className = 'test-result fail';
+          resultEl.textContent = 'FAIL: Debería haber rechazado versión antigua';
+        }
+      } catch (error) {
+        resultEl.className = 'test-result fail';
+        resultEl.textContent = `FAIL: ${error.message}`;
+      }
+    };
+    
+    window.testStorageEvent = () => {
+      const resultEl = document.getElementById('test-sync');
+      
+      let eventFired = false;
+      const handler = (e) => {
+        eventFired = true;
+        window.removeEventListener('horarios:selections-changed', handler);
+      };
+      window.addEventListener('horarios:selections-changed', handler);
+      
+      const event = new StorageEvent('storage', {
+        key: UIStateService.SELECTION_STORAGE_KEYS.SELECTIONS,
+        newValue: JSON.stringify({ items: { priority: [], candidate: [] }, version: '1.0' })
+      });
+      window.dispatchEvent(event);
+      
+      setTimeout(() => {
+        if (eventFired) {
+          resultEl.className = 'test-result pass';
+          resultEl.textContent = 'PASS: Evento de sincronización funciona correctamente';
+        } else {
+          resultEl.className = 'test-result fail';
+          resultEl.textContent = 'FAIL: Evento no fue disparado';
+        }
+      }, 100);
+    };
+    
+    window.testSchedule = () => {
+      const resultEl = document.getElementById('test-schedule');
+      
+      try {
+        const testSchedule = [
+          { subject: 'MAT101', sections: ['A', 'B'] },
+          { subject: 'FIS101', sections: ['A'] }
+        ];
+        
+        UIStateService.saveSelectedSchedule(testSchedule);
+        const loaded = UIStateService.loadSelectedSchedule();
+        
+        if (!loaded || !loaded.schedule) {
+          resultEl.className = 'test-result fail';
+          resultEl.textContent = 'FAIL: No se cargó el schedule';
+          return;
+        }
+        
+        if (loaded.schedule.length !== 2) {
+          resultEl.className = 'test-result fail';
+          resultEl.textContent = `FAIL: Se esperaban 2 schedules, se encontraron ${loaded.schedule.length}`;
+          return;
+        }
+        
+        resultEl.className = 'test-result pass';
+        resultEl.textContent = 'PASS: Schedule guardado y cargado correctamente';
+      } catch (error) {
+        resultEl.className = 'test-result fail';
+        resultEl.textContent = `FAIL: ${error.message}`;
+      }
+    };
+    
+    window.clearAll = () => {
+      localStorage.removeItem(UIStateService.SELECTION_STORAGE_KEYS.SELECTIONS);
+      localStorage.removeItem(UIStateService.SELECTION_STORAGE_KEYS.SELECTED_SCHEDULE);
+      localStorage.removeItem(UIStateService.SELECTION_STORAGE_KEYS.LAST_GENERATED);
+      document.querySelectorAll('.test-result').forEach(el => {
+        el.className = 'test-result info';
+        el.textContent = 'Datos limpiados';
+      });
+    };
+    
+    const storageEl = document.getElementById('test-storage');
+    if (typeof localStorage !== 'undefined') {
+      storageEl.className = 'test-result pass';
+      storageEl.textContent = 'PASS: localStorage está disponible';
+    } else {
+      storageEl.className = 'test-result fail';
+      storageEl.textContent = 'FAIL: localStorage no está disponible';
+    }
+    
+    console.log('[Test] Persistence tests loaded');
+  </script>
+</body>
+</html>
