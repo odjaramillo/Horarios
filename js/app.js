@@ -5,6 +5,7 @@ import SectionSelector from './components/SectionSelector.js';
 import SelectionPanel from './components/SelectionPanel.js';
 import ScheduleResults from './components/ScheduleResults.js';
 import UIStateService from './services/UIStateService.js';
+import ShareService from './services/ShareService.js';
 
 const app = createApp({
   components: {
@@ -20,7 +21,10 @@ const app = createApp({
       currentView: 'hybrid-selector',
       generatedSchedules: null,
       showAdvancedOptions: false,
-      uiState: UIStateService
+      uiState: UIStateService,
+      selectedItems: [],
+      onlyOpenSections: true,
+      selectedCampus: ''
     };
   },
   
@@ -32,6 +36,25 @@ const app = createApp({
         }
       },
       deep: true
+    },
+    'uiState._state.viewState.selectedItems': {
+      handler(items) {
+        this.selectedItems = items;
+      },
+      deep: true,
+      immediate: true
+    },
+    'uiState._state.viewState.onlyOpenSections': {
+      handler(value) {
+        this.onlyOpenSections = value;
+      },
+      immediate: true
+    },
+    'uiState._state.viewState.selectedCampus': {
+      handler(value) {
+        this.selectedCampus = value;
+      },
+      immediate: true
     }
   },
   
@@ -44,6 +67,17 @@ const app = createApp({
       this.uiState.updateViewState({
         selectedItems: savedSelections.items
       });
+    }
+
+    const sharedState = ShareService.decodeFromUrl();
+    if (sharedState) {
+      console.log('[App] Restoring from shared URL');
+      this.uiState.updateViewState({
+        selectedItems: sharedState.selectedItems,
+        onlyOpenSections: sharedState.onlyOpenSections,
+        selectedCampus: sharedState.selectedCampus
+      });
+      ShareService.cleanUrl();
     }
     
     window.addEventListener('horarios:selections-changed', (event) => {
@@ -92,6 +126,9 @@ const app = createApp({
             <div class="results-column">
               <schedule-results 
                 :generated-schedules="generatedSchedules"
+                :selected-items="selectedItems"
+                :only-open-sections="onlyOpenSections"
+                :selected-campus="selectedCampus"
               />
             </div>
           </div>
@@ -133,6 +170,9 @@ const app = createApp({
                   <div class="legacy-results">
                     <schedule-results 
                       :generated-schedules="generatedSchedules"
+                      :selected-items="selectedItems"
+                      :only-open-sections="onlyOpenSections"
+                      :selected-campus="selectedCampus"
                     />
                   </div>
                 </div>

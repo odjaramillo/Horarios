@@ -1,10 +1,23 @@
 import { decodeHtmlEntities } from '../utils/HtmlUtils.js';
 import PdfExportService from '../services/PdfExportService.js';
 import IcsExportService from '../services/IcsExportService.js';
+import ShareService from '../services/ShareService.js';
 
 export default {
   props: {
-    generatedSchedules: Object
+    generatedSchedules: Object,
+    selectedItems: {
+      type: Object,
+      default: () => ({ priority: [], candidate: [] })
+    },
+    onlyOpenSections: {
+      type: Boolean,
+      default: true
+    },
+    selectedCampus: {
+      type: String,
+      default: ''
+    }
   },
   
 data() {
@@ -485,6 +498,25 @@ closeSaveModal() {
     
     showNotification(message, type) {
       this.$emit('notification', { message, type });
+    },
+
+    async handleShare() {
+      const allItems = [...(this.selectedItems.priority || []), ...(this.selectedItems.candidate || [])];
+      
+      const state = {
+        selectedItems: allItems,
+        onlyOpenSections: this.onlyOpenSections,
+        selectedCampus: this.selectedCampus
+      };
+      
+      const url = ShareService.generateShareUrl(state);
+      const copied = await ShareService.copyToClipboard(url);
+      
+      if (copied) {
+        this.showNotification('URL copiada al portapapeles', 'success');
+      } else {
+        this.showNotification('Error al copiar URL', 'error');
+      }
     }
   },
   
@@ -511,6 +543,9 @@ closeSaveModal() {
             </button>
             <button @click="handleExportIcs" class="btn btn-outline-success btn-sm me-2">
               📅 Exportar ICS
+            </button>
+            <button @click="handleShare" class="btn btn-outline-info btn-sm me-2">
+              🔗 Compartir
             </button>
             <span class="badge bg-info">{{ currentScheduleIndex + 1 }} de {{ totalSchedules }}</span>
           </div>
