@@ -1,11 +1,12 @@
 import { decodeHtmlEntities } from '../utils/HtmlUtils.js';
+import PdfExportService from '../services/PdfExportService.js';
 
 export default {
   props: {
     generatedSchedules: Object
   },
   
-  data() {
+data() {
     return {
       currentScheduleIndex: 0,
       daysOfWeek: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
@@ -13,7 +14,8 @@ export default {
       timeSlots: [],
       displayFormat: 'list', // 'list' o 'grid'
       subjectColors: {}, // Mapa para almacenar colores por asignatura
-      showSaveModal: false // Control para mostrar/ocultar el modal de descarga
+      showSaveModal: false, // Control para mostrar/ocultar el modal de descarga
+      isExporting: false
     };
   },
   
@@ -446,8 +448,24 @@ export default {
       this.showSaveModal = true;
     },
     
-    closeSaveModal() {
+closeSaveModal() {
       this.showSaveModal = false;
+    },
+    
+    async handleExportPdf() {
+      if (!this.currentSchedule) return;
+      try {
+        this.isExporting = true;
+        await PdfExportService.downloadSchedule(
+          this.currentSchedule,
+          `horario-${new Date().toISOString().split('T')[0]}.pdf`
+        );
+      } catch (error) {
+        console.error('PDF export error:', error);
+        alert('Error al generar PDF');
+      } finally {
+        this.isExporting = false;
+      }
     }
   },
   
@@ -462,12 +480,15 @@ export default {
         </ul>
       </div>
       
-      <div v-if="hasResults" class="card">
+<div v-if="hasResults" class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h2 class="m-0">Horarios Posibles</h2>
           <div>
             <button @click="toggleDisplayFormat" class="btn btn-outline-secondary btn-sm me-2">
               {{ displayFormat === 'list' ? 'Ver como Grilla' : 'Ver como Lista' }}
+            </button>
+            <button @click="handleExportPdf" class="btn btn-outline-primary btn-sm me-2" :disabled="isExporting">
+              {{ isExporting ? 'Generando...' : '📄 Exportar PDF' }}
             </button>
             <span class="badge bg-info">{{ currentScheduleIndex + 1 }} de {{ totalSchedules }}</span>
           </div>
