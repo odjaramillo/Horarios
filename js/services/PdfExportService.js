@@ -11,11 +11,19 @@ export default {
    * @return {Promise<void>}
    */
   async downloadSchedule(scheduleItems, filename = 'horario.pdf') {
+    console.log('[PDF] Starting export with', scheduleItems?.length, 'items');
+    
+    if (!scheduleItems || scheduleItems.length === 0) {
+      throw new Error('No hay materias en el horario para exportar');
+    }
+    
     await loadPdfMake();
     
     const docDefinition = this._buildDocDefinition(scheduleItems);
     
+    console.log('[PDF] Doc definition built, generating PDF...');
     window.pdfMake.createPdf(docDefinition).download(filename);
+    console.log('[PDF] Download triggered:', filename);
   },
   
   /**
@@ -24,6 +32,15 @@ export default {
    * @return {Object} Definición del documento pdfMake
    */
   _buildDocDefinition(scheduleItems) {
+    console.log('[PDF] Building doc for', scheduleItems?.length, 'courses');
+    
+    if (!scheduleItems || scheduleItems.length === 0) {
+      return {
+        pageSize: 'A4',
+        content: [{ text: 'No hay materias para mostrar', alignment: 'center' }]
+      };
+    }
+    
     const totalCredits = scheduleItems.reduce((sum, course) => {
       return sum + (parseFloat(course.creditHourLow) || 0);
     }, 0);
@@ -155,10 +172,22 @@ export default {
    * @return {Array} Items para ese día
    */
   _getItemsForDay(scheduleItems, day) {
+    console.log(`[PDF] Getting items for ${day}, input:`, JSON.stringify(scheduleItems, null, 2).substring(0, 500));
+    
     const items = [];
     
     scheduleItems.forEach(course => {
-      if (!course.section || !course.section.meetingsFaculty) return;
+      console.log('[PDF] Processing course:', course.subject, course.courseNumber);
+      console.log('[PDF] Section:', course.section);
+      
+      if (!course.section) {
+        console.log('[PDF] No section found for course');
+        return;
+      }
+      if (!course.section.meetingsFaculty) {
+        console.log('[PDF] No meetingsFaculty for section', course.section.sequenceNumber);
+        return;
+      }
       
       course.section.meetingsFaculty.forEach(meeting => {
         if (!meeting.meetingTime) return;
