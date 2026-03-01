@@ -2197,13 +2197,17 @@ ata integration status in header */
   cursor: not-allowed;
 }
 
+.export-menu__trigger:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
 .export-menu__dropdown {
   position: absolute;
   top: 100%;
   right: 0;
   margin-top: 4px;
   background: white;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   box-shadow: var(--shadow-lg);
   overflow: hidden;

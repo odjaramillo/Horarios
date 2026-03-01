@@ -2,6 +2,10 @@ import PdfExportService from '../services/PdfExportService.js';
 import IcsExportService from '../services/IcsExportService.js';
 import ShareService from '../services/ShareService.js';
 
+/**
+ * Componente de menú de exportación
+ * Permite exportar a PDF, ICS o compartir URL
+ */
 export default {
   props: {
     schedule: { type: Object, required: true }
@@ -18,10 +22,17 @@ export default {
   },
 
   methods: {
+    /**
+     * Alterna la visibilidad del menú desplegable
+     */
     toggleMenu() {
       this.isOpen = !this.isOpen;
     },
 
+    /**
+     * Exporta el horario actual a formato PDF
+     * Utiliza PdfExportService para generar y descargar el archivo
+     */
     async exportPdf() {
       this.isExporting = true;
       this.exportType = 'pdf';
@@ -41,12 +52,16 @@ export default {
       }
     },
 
-    exportIcs() {
+    /**
+     * Exporta el horario actual a formato ICS para calendarios
+     * Utiliza IcsExportService para generar y descargar el archivo
+     */
+    async exportIcs() {
       this.isExporting = true;
       this.exportType = 'ics';
       
       try {
-        IcsExportService.downloadIcs(
+        await IcsExportService.downloadIcs(
           this.schedule.items,
           `horario-${new Date().toISOString().split('T')[0]}.ics`
         );
@@ -60,6 +75,10 @@ export default {
       }
     },
 
+    /**
+     * Comparte el horario actual mediante una URL
+     * Genera una URL con el estado y la copia al portapapeles
+     */
     async shareUrl() {
       this.isExporting = true;
       this.exportType = 'share';
