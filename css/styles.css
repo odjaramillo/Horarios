@@ -2172,3 +2172,64 @@ ata integration status in header */
     font-size: 1rem;
   }
 }
+
+/* Export Menu */
+.export-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.export-menu__trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.export-menu__trigger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.export-menu__dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  z-index: 100;
+  min-width: 160px;
+}
+
+.export-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #2d3748;
+}
+
+.export-menu__item:hover {
+  background: #f7fafc;
+}
+
+.export-menu__item:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
