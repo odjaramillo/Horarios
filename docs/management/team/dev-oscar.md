@@ -1,64 +1,86 @@
 # Developer Handoff - Oscar
 
-**Last Updated:** 2026-02-28
-**Current Branch:** feature/fase1-quick-wins
+**Last Updated:** 2026-03-01
+**Current Branch:** fix/export-fixes
 
 ---
 
 ## Session Summary
 
-### Completed Tasks (Today)
+### Sprint 2: Core Features Implementation
 
-1. **Fase 1: Quick Wins** - Implemented 3 of 4 tasks:
-   - ✅ Nueva tipografía (DM Sans + IBM Plex Mono)
-   - ✅ Corregir contraste WCAG (candidate badges)
-   - ✅ Eliminar animaciones de pulso innecesarias
-   - ⏳ Vue production build (deferred to later)
+Implemented 4 features but with known bugs:
 
-### Changes Made
+1. **PDF Export** - ✅ Working
+   - Uses pdfMake 0.2.12 from CDN
+   - Fixed loading issue with correct version
 
-| File | Change |
-|------|--------|
-| `index.html` | Updated Google Fonts to DM Sans + IBM Plex Mono |
-| `css/styles.css` | Added typography variables, prefers-reduced-motion, fixed badge contrast |
-| `css/subject-card.css` | Fixed badge contrast, removed pulse animation |
-| `css/filter-panel.css` | Removed 2 pulse animations |
+2. **ICS Export** - ⚠️ Partial
+   - Generates valid RFC 5545 file
+   - BUG: Time shows 19:00 instead of 08:30 (timezone issue)
+
+3. **URL Sharing** - ⚠️ Partial
+   - Generates shareable URL with selections
+   - BUG: Restoration from URL not fully working
+
+4. **LocalStorage Persistence** - ⚠️ Partial
+   - Added auto-save watcher
+   - BUG: Restoration on page load not working correctly
 
 ---
 
-## Current State
+## Branches
 
-- **Branch:** `feature/fase1-quick-wins`
-- **Status:** Ready for commit
-- **Verification:** npm test ✅, npm run build ✅
+| Branch | Status | Description |
+|--------|--------|-------------|
+| `feature/sprint2-core-features` | Needs fixes | Full implementation |
+| `fix/export-fixes` | Current | Debug + fixes applied |
+
+---
+
+## Known Issues (Need Fixing)
+
+### 1. ICS Time Bug
+```
+Problem: Shows 19:00 instead of 08:30
+Location: IcsExportService.js _formatDateTimeWithTz
+Fix needed: Timezone offset calculation is wrong
+```
+
+### 2. URL Restoration
+```
+Problem: URL restores but selections don't appear
+Location: app.js _restoreFromSharedState
+Fix needed: CourseService lookup not finding courses
+```
+
+### 3. LocalStorage Restore
+```
+Problem: Page reload doesn't restore selections
+Location: app.js mounted() loadSelections
+Fix needed: Format mismatch between saved and expected
+```
 
 ---
 
 ## Next Steps
 
-### Immediate (After Commit)
+1. **Fix ICS time bug** - Priority High
+2. **Fix URL restoration** - Priority Medium  
+3. **Fix localStorage restore** - Priority Medium
 
-1. **Phase 2: Core Features** - Start implementation:
-   - Persistencia local (localStorage)
-   - Exportar a PDF
-   - Exportar a ICS
-   - Compartir horario
-
-2. **Vue Production Build** - Can be done anytime:
-   - Currently deferred (not blocking other work)
-   - Consider in Sprint 3 with Vite migration
+Or defer to Sprint 3 after testing with real users.
 
 ---
 
 ## Notes
 
-- No blockers identified
-- All WCAG accessibility issues from Phase 1 resolved
-- Server running at localhost:3000 for testing
+- PDF export works correctly
+- Server running at localhost for testing
+- All debug logging added to track issues
 
 ---
 
 ## Contact
 
-- Email: (See project README)
 - GitHub: @Poletron
