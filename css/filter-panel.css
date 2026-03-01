@@ -83,7 +83,6 @@
   border-radius: 12px;
   min-width: 20px;
   text-align: center;
-  animation: pulse 2s infinite;
 }
 
 .filter-panel__stats {
@@ -248,7 +247,6 @@
 .schedule-active-indicator {
   color: var(--filter-active-color);
   font-size: 0.8rem;
-  animation: pulse 2s infinite;
 }
 
 .schedule-filter-toggle {

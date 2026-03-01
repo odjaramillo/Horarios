@@ -257,7 +257,6 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: var(--shadow-sm);
-  animation: pulse 2s infinite;
 }
 
 .selection-badge--priority {
@@ -267,7 +266,7 @@
 
 .selection-badge--candidate {
   background: var(--candidate-color);
-  color: var(--dark-text);
+  color: #1a1a1a;  /* Dark text for WCAG contrast compliance */
 }
 
 .selection-badge__icon {

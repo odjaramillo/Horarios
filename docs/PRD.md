@@ -185,9 +185,9 @@ flowchart LR
 - [x] Selección prioritaria/candidata
 
 ### Fase 1: Quick Wins (Semana 1)
-- [ ] Nueva tipografía (DM Sans + IBM Plex Sans)
-- [ ] Corregir contraste WCAG
-- [ ] Eliminar animaciones de pulso innecesarias
+- [x] Nueva tipografía (DM Sans + IBM Plex Sans)
+- [x] Corregir contraste WCAG
+- [x] Eliminar animaciones de pulso innecesarias
 - [ ] Vue production build
 
 ### Fase 2: Funcionalidades Core (Semana 2-3)

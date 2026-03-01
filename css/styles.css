@@ -1,4 +1,9 @@
 :root {
+  /* Typography - UIRD Spec */
+  --font-display: 'DM Sans', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+
   --primary-color: #1a5276;
   --secondary-color: #2980b9;
   --accent-color: #3498db;
@@ -42,8 +47,20 @@
   --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
+/* Accessibility: Reduced Motion - UIRD Spec */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-body);
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   color: var(--dark-text);
   margin: 0;
@@ -729,7 +746,6 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: var(--shadow-sm);
-  animation: pulse 2s infinite;
 }
 
 .selection-badge.priority {
@@ -739,7 +755,7 @@ body {
 
 .selection-badge.candidate {
   background: var(--candidate-color);
-  color: var(--dark-text);
+  color: #1a1a1a;  /* Dark text for WCAG contrast compliance */
 }
 
 @keyframes pulse {
