@@ -501,6 +501,11 @@ closeSaveModal() {
     },
 
     async handleShare() {
+      console.log('[Share] handleShare called');
+      console.log('[Share] selectedItems:', this.selectedItems);
+      console.log('[Share] onlyOpenSections:', this.onlyOpenSections);
+      console.log('[Share] selectedCampus:', this.selectedCampus);
+      
       const allItems = this.selectedItems || [];
       
       const state = {
@@ -510,6 +515,8 @@ closeSaveModal() {
       };
       
       const url = ShareService.generateShareUrl(state);
+      console.log('[Share] Generated URL length:', url.length);
+      
       const copied = await ShareService.copyToClipboard(url);
       
       if (copied) {
