@@ -506,7 +506,19 @@ closeSaveModal() {
       console.log('[Share] onlyOpenSections:', this.onlyOpenSections);
       console.log('[Share] selectedCampus:', this.selectedCampus);
       
-      const allItems = this.selectedItems || [];
+      // Handle both formats: array or {priority: [], candidate: []}
+      let allItems = [];
+      if (Array.isArray(this.selectedItems)) {
+        allItems = this.selectedItems;
+      } else if (this.selectedItems && typeof this.selectedItems === 'object') {
+        // Convert from {priority: [], candidate: []} to flat array
+        allItems = [
+          ...(this.selectedItems.priority || []),
+          ...(this.selectedItems.candidate || [])
+        ];
+      }
+      
+      console.log('[Share] Flattened items:', allItems);
       
       const state = {
         selectedItems: allItems,
