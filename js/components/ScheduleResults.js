@@ -1,5 +1,6 @@
 import { decodeHtmlEntities } from '../utils/HtmlUtils.js';
 import PdfExportService from '../services/PdfExportService.js';
+import IcsExportService from '../services/IcsExportService.js';
 
 export default {
   props: {
@@ -466,6 +467,24 @@ closeSaveModal() {
       } finally {
         this.isExporting = false;
       }
+    },
+    
+    handleExportIcs() {
+      if (!this.currentSchedule) return;
+      try {
+        IcsExportService.downloadIcs(
+          this.currentSchedule,
+          `horario-${new Date().toISOString().split('T')[0]}.ics`
+        );
+        this.showNotification('ICS descargado. Importa en Google Calendar u Outlook', 'success');
+      } catch (error) {
+        console.error('ICS export error:', error);
+        this.showNotification('Error al generar ICS', 'error');
+      }
+    },
+    
+    showNotification(message, type) {
+      this.$emit('notification', { message, type });
     }
   },
   
@@ -489,6 +508,9 @@ closeSaveModal() {
             </button>
             <button @click="handleExportPdf" class="btn btn-outline-primary btn-sm me-2" :disabled="isExporting">
               {{ isExporting ? 'Generando...' : '📄 Exportar PDF' }}
+            </button>
+            <button @click="handleExportIcs" class="btn btn-outline-success btn-sm me-2">
+              📅 Exportar ICS
             </button>
             <span class="badge bg-info">{{ currentScheduleIndex + 1 }} de {{ totalSchedules }}</span>
           </div>

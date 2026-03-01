@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test ICS Export</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .log {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test ICS Export</h1>
+    
+    <div id="status" class="status pending">Cargando...</div>
+    
+    <button id="testBtn" disabled>Probar Exportar ICS</button>
+    
+    <div class="log" id="log"></div>
+    
+    <script type="module">
+        import IcsExportService from './js/services/IcsExportService.js';
+        
+        const mockSchedule = [
+            {
+                subject: 'FING',
+                courseNumber: '02013',
+                courseTitle: 'Laboratorio de Física',
+                creditHourLow: 2,
+                section: {
+                    sequenceNumber: '003',
+                    courseReferenceNumber: '26520',
+                    meetingsFaculty: [
+                        {
+                            meetingTime: {
+                                monday: false,
+                                tuesday: false,
+                                wednesday: false,
+                                thursday: true,
+                                friday: false,
+                                saturday: false,
+                                beginTime: '1300',
+                                endTime: '1450',
+                                room: 'Lab-201'
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                subject: 'MAT',
+                courseNumber: '02045',
+                courseTitle: 'Cálculo Diferencial',
+                creditHourLow: 4,
+                section: {
+                    sequenceNumber: '001',
+                    courseReferenceNumber: '26530',
+                    meetingsFaculty: [
+                        {
+                            meetingTime: {
+                                monday: true,
+                                tuesday: true,
+                                wednesday: false,
+                                thursday: true,
+                                friday: false,
+                                saturday: false,
+                                beginTime: '0800',
+                                endTime: '0920',
+                                room: 'Aula-101'
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                subject: 'PSI',
+                courseNumber: '01001',
+                courseTitle: 'Introducción a la Psicología',
+                creditHourLow: 3,
+                section: {
+                    sequenceNumber: '002',
+                    courseReferenceNumber: '26540',
+                    meetingsFaculty: [
+                        {
+                            meetingTime: {
+                                monday: false,
+                                tuesday: true,
+                                wednesday: true,
+                                thursday: false,
+                                friday: true,
+                                saturday: false,
+                                beginTime: '1000',
+                                endTime: '1120',
+                                room: 'Salón-301'
+                            }
+                        }
+                    ]
+                }
+            }
+        ];
+        
+        function log(message) {
+            const logEl = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logEl.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            console.log(message);
+        }
+        
+        function setStatus(message, type) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+        
+        document.getElementById('testBtn').addEventListener('click', () => {
+            try {
+                log('Iniciando exportación de ICS...');
+                setStatus('Generando ICS...', 'pending');
+                
+                IcsExportService.downloadIcs(
+                    mockSchedule,
+                    `test-horario-${new Date().toISOString().split('T')[0]}.ics`
+                );
+                
+                log('ICS descargado exitosamente!');
+                setStatus('✅ ICS descargado correctamente', 'success');
+            } catch (error) {
+                log(`Error: ${error.message}`);
+                console.error(error);
+                setStatus(`❌ Error: ${error.message}`, 'error');
+            }
+        });
+        
+        // Enable button
+        document.getElementById('testBtn').disabled = false;
+        setStatus('Listo para probar', 'pending');
+        log('Script cargado. Haz clic en el botón para exportar.');
+    </script>
+</body>
+</html>
