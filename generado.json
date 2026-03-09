@@ -33,13 +33,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02001",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26505",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -73,7 +81,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26505",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -105,7 +117,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449788,
@@ -138,13 +151,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02001",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26737",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -178,7 +199,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26737",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -210,7 +235,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448576,
@@ -348,13 +374,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25485",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -388,7 +422,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25485",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -420,7 +458,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449763,
@@ -453,13 +492,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Quintero Davila, José Luis"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26712",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Quintero Davila, José Luis"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -493,7 +540,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26712",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Quintero Davila, José Luis"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -525,7 +576,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448572,
@@ -663,13 +715,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02003",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25490",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -703,7 +763,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25490",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -735,7 +799,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449465,
@@ -768,13 +833,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02003",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Cardenas Cardenas, Augusto José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26435",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Cardenas Cardenas, Augusto José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -808,7 +881,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26435",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Cardenas Cardenas, Augusto José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -840,7 +917,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448573,
@@ -978,13 +1056,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02004",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25496",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -1018,7 +1104,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25496",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -1050,7 +1140,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449775,
@@ -1083,13 +1174,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02004",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26724",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -1123,7 +1222,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26724",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -1155,7 +1258,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448574,
@@ -1293,13 +1397,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02005",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Bastidas Ravelo, Kahela de Jesús"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25499",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Bastidas Ravelo, Kahela de Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -1333,7 +1445,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25499",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Bastidas Ravelo, Kahela de Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -1365,7 +1481,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449446,
@@ -1398,13 +1515,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02005",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26416",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -1438,7 +1563,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26416",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -1470,7 +1599,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448575,
@@ -1608,13 +1738,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02006",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Estrada, Luis Enrique"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25501",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Estrada, Luis Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -1648,7 +1786,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25501",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Estrada, Luis Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -1680,7 +1822,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449813,
@@ -1713,13 +1856,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02006",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26762",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -1751,7 +1902,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448577,
@@ -1855,13 +2007,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02007",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25971",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -1895,7 +2055,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25971",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -1927,7 +2091,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449047,
@@ -2065,13 +2230,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02008",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25562",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -2103,7 +2276,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448594,
@@ -2278,13 +2452,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02008",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Holguín Valdez, Rodolfo Enrique"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25567",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Holguín Valdez, Rodolfo Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -2316,7 +2498,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448598,
@@ -2349,13 +2532,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02008",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Holguín Valdez, Rodolfo Enrique"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25568",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Holguín Valdez, Rodolfo Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -2387,7 +2578,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448599,
@@ -2420,13 +2612,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02008",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Graterol Martínez, Daniel José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25569",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Graterol Martínez, Daniel José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -2458,7 +2658,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448600,
@@ -2491,13 +2692,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02008",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Taipe, Miguel Lorenzo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25570",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Taipe, Miguel Lorenzo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -2529,7 +2738,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449387,
@@ -2988,13 +3198,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02009",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Sué Del Duca, Antonio José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25549",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Sué Del Duca, Antonio José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -3028,7 +3246,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25549",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Sué Del Duca, Antonio José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -3060,7 +3282,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448581,
@@ -3198,13 +3421,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02009",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25552",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -3238,7 +3469,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25552",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -3270,7 +3505,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448585,
@@ -3408,13 +3644,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02009",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26425",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -3448,7 +3692,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26425",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -3480,7 +3728,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448641,
@@ -3584,13 +3833,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02010",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27019",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -3622,7 +3879,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448578,
@@ -3726,13 +3984,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02011",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Campos Marrero, José Miguel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25939",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Campos Marrero, José Miguel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -3766,7 +4032,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25939",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Campos Marrero, José Miguel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -3798,7 +4068,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449444,
@@ -3831,13 +4102,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02011",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Campos Marrero, José Miguel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26414",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Campos Marrero, José Miguel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -3871,7 +4150,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26414",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Campos Marrero, José Miguel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -3903,7 +4186,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449802,
@@ -3936,13 +4220,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02011",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Campos Marrero, José Miguel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26751",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Campos Marrero, José Miguel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -3976,7 +4268,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26751",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Campos Marrero, José Miguel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -4008,7 +4304,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448589,
@@ -4461,13 +4758,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02013",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Lavado Sánchez, Juan Carlos"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26016",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lavado Sánchez, Juan Carlos"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -4499,7 +4804,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449549,
@@ -4532,13 +4838,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02013",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Lavado Sánchez, Juan Carlos"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26519",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lavado Sánchez, Juan Carlos"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -4570,7 +4884,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450569,
@@ -4603,13 +4918,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02013",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Lárez Natera, Joszaira Del Valle"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27193",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lárez Natera, Joszaira Del Valle"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -4641,7 +4964,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450570,
@@ -4674,13 +4998,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02013",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Lárez Natera, Joszaira Del Valle"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27194",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lárez Natera, Joszaira Del Valle"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -4712,7 +5044,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450571,
@@ -4745,13 +5078,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02013",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ferreira Arévalo, Edgar José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27195",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ferreira Arévalo, Edgar José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -4783,7 +5124,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450572,
@@ -4816,13 +5158,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02013",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ferreira Arévalo, Edgar José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27196",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ferreira Arévalo, Edgar José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -4854,7 +5204,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449247,
@@ -4958,13 +5309,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02014",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26766",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1900",
             "building": null,
@@ -4996,7 +5355,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "V"
     },
     {
       "id": 448652,
@@ -5029,13 +5389,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "García León, Pedro José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25622",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "García León, Pedro José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -5069,7 +5437,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25622",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "García León, Pedro José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -5101,7 +5473,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450283,
@@ -5134,13 +5507,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27063",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -5174,7 +5555,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27063",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -5206,7 +5591,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450284,
@@ -5239,13 +5625,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27064",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -5279,7 +5673,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27064",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -5311,7 +5709,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448694,
@@ -5449,13 +5848,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25625",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -5487,7 +5894,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448656,
@@ -5520,13 +5928,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25626",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -5558,7 +5974,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448657,
@@ -5591,13 +6008,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25627",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -5629,7 +6054,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449083,
@@ -5662,13 +6088,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "FING02016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26053",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -5700,7 +6134,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450662,
@@ -6690,13 +7125,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02000",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Valencia Zambrano, Irving Alfredo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25769",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Valencia Zambrano, Irving Alfredo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -6730,7 +7173,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25769",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Valencia Zambrano, Irving Alfredo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -6764,7 +7211,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25769",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Valencia Zambrano, Irving Alfredo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -6796,7 +7247,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448800,
@@ -6829,13 +7281,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02000",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Valencia Zambrano, Irving Alfredo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25770",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Valencia Zambrano, Irving Alfredo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -6869,7 +7329,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25770",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Valencia Zambrano, Irving Alfredo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -6903,7 +7367,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25770",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Valencia Zambrano, Irving Alfredo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -6935,7 +7403,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448846,
@@ -6968,13 +7437,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02000",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Martínez León, Henry José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25816",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Martínez León, Henry José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -7008,7 +7485,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25816",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Martínez León, Henry José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -7042,7 +7523,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25816",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Martínez León, Henry José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -7074,7 +7559,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448700,
@@ -7212,13 +7698,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02001",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Castillo Pacheco, José Gregorio"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25771",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Castillo Pacheco, José Gregorio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1200",
             "building": null,
@@ -7250,7 +7744,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448802,
@@ -7283,13 +7778,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02001",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Holguín Valdez, Rodolfo Enrique"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25772",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Holguín Valdez, Rodolfo Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -7321,7 +7824,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448803,
@@ -7354,13 +7858,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02001",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Castillo Pacheco, José Gregorio"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25773",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Castillo Pacheco, José Gregorio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1200",
             "building": null,
@@ -7392,7 +7904,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448807,
@@ -7425,13 +7938,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02001",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Holguín Valdez, Rodolfo Enrique"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25777",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Holguín Valdez, Rodolfo Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -7463,7 +7984,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449010,
@@ -7496,13 +8018,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02001",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Castillo Pacheco, José Gregorio"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25980",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Castillo Pacheco, José Gregorio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -7534,7 +8064,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449011,
@@ -7745,13 +8276,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Meza Houtteman, Oscar José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25776",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Meza Houtteman, Oscar José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -7785,7 +8324,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25776",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Meza Houtteman, Oscar José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -7817,7 +8360,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448809,
@@ -7850,13 +8394,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Mendoza, Lia Roxana"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25779",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Mendoza, Lia Roxana"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -7890,7 +8442,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25779",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Mendoza, Lia Roxana"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -7924,7 +8480,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25779",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Mendoza, Lia Roxana"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -7956,7 +8516,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448810,
@@ -7989,13 +8550,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Mendoza, Lia Roxana"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25780",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Mendoza, Lia Roxana"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -8029,7 +8598,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25780",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Mendoza, Lia Roxana"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -8063,7 +8636,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25780",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Mendoza, Lia Roxana"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -8095,7 +8672,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448812,
@@ -8128,13 +8706,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Hernández Barrera, Omar Jesús"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25782",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -8168,7 +8754,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25782",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -8202,7 +8792,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25782",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -8234,7 +8828,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448829,
@@ -8267,13 +8862,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Hernández Barrera, Omar Jesús"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25799",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -8307,7 +8910,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25799",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -8341,7 +8948,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25799",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -8373,7 +8984,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449006,
@@ -8406,13 +9018,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "León Espinoza, Yisheng"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25976",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "León Espinoza, Yisheng"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -8446,7 +9066,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25976",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "León Espinoza, Yisheng"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -8480,7 +9104,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25976",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "León Espinoza, Yisheng"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -8512,7 +9140,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449241,
@@ -8686,13 +9315,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02003",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Mendoza, Lia Roxana"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25766",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Mendoza, Lia Roxana"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -8726,7 +9363,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25766",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Mendoza, Lia Roxana"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -8760,7 +9401,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25766",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Mendoza, Lia Roxana"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -8792,7 +9437,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448797,
@@ -8825,13 +9471,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02003",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Castro Gonzalez, Marcel Jose"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25767",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Castro Gonzalez, Marcel Jose"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -8865,7 +9519,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25767",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Castro Gonzalez, Marcel Jose"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -8899,7 +9557,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25767",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Castro Gonzalez, Marcel Jose"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -8931,7 +9593,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449013,
@@ -8964,13 +9627,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02003",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Castillo Pacheco, José Gregorio"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25983",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Castillo Pacheco, José Gregorio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -9004,7 +9675,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25983",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Castillo Pacheco, José Gregorio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -9038,7 +9713,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25983",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Castillo Pacheco, José Gregorio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -9070,7 +9749,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449014,
@@ -9278,13 +9958,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02004",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ortega, Dinarle Milagro"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25768",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ortega, Dinarle Milagro"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -9316,7 +10004,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450146,
@@ -9349,13 +10038,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02004",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Hernández de López, Fanny Xiomara"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26976",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández de López, Fanny Xiomara"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -9387,7 +10084,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449037,
@@ -9420,13 +10118,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02004",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Cardoso Militao, Lúcia Isabel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26007",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Cardoso Militao, Lúcia Isabel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1200",
             "building": null,
@@ -9458,7 +10164,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448705,
@@ -9562,13 +10269,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02005",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Hernández Barrera, Omar Jesús"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25765",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -9602,7 +10317,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25765",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -9634,7 +10353,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449039,
@@ -9667,13 +10387,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02005",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Hernández Barrera, Omar Jesús"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26009",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -9707,7 +10435,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26009",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -9739,7 +10471,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449368,
@@ -9772,13 +10505,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02005",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Hernández Barrera, Omar Jesús"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26338",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -9812,7 +10553,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26338",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -9844,7 +10589,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449051,
@@ -9982,13 +10728,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02006",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Lara Campos, Rafael Antonio"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25763",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lara Campos, Rafael Antonio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -10020,7 +10774,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449040,
@@ -10053,13 +10808,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02006",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Sánchez Padilla, Hermes Samuel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26010",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Sánchez Padilla, Hermes Samuel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -10091,7 +10854,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449593,
@@ -10124,13 +10888,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02006",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Sánchez Padilla, Hermes Samuel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26563",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Sánchez Padilla, Hermes Samuel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -10162,7 +10934,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449607,
@@ -10302,13 +11075,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02007",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Pérez de Ovalles, María Angélica"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25764",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Pérez de Ovalles, María Angélica"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -10342,7 +11123,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25764",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Pérez de Ovalles, María Angélica"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -10374,7 +11159,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449041,
@@ -10407,13 +11193,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02007",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Pérez de Ovalles, María Angélica"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26011",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Pérez de Ovalles, María Angélica"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -10447,7 +11241,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26011",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Pérez de Ovalles, María Angélica"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -10479,7 +11277,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449167,
@@ -10512,13 +11311,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02007",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Goncalves Da Silva, Marlene"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26137",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Goncalves Da Silva, Marlene"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -10552,7 +11359,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26137",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Goncalves Da Silva, Marlene"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -10584,7 +11395,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448706,
@@ -10722,13 +11534,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02008",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Gómez Chacón, Carlos Esteban"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25985",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Gómez Chacón, Carlos Esteban"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -10762,7 +11582,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25985",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Gómez Chacón, Carlos Esteban"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -10794,7 +11618,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449166,
@@ -10827,13 +11652,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02008",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Gómez Chacón, Carlos Esteban"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26136",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Gómez Chacón, Carlos Esteban"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -10867,7 +11700,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26136",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Gómez Chacón, Carlos Esteban"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -10899,7 +11736,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449603,
@@ -10932,13 +11770,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02008",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Gómez Chacón, Carlos Esteban"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26573",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Gómez Chacón, Carlos Esteban"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -10972,7 +11818,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26573",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Gómez Chacón, Carlos Esteban"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -11004,7 +11854,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448707,
@@ -11142,13 +11993,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02010",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Hernández Barrera, Omar Jesús"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26008",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -11182,7 +12041,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26008",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández Barrera, Omar Jesús"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -11214,7 +12077,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449170,
@@ -11247,13 +12111,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02010",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Lara Domínguez, Gustavo Adolfo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26140",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lara Domínguez, Gustavo Adolfo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -11287,7 +12159,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26140",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lara Domínguez, Gustavo Adolfo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -11319,7 +12195,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449171,
@@ -11493,13 +12370,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02011",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Fuentes Salazar, Luis Reynaldo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25761",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Fuentes Salazar, Luis Reynaldo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -11531,7 +12416,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449016,
@@ -11564,13 +12450,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02011",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "León Espinoza, Yisheng"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25986",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "León Espinoza, Yisheng"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -11602,7 +12496,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449594,
@@ -11635,13 +12530,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02011",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Fuentes Salazar, Luis Reynaldo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26564",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Fuentes Salazar, Luis Reynaldo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -11673,7 +12576,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450202,
@@ -11706,13 +12610,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02011",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Fuentes Salazar, Luis Reynaldo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27026",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Fuentes Salazar, Luis Reynaldo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -11744,7 +12656,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448708,
@@ -11848,13 +12761,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02012",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Cardoso Militao, Lúcia Isabel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25758",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Cardoso Militao, Lúcia Isabel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -11888,7 +12809,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25758",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Cardoso Militao, Lúcia Isabel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1200",
             "building": null,
@@ -11920,7 +12845,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448790,
@@ -11953,13 +12879,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02012",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Goncalves Da Silva, Marlene"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25760",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Goncalves Da Silva, Marlene"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -11993,7 +12927,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25760",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Goncalves Da Silva, Marlene"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -12025,7 +12963,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449168,
@@ -12058,13 +12997,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02012",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Fernandes Agrela, Ana Karina"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26138",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Fernandes Agrela, Ana Karina"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -12098,7 +13045,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26138",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Fernandes Agrela, Ana Karina"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -12130,7 +13081,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450147,
@@ -12163,13 +13115,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02012",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Cardoso Militao, Lúcia Isabel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26977",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Cardoso Militao, Lúcia Isabel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -12203,7 +13163,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26977",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Cardoso Militao, Lúcia Isabel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -12235,7 +13199,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448709,
@@ -12373,13 +13338,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02013",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Hernández de López, Fanny Xiomara"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26139",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández de López, Fanny Xiomara"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1900",
             "building": null,
@@ -12411,7 +13384,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "V"
     },
     {
       "id": 448786,
@@ -12444,13 +13418,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02013",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Hernández de López, Fanny Xiomara"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25756",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Hernández de López, Fanny Xiomara"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1900",
             "building": null,
@@ -12482,7 +13464,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "V"
     },
     {
       "id": 448792,
@@ -12586,13 +13569,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02014",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Rivas García, Fredi Alfonso"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25787",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Rivas García, Fredi Alfonso"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -12624,7 +13615,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448818,
@@ -12657,13 +13649,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02014",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Youssif Jorge, Rosa"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25788",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Youssif Jorge, Rosa"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -12695,7 +13695,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450343,
@@ -12728,13 +13729,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02014",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Rivas García, Fredi Alfonso"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27091",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Rivas García, Fredi Alfonso"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -12766,7 +13775,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448723,
@@ -12870,13 +13880,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ruíz Rondón, Eva Alexandra"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25785",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ruíz Rondón, Eva Alexandra"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -12910,7 +13928,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25785",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ruíz Rondón, Eva Alexandra"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -12942,7 +13964,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450160,
@@ -12975,13 +13998,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ruíz Rondón, Eva Alexandra"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26990",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ruíz Rondón, Eva Alexandra"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -13015,7 +14046,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26990",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ruíz Rondón, Eva Alexandra"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -13047,7 +14082,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450162,
@@ -13080,13 +14116,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Murillo Gonzalez, Luz Karime"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26992",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Murillo Gonzalez, Luz Karime"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -13120,7 +14164,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26992",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Murillo Gonzalez, Luz Karime"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -13152,7 +14200,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449052,
@@ -13324,13 +14373,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Russoniello Antonacci, Antonio"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25786",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Russoniello Antonacci, Antonio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0900",
             "building": null,
@@ -13362,7 +14419,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449180,
@@ -13395,13 +14453,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Murillo Gonzalez, Luz Karime"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26150",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Murillo Gonzalez, Luz Karime"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -13433,7 +14499,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450320,
@@ -13607,13 +14674,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02017",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Djenanian Dertorossian, Armen"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25797",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Djenanian Dertorossian, Armen"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -13645,7 +14720,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450151,
@@ -13678,13 +14754,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02017",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Djenanian Dertorossian, Armen"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26981",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Djenanian Dertorossian, Armen"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -13716,7 +14800,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450410,
@@ -13820,13 +14905,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02018",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Cardoso Militao, Lúcia Isabel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25784",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Cardoso Militao, Lúcia Isabel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -13858,7 +14951,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450150,
@@ -13891,13 +14985,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02018",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Cardoso Militao, Lúcia Isabel"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26980",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Cardoso Militao, Lúcia Isabel"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -13929,7 +15031,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449457,
@@ -14033,13 +15136,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02019",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Suárez, Ernesto"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25790",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Suárez, Ernesto"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -14071,7 +15182,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450152,
@@ -14104,13 +15216,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02019",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Suárez, Ernesto"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26982",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Suárez, Ernesto"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -14142,7 +15262,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449456,
@@ -14246,13 +15367,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02020",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "La Fontaine García, Gustavo Adolfo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25795",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "La Fontaine García, Gustavo Adolfo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -14286,7 +15415,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25795",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "La Fontaine García, Gustavo Adolfo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -14318,7 +15451,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449012,
@@ -14351,13 +15485,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02020",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Por Asignar"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25982",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -14391,7 +15533,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25982",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Por Asignar"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -14423,7 +15569,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450203,
@@ -14597,13 +15744,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02021",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "González Nahmens, Amasilis del Carmen"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25774",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "González Nahmens, Amasilis del Carmen"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -14635,7 +15790,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448805,
@@ -14668,13 +15824,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02021",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "González Nahmens, Amasilis del Carmen"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25775",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "González Nahmens, Amasilis del Carmen"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -14706,7 +15870,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450345,
@@ -14739,13 +15904,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02021",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "González Nahmens, Amasilis del Carmen"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27093",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "González Nahmens, Amasilis del Carmen"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -14777,7 +15950,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448736,
@@ -14881,13 +16055,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02022",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Quintero Davila, José Luis"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25778",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Quintero Davila, José Luis"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -14921,7 +16103,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25778",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Quintero Davila, José Luis"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -14953,7 +16139,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449036,
@@ -14986,13 +16173,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02022",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Becemberg Lippo, Rafael Enrique"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26006",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Becemberg Lippo, Rafael Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -15026,7 +16221,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26006",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Becemberg Lippo, Rafael Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -15058,7 +16257,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450346,
@@ -15091,13 +16291,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02022",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Becemberg Lippo, Rafael Enrique"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27094",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Becemberg Lippo, Rafael Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1200",
             "building": null,
@@ -15131,7 +16339,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27094",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Becemberg Lippo, Rafael Enrique"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -15163,7 +16375,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448727,
@@ -15301,13 +16514,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02023",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Lara Domínguez, Gustavo Adolfo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25781",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lara Domínguez, Gustavo Adolfo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -15339,7 +16560,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450169,
@@ -15372,13 +16594,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02023",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ferrer Zapata, Francis Elena"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26999",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ferrer Zapata, Francis Elena"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -15410,7 +16640,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450315,
@@ -15584,13 +16815,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02024",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Di Vasta Valente, Concettina"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25789",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Di Vasta Valente, Concettina"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -15622,7 +16861,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448821,
@@ -15655,13 +16895,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02024",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Di Vasta Valente, Concettina"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25791",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Di Vasta Valente, Concettina"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -15693,7 +16941,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450153,
@@ -15726,13 +16975,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02024",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Di Vasta Valente, Concettina"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26983",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Di Vasta Valente, Concettina"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -15764,7 +17021,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450155,
@@ -15797,13 +17055,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02024",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Martínez Marín, Jorge Alejandro"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26985",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Martínez Marín, Jorge Alejandro"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0700",
             "building": null,
@@ -15835,7 +17101,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448732,
@@ -15939,13 +17206,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02025",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Alonzo Sánchez, Carlos Eduardo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25783",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Alonzo Sánchez, Carlos Eduardo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -15979,7 +17254,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25783",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Alonzo Sánchez, Carlos Eduardo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -16011,7 +17290,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450404,
@@ -16044,13 +17324,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02025",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ponce Mavárez, Bismarck Ricardo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27111",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ponce Mavárez, Bismarck Ricardo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -16084,7 +17372,11 @@
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27111",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ponce Mavárez, Bismarck Ricardo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1800",
             "building": null,
@@ -16116,7 +17408,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448737,
@@ -16254,13 +17547,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02026",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Lista Mancilla, Olga Carolina"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25757",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lista Mancilla, Olga Carolina"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1800",
             "building": null,
@@ -16292,7 +17593,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "V"
     },
     {
       "id": 449592,
@@ -16396,13 +17698,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02027",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Vásquez García, María Carolina del Valle"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25759",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Vásquez García, María Carolina del Valle"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1200",
             "building": null,
@@ -16434,7 +17744,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "V"
     },
     {
       "id": 450431,
@@ -16610,13 +17921,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02028",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Bravo Viloria, Jhoberth Andrés"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25995",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Bravo Viloria, Jhoberth Andrés"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1700",
             "building": null,
@@ -16648,7 +17967,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448738,
@@ -16786,13 +18106,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFO02029",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ortega, Dinarle Milagro"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26986",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ortega, Dinarle Milagro"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -16824,7 +18152,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "V"
     },
     {
       "id": 450428,
@@ -18269,13 +19598,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Meza Houtteman, Oscar José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27294",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Meza Houtteman, Oscar José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1300",
             "building": null,
@@ -18307,7 +19644,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450706,
@@ -18340,13 +19678,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2002",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Meza Houtteman, Oscar José"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27295",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Meza Houtteman, Oscar José"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -18378,7 +19724,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449019,
@@ -18553,13 +19900,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ruíz Rondón, Eva Alexandra"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25802",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ruíz Rondón, Eva Alexandra"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -18591,7 +19946,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 449184,
@@ -18624,13 +19980,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ruíz Rondón, Eva Alexandra"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26154",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ruíz Rondón, Eva Alexandra"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -18662,7 +20026,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450164,
@@ -18695,13 +20060,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ruíz Rondón, Eva Alexandra"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26994",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ruíz Rondón, Eva Alexandra"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -18733,7 +20106,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450165,
@@ -18766,13 +20140,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2015",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ruíz Rondón, Eva Alexandra"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26995",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ruíz Rondón, Eva Alexandra"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1500",
             "building": null,
@@ -18804,7 +20186,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450166,
@@ -19015,13 +20398,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Murillo Gonzalez, Luz Karime"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25803",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Murillo Gonzalez, Luz Karime"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1100",
             "building": null,
@@ -19053,7 +20444,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450154,
@@ -19086,13 +20478,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Russoniello Antonacci, Antonio"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26984",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Russoniello Antonacci, Antonio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -19124,7 +20524,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450157,
@@ -19157,13 +20558,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Russoniello Antonacci, Antonio"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26987",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Russoniello Antonacci, Antonio"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -19195,7 +20604,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450158,
@@ -19228,13 +20638,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Murillo Gonzalez, Luz Karime"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26988",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Murillo Gonzalez, Luz Karime"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1600",
             "building": null,
@@ -19266,7 +20684,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450159,
@@ -19299,13 +20718,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2016",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Murillo Gonzalez, Luz Karime"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "26989",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Murillo Gonzalez, Luz Karime"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1400",
             "building": null,
@@ -19337,7 +20764,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450322,
@@ -19406,13 +20834,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2023",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ferrer Zapata, Francis Elena"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25806",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ferrer Zapata, Francis Elena"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -19444,7 +20880,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448837,
@@ -19477,13 +20914,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2023",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Lara Domínguez, Gustavo Adolfo"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25807",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Lara Domínguez, Gustavo Adolfo"
+            }
+          ],
           "meetingTime": {
             "beginTime": "0800",
             "building": null,
@@ -19515,7 +20960,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450171,
@@ -19548,13 +20994,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2023",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Ferrer Zapata, Francis Elena"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27000",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Ferrer Zapata, Francis Elena"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1000",
             "building": null,
@@ -19586,7 +21040,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450172,
@@ -19619,13 +21074,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2023",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Martínez Marín, Jorge Alejandro"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "27001",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Martínez Marín, Jorge Alejandro"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1700",
             "building": null,
@@ -19657,7 +21120,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450316,
@@ -19797,13 +21261,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2028",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Bravo Viloria, Jhoberth Andrés"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25804",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Bravo Viloria, Jhoberth Andrés"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1700",
             "building": null,
@@ -19835,7 +21307,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 448835,
@@ -19868,13 +21341,21 @@
       "linkIdentifier": null,
       "isSectionLinked": false,
       "subjectCourse": "INFOP2028",
-      "faculty": [],
+      "faculty": [
+        {
+          "displayName": "Bravo Viloria, Jhoberth Andrés"
+        }
+      ],
       "meetingsFaculty": [
         {
           "category": "01",
           "class": "net.hedtech.banner.student.schedule.SectionSessionDecorator",
           "courseReferenceNumber": "25805",
-          "faculty": [],
+          "faculty": [
+            {
+              "displayName": "Bravo Viloria, Jhoberth Andrés"
+            }
+          ],
           "meetingTime": {
             "beginTime": "1700",
             "building": null,
@@ -19906,7 +21387,8 @@
         }
       ],
       "reservedSeatSummary": null,
-      "sectionAttributes": null
+      "sectionAttributes": null,
+      "modality": "P"
     },
     {
       "id": 450331,
