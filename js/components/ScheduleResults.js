@@ -522,7 +522,7 @@ export default {
 
         msg += `📅 *${dayNames[day]}*\n`;
         courses.forEach(c => {
-          msg += `  ${c.beginTime}-${c.endTime} ${c.title} (Sec ${c.section})\n`;
+          msg += `  ${c.beginTime}-${c.endTime} ${c.fullTitle} (Sec ${c.section})\n`;
         });
         msg += `\n`;
       });
