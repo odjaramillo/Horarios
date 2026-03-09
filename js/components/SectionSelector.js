@@ -530,6 +530,70 @@ export default {
         .join(", ");
 
       return `${openSections} de ${totalSections} secciones abiertas${nrcs ? ` (NRCs: ${nrcs}${subject.sections.length > 2 ? '...' : ''})` : ''}`;
+    },
+
+    _restoreSelectionsFromStorage() {
+      try {
+        const saved = UIStateService.loadSelections();
+        if (!saved || !saved.items || !Array.isArray(saved.items) || saved.items.length === 0) {
+          console.log('[Restore] No saved selections found');
+          return;
+        }
+
+        console.log('[Restore] Found', saved.items.length, 'saved items, resolving...');
+
+        // Restore options
+        if (saved.options) {
+          this.onlyOpenSections = saved.options.onlyOpenSections ?? true;
+          this.selectedCampus = saved.options.selectedCampus ?? '';
+        }
+
+        // Re-resolve each saved item against the fresh subjects data
+        const restoredItems = [];
+        saved.items.forEach(savedItem => {
+          if (savedItem.type === 'subject') {
+            // Find the subject by ID in the freshly loaded data
+            const subject = this.subjects.find(s => s.id === savedItem.item?.id);
+            if (subject) {
+              restoredItems.push({
+                type: 'subject',
+                item: subject,
+                selectionType: savedItem.selectionType || 'priority'
+              });
+            } else {
+              console.warn('[Restore] Subject not found:', savedItem.item?.id);
+            }
+          } else if (savedItem.type === 'section') {
+            // Find section by matching subject + section ID
+            const subjectId = savedItem.subjectInfo?.id;
+            const subject = this.subjects.find(s => s.id === subjectId);
+            if (subject) {
+              const section = subject.sections.find(sec => sec.id === savedItem.item?.id);
+              if (section) {
+                restoredItems.push({
+                  type: 'section',
+                  item: section,
+                  selectionType: savedItem.selectionType || 'priority',
+                  subjectInfo: {
+                    id: subject.id,
+                    subject: subject.subject,
+                    courseNumber: subject.courseNumber,
+                    courseTitle: subject.courseTitle,
+                    creditHourLow: subject.creditHourLow
+                  }
+                });
+              }
+            }
+          }
+        });
+
+        if (restoredItems.length > 0) {
+          this.selectedItems = restoredItems;
+          console.log('[Restore] Restored', restoredItems.length, 'selections');
+        }
+      } catch (error) {
+        console.error('[Restore] Error restoring selections:', error);
+      }
     }
   },
 
