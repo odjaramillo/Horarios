@@ -1,25 +1,57 @@
 {
-  "name": "horarios",
+  "name": "horarios-ucab",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "npx -y serve ."
-  },
+  "description": "Planificador de Horarios UCAB - Aplicación web para planificar horarios académicos de la Universidad Católica Andrés Bello",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Poletron/Horarios.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "ucab",
+    "schedule",
+    "university",
+    "planner",
+    "vue",
+    "timetable"
+  ],
+  "author": "Oscar",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Poletron/Horarios/issues"
   },
   "homepage": "https://github.com/Poletron/Horarios#readme",
+
+  "scripts": {
+    "dev": "serve .",
+    "serve": "serve . -l 3000",
+    "serve:open": "serve . -l 3000 -o",
+    "lint": "echo 'No linter configured yet'",
+    "format": "echo 'No formatter configured yet'",
+    
+    "build": "echo 'Build not required for CDN-based setup'",
+    "build:vite": "echo 'Run npm install && npm run build:vite after Vite migration'",
+    
+    "deploy": "npx gh-pages -d . -m 'chore: deploy to GitHub Pages'",
+    "deploy:ci": "npx gh-pages -d . -m 'chore: deploy to GitHub Pages' --ci",
+    
+    "scrape": "node html-to-json.js",
+    "scrape:check": "node --check html-to-json.js",
+    
+    "test": "echo 'No tests configured yet. Consider adding Vitest after Vite migration.'"
+  },
+
   "dependencies": {
     "cheerio": "^1.1.2"
-  }
+  },
+
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+
+  "engines": {
+    "node": ">=18.0.0"
+  },
+
+  "private": true
 }

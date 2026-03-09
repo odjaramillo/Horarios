@@ -26,23 +26,23 @@ export default {
     priorityItems() {
       return this.selectedItems.filter(item => item.selectionType === 'priority');
     },
-    
+
     candidateItems() {
       return this.selectedItems.filter(item => item.selectionType === 'candidate');
     },
-    
+
     prioritySubjects() {
       return this.priorityItems.filter(item => item.type === 'subject');
     },
-    
+
     candidateSubjects() {
       return this.candidateItems.filter(item => item.type === 'subject');
     },
-    
+
     prioritySections() {
       return this.priorityItems.filter(item => item.type === 'section');
     },
-    
+
     candidateSections() {
       return this.candidateItems.filter(item => item.type === 'section');
     },
@@ -72,7 +72,7 @@ export default {
       this.selectedItems.forEach(item => {
         const credits = this.getItemCredits(item);
         stats.totalCredits += credits;
-        
+
         if (item.selectionType === 'priority') {
           stats.priorityCredits += credits;
         } else {
@@ -127,10 +127,10 @@ export default {
 
     updateDayDistribution(section, distribution) {
       if (!section.meetingsFaculty || section.meetingsFaculty.length === 0) return;
-      
+
       section.meetingsFaculty.forEach(meeting => {
         if (!meeting.meetingTime) return;
-        
+
         const days = meeting.meetingTime;
         if (days.monday) distribution.monday++;
         if (days.tuesday) distribution.tuesday++;
@@ -149,22 +149,22 @@ export default {
       // Collect all scheduled times
       this.selectedItems.forEach(item => {
         const sections = item.type === 'subject' ? item.item.sections : [item.item];
-        
+
         sections.forEach(section => {
           if (!section.meetingsFaculty) return;
-          
+
           section.meetingsFaculty.forEach(meeting => {
             if (!meeting.meetingTime) return;
-            
+
             const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
             days.forEach(day => {
               if (meeting.meetingTime[day]) {
                 const timeKey = `${day}-${meeting.meetingTime.beginTime}-${meeting.meetingTime.endTime}`;
-                
+
                 if (!scheduleMap.has(timeKey)) {
                   scheduleMap.set(timeKey, []);
                 }
-                
+
                 scheduleMap.get(timeKey).push({
                   item,
                   section,
@@ -203,7 +203,7 @@ export default {
       this.priorityItems.forEach(item => {
         const sections = item.type === 'subject' ? item.item.sections : [item.item];
         const closedSections = sections.filter(s => !s.openSection);
-        
+
         if (closedSections.length > 0 && item.type === 'section') {
           conflicts.push({
             type: 'capacity',
@@ -229,7 +229,7 @@ export default {
     getDayName(day) {
       const dayNames = {
         monday: 'Lunes',
-        tuesday: 'Martes', 
+        tuesday: 'Martes',
         wednesday: 'Miércoles',
         thursday: 'Jueves',
         friday: 'Viernes',
@@ -243,10 +243,10 @@ export default {
       if (!section.meetingsFaculty || section.meetingsFaculty.length === 0) {
         return 'Sin horario definido';
       }
-      
+
       const schedules = section.meetingsFaculty.map(meeting => {
         if (!meeting.meetingTime) return '';
-        
+
         const days = [];
         if (meeting.meetingTime.monday) days.push('L');
         if (meeting.meetingTime.tuesday) days.push('M');
@@ -255,11 +255,11 @@ export default {
         if (meeting.meetingTime.friday) days.push('V');
         if (meeting.meetingTime.saturday) days.push('S');
         if (meeting.meetingTime.sunday) days.push('D');
-        
+
         const time = `${meeting.meetingTime.beginTime}-${meeting.meetingTime.endTime}`;
         return `${days.join('')} ${time}`;
       }).filter(schedule => schedule).join(', ');
-      
+
       return schedules || 'Sin horario definido';
     },
 
@@ -267,34 +267,34 @@ export default {
       if (!section.meetingsFaculty || section.meetingsFaculty.length === 0) {
         return 'Sin profesor asignado';
       }
-      
+
       const allProfessors = [];
-      
+
       section.meetingsFaculty.forEach(meeting => {
         if (meeting.faculty && Array.isArray(meeting.faculty)) {
           meeting.faculty.forEach(faculty => {
-            if (faculty.displayName && 
-                faculty.displayName.trim() !== '' && 
-                faculty.displayName !== 'Por Asignar' &&
-                !allProfessors.includes(faculty.displayName)) {
+            if (faculty.displayName &&
+              faculty.displayName.trim() !== '' &&
+              faculty.displayName !== 'Por Asignar' &&
+              !allProfessors.includes(faculty.displayName)) {
               allProfessors.push(faculty.displayName);
             }
           });
         }
       });
-      
+
       return allProfessors.length > 0 ? allProfessors.join(', ') : 'Sin profesor asignado';
     },
 
     formatSubjectSections(subject) {
       const totalSections = subject.sections.length;
       const openSections = subject.sections.filter(section => section.openSection).length;
-      
+
       const nrcs = subject.sections.slice(0, 2)
         .map(section => section.courseReferenceNumber)
         .filter(Boolean)
         .join(", ");
-      
+
       return `${openSections} de ${totalSections} secciones abiertas${nrcs ? ` (NRCs: ${nrcs}${subject.sections.length > 2 ? '...' : ''})` : ''}`;
     },
 
@@ -302,16 +302,16 @@ export default {
       if (!subject.sections || subject.sections.length === 0) {
         return 'Sin secciones disponibles';
       }
-      
+
       const allProfessors = new Set();
-      
+
       subject.sections.forEach(section => {
         const professorName = this.formatSectionProfessor(section);
         if (professorName && professorName !== 'Sin profesor asignado') {
           allProfessors.add(professorName);
         }
       });
-      
+
       if (allProfessors.size === 0) {
         return 'Sin profesor asignado';
       } else if (allProfessors.size === 1) {
@@ -349,377 +349,98 @@ export default {
   },
 
   template: `
-    <div class="selection-panel">
-      <!-- Enhanced Header -->
-      <div class="selection-panel__header">
-        <div class="header-main">
-          <div class="header-title-section">
-            <h2 class="panel-title">📋 Mis Selecciones</h2>
-            <div class="header-stats" v-if="selectedItems.length > 0">
-              <div class="stat-chip primary">
-                <span class="stat-value">{{ selectedItems.length }}</span>
-                <span class="stat-text">elementos</span>
+    <div class="flex flex-col bg-panel-bg border-t border-border-color rounded-b-2xl overflow-hidden font-display relative z-50">
+      
+      <!-- Compact Summary Bar & Chips -->
+      <div v-if="selectedItems.length > 0" class="flex flex-col bg-slate-50 border-b border-border-color">
+        <!-- Top Summary -->
+        <div class="px-5 py-3 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="flex -space-x-2 relative z-10">
+              <div v-if="priorityItems.length > 0" class="flex items-center justify-center w-8 h-8 rounded-full bg-red-50 text-red-600 border border-red-100 shadow-sm z-20" title="Prioritarias">
+                <span class="text-xs font-bold">{{ priorityItems.length }}</span>
               </div>
-              <div class="stat-chip secondary">
-                <span class="stat-value">{{ selectionStats.totalCredits }}</span>
-                <span class="stat-text">créditos</span>
-              </div>
-              <div v-if="hasConflicts" class="stat-chip warning">
-                <span class="stat-value">{{ selectionStats.conflicts.length }}</span>
-                <span class="stat-text">conflictos</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="header-actions" v-if="selectedItems.length > 0">
-            <button @click="clearAllSelections" class="header-action-btn clear">
-              <i class="fas fa-trash-alt"></i>
-              <span>Limpiar Todo</span>
-            </button>
-          </div>
-        </div>
-        
-        <div class="header-subtitle">
-          <p v-if="selectedItems.length === 0" class="subtitle-text empty">
-            Selecciona materias o secciones para crear tu horario personalizado
-          </p>
-          <p v-else class="subtitle-text">
-            <span class="priority-count" v-if="priorityItems.length > 0">
-              {{ priorityItems.length }} prioritario{{ priorityItems.length > 1 ? 's' : '' }}
-            </span>
-            <span class="separator" v-if="priorityItems.length > 0 && candidateItems.length > 0"> • </span>
-            <span class="candidate-count" v-if="candidateItems.length > 0">
-              {{ candidateItems.length }} candidato{{ candidateItems.length > 1 ? 's' : '' }}
-            </span>
-          </p>
-        </div>
-      </div>
-
-      <!-- Conflicts Section -->
-      <div v-if="hasConflicts" class="conflicts-section">
-        <div class="conflicts-header">
-          <h3>⚠️ Conflictos Detectados</h3>
-          <span class="conflicts-count">{{ selectionStats.conflicts.length }}</span>
-        </div>
-        
-        <div class="conflicts-list">
-          <div v-for="conflict in selectionStats.conflicts" :key="conflict.description" 
-               class="conflict-item" :class="conflict.severity">
-            <div class="conflict-icon">
-              <i v-if="conflict.severity === 'error'" class="fas fa-times-circle"></i>
-              <i v-else class="fas fa-exclamation-triangle"></i>
-            </div>
-            <div class="conflict-content">
-              <div class="conflict-description">{{ conflict.description }}</div>
-              <div class="conflict-suggestions">
-                <strong>Sugerencias:</strong>
-                <ul>
-                  <li v-for="suggestion in conflict.suggestions" :key="suggestion">{{ suggestion }}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Selection Content -->
-      <div class="selection-panel__content">
-        <!-- Empty State -->
-        <div v-if="selectedItems.length === 0" class="empty-state">
-          <div class="empty-state-icon">📝</div>
-          <h5>No has seleccionado ningún elemento</h5>
-          <p class="text-muted">Haz clic en las materias o expande para seleccionar secciones específicas</p>
-        </div>
-
-        <!-- Management Actions -->
-        <div v-if="selectedItems.length > 0" class="management-section">
-          <div class="management-header">
-            <h3 class="management-title">⚙️ Gestión de Selecciones</h3>
-          </div>
-          
-          <div class="management-actions">
-            <div class="action-group">
-              <div class="action-label">Cambiar tipo:</div>
-              <div class="action-buttons">
-                <button @click="selectAllPriority" 
-                        class="management-btn priority" 
-                        :disabled="candidateItems.length === 0"
-                        title="Marcar todos como prioritarios">
-                  <div class="btn-icon">🔴</div>
-                  <div class="btn-content">
-                    <span class="btn-title">Todos Prioritarios</span>
-                    <span class="btn-subtitle">Obligatorios en horarios</span>
-                  </div>
-                </button>
-                
-                <button @click="selectAllCandidate" 
-                        class="management-btn candidate"
-                        :disabled="priorityItems.length === 0"
-                        title="Marcar todos como candidatos">
-                  <div class="btn-icon">🟡</div>
-                  <div class="btn-content">
-                    <span class="btn-title">Todos Candidatos</span>
-                    <span class="btn-subtitle">Opcionales si no hay conflictos</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Priority Items Section -->
-        <div v-if="priorityItems.length > 0" class="selection-section priority-section">
-          <div class="section-header">
-            <div class="section-title">
-              <span class="section-badge priority">🔴 Elementos Prioritarios</span>
-              <span class="section-count">{{ priorityItems.length }}</span>
-            </div>
-            <div class="section-description">
-              Elementos que deben estar en todos los horarios generados
-            </div>
-          </div>
-
-          <!-- Priority Subjects -->
-          <div v-if="prioritySubjects.length > 0" class="subsection">
-            <div class="subsection-title">📚 Materias Completas ({{ prioritySubjects.length }})</div>
-            <div class="items-grid">
-              <div v-for="item in prioritySubjects" :key="'ps-' + item.item.id" 
-                   class="selection-item priority">
-                <div class="item-header">
-                  <div class="item-code">{{ item.item.subject }}{{ item.item.courseNumber }}</div>
-                  <div class="item-actions">
-                    <button @click="toggleSelectionType(item)" 
-                            class="action-btn change-type" title="Cambiar a candidata">
-                      🔄
-                    </button>
-                    <button @click="removeItem(item)" 
-                            class="action-btn remove" title="Eliminar">
-                      🗑️
-                    </button>
-                  </div>
-                </div>
-                <div class="item-title">{{ item.item.courseTitle }}</div>
-                <div class="item-details">
-                  <span class="credits">🎓 {{ item.item.creditHourLow || 0 }} créditos</span>
-                  <span class="sections-info">📊 {{ formatSubjectSections(item.item) }}</span>
-                  <span class="professor-info">👨‍🏫 {{ formatSubjectProfessors(item.item) }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Priority Sections -->
-          <div v-if="prioritySections.length > 0" class="subsection">
-            <div class="subsection-title">📋 Secciones Específicas ({{ prioritySections.length }})</div>
-            <div class="items-grid">
-              <div v-for="item in prioritySections" :key="'pse-' + item.item.id" 
-                   class="selection-item priority section-item">
-                <div class="item-header">
-                  <div class="item-code">{{ item.subjectInfo.subject }}{{ item.subjectInfo.courseNumber }}</div>
-                  <div class="item-actions">
-                    <button @click="toggleSelectionType(item)" 
-                            class="action-btn change-type" title="Cambiar a candidata">
-                      🔄
-                    </button>
-                    <button @click="removeItem(item)" 
-                            class="action-btn remove" title="Eliminar">
-                      🗑️
-                    </button>
-                  </div>
-                </div>
-                <div class="item-title">{{ item.subjectInfo.courseTitle }}</div>
-                <div class="section-details">
-                  <div class="section-info">
-                    <span class="nrc">{{ item.item.courseReferenceNumber }}</span>
-                    <span class="sequence">Sec. {{ item.item.sequenceNumber }}</span>
-                    <span class="status" :class="item.item.openSection ? 'open' : 'closed'">
-                      {{ item.item.openSection ? '✅ Abierta' : '❌ Cerrada' }}
-                    </span>
-                  </div>
-                  <div class="schedule">⏰ {{ formatSectionSchedule(item.item) }}</div>
-                  <div class="professor">👨‍🏫 {{ formatSectionProfessor(item.item) }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Candidate Items Section -->
-        <div v-if="candidateItems.length > 0" class="selection-section candidate-section">
-          <div class="section-header">
-            <div class="section-title">
-              <span class="section-badge candidate">🟡 Elementos Candidatos</span>
-              <span class="section-count">{{ candidateItems.length }}</span>
-            </div>
-            <div class="section-description">
-              Elementos opcionales que se incluirán si no generan conflictos
-            </div>
-          </div>
-
-          <!-- Candidate Subjects -->
-          <div v-if="candidateSubjects.length > 0" class="subsection">
-            <div class="subsection-title">📚 Materias Completas ({{ candidateSubjects.length }})</div>
-            <div class="items-grid">
-              <div v-for="item in candidateSubjects" :key="'cs-' + item.item.id" 
-                   class="selection-item candidate">
-                <div class="item-header">
-                  <div class="item-code">{{ item.item.subject }}{{ item.item.courseNumber }}</div>
-                  <div class="item-actions">
-                    <button @click="toggleSelectionType(item)" 
-                            class="action-btn change-type" title="Cambiar a prioritaria">
-                      🔄
-                    </button>
-                    <button @click="removeItem(item)" 
-                            class="action-btn remove" title="Eliminar">
-                      🗑️
-                    </button>
-                  </div>
-                </div>
-                <div class="item-title">{{ item.item.courseTitle }}</div>
-                <div class="item-details">
-                  <span class="credits">🎓 {{ item.item.creditHourLow || 0 }} créditos</span>
-                  <span class="sections-info">📊 {{ formatSubjectSections(item.item) }}</span>
-                  <span class="professor-info">👨‍🏫 {{ formatSubjectProfessors(item.item) }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Candidate Sections -->
-          <div v-if="candidateSections.length > 0" class="subsection">
-            <div class="subsection-title">📋 Secciones Específicas ({{ candidateSections.length }})</div>
-            <div class="items-grid">
-              <div v-for="item in candidateSections" :key="'cse-' + item.item.id" 
-                   class="selection-item candidate section-item">
-                <div class="item-header">
-                  <div class="item-code">{{ item.subjectInfo.subject }}{{ item.subjectInfo.courseNumber }}</div>
-                  <div class="item-actions">
-                    <button @click="toggleSelectionType(item)" 
-                            class="action-btn change-type" title="Cambiar a prioritaria">
-                      🔄
-                    </button>
-                    <button @click="removeItem(item)" 
-                            class="action-btn remove" title="Eliminar">
-                      🗑️
-                    </button>
-                  </div>
-                </div>
-                <div class="item-title">{{ item.subjectInfo.courseTitle }}</div>
-                <div class="section-details">
-                  <div class="section-info">
-                    <span class="nrc">{{ item.item.courseReferenceNumber }}</span>
-                    <span class="sequence">Sec. {{ item.item.sequenceNumber }}</span>
-                    <span class="status" :class="item.item.openSection ? 'open' : 'closed'">
-                      {{ item.item.openSection ? '✅ Abierta' : '❌ Cerrada' }}
-                    </span>
-                  </div>
-                  <div class="schedule">⏰ {{ formatSectionSchedule(item.item) }}</div>
-                  <div class="professor">👨‍🏫 {{ formatSectionProfessor(item.item) }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Enhanced Generation Controls -->
-        <div v-if="selectedItems.length > 0" class="generation-section">
-          <div class="generation-header">
-            <h3>🚀 Generar Horarios</h3>
-            <p>Configura las opciones y genera tus horarios personalizados</p>
-          </div>
-          
-          <div class="generation-content">
-            <div class="generation-options-grid">
-              <div class="option-card">
-                <div class="option-header">
-                  <i class="fas fa-filter"></i>
-                  <span>Filtros de Secciones</span>
-                </div>
-                <div class="option-content">
-                  <label class="custom-checkbox">
-                    <input type="checkbox" :checked="onlyOpenSections" 
-                           @change="$emit('update:onlyOpenSections', $event.target.checked)">
-                    <span class="checkmark"></span>
-                    <span class="checkbox-label">
-                      <strong>Solo secciones abiertas</strong>
-                      <small>Excluir secciones cerradas del horario</small>
-                    </span>
-                  </label>
-                </div>
-              </div>
-              
-              <div class="option-card">
-                <div class="option-header">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>Sede Preferida</span>
-                </div>
-                <div class="option-content">
-                  <div class="campus-selector-enhanced">
-                    <select :value="selectedCampus" 
-                            @change="$emit('update:selectedCampus', $event.target.value)" 
-                            class="campus-select">
-                      <option value="">🏫 Todas las sedes</option>
-                      <option v-for="campus in campuses" :key="campus" :value="campus">
-                        🏢 {{ campus }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
+              <div v-if="candidateItems.length > 0" class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-50 text-amber-600 border border-amber-100 shadow-sm z-10" title="Candidatas">
+                <span class="text-xs font-bold">{{ candidateItems.length }}</span>
               </div>
             </div>
             
-            <!-- Generation Summary -->
-            <div class="generation-summary">
-              <div class="summary-stats">
-                <div class="summary-item">
-                  <span class="summary-value">{{ selectedItems.length }}</span>
-                  <span class="summary-label">elementos</span>
-                </div>
-                <div class="summary-item">
-                  <span class="summary-value">{{ selectionStats.totalCredits }}</span>
-                  <span class="summary-label">créditos</span>
-                </div>
-                <div class="summary-item" :class="{ 'has-conflicts': hasConflicts }">
-                  <span class="summary-value">{{ selectionStats.conflicts.length }}</span>
-                  <span class="summary-label">conflictos</span>
-                </div>
-              </div>
-              
-              <div class="generation-actions">
-                <button @click="generateSchedules" 
-                        class="generate-btn-enhanced" 
-                        :disabled="selectedItems.length === 0 || generatingSchedules"
-                        :class="{ 
-                          'generating': generatingSchedules, 
-                          'has-conflicts': hasConflicts,
-                          'ready': !hasConflicts && selectedItems.length > 0
-                        }">
-                  <div class="btn-content">
-                    <div class="btn-icon">
-                      <i v-if="generatingSchedules" class="fas fa-spinner fa-spin"></i>
-                      <i v-else-if="hasConflicts" class="fas fa-exclamation-triangle"></i>
-                      <i v-else class="fas fa-rocket"></i>
-                    </div>
-                    <div class="btn-text">
-                      <span class="btn-title">
-                        {{ generatingSchedules ? 'Generando...' : 'Generar Horarios' }}
-                      </span>
-                      <span class="btn-subtitle">
-                        {{ generatingSchedules ? 'Por favor espera' : 
-                           hasConflicts ? 'Con conflictos detectados' : 
-                           'Crear horarios optimizados' }}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div v-if="generatingSchedules" class="progress-bar">
-                    <div class="progress-fill"></div>
-                  </div>
-                </button>
+            <div class="flex flex-col text-xs mt-0.5">
+              <span class="font-bold text-primary-text text-[13px] tracking-tight">{{ selectionStats.totalCredits }} UC Seleccionadas</span>
+              <div class="flex items-center gap-2 mt-0.5">
+                <span class="text-muted-text font-medium">{{ selectedItems.length }} elementos</span>
+                <button @click="clearAllSelections" class="text-[10px] font-bold text-muted-text hover:text-rose-500 uppercase tracking-widest transition-colors flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px]">delete</span> Limpiar</button>
               </div>
             </div>
           </div>
+
+          <!-- Warning / Conflicts Compact -->
+          <div v-if="hasConflicts" class="flex items-center gap-2 px-3 py-1.5 bg-rose-50 rounded-lg border border-rose-200 text-rose-700 shadow-sm animate-pulse">
+             <span class="material-symbols-outlined text-[16px]">error</span>
+             <span class="text-xs font-bold">{{ selectionStats.conflicts.length }} Conflictos</span>
+          </div>
         </div>
+
+        <!-- Selected Items Chips (Scrollable) -->
+        <div class="px-5 pb-3 flex gap-2 overflow-x-auto no-scrollbar items-center">
+          <span class="text-[10px] font-bold text-muted-text uppercase tracking-widest mr-1 opacity-70 flex-none">Items:</span>
+          <div v-for="item in selectedItems" :key="item.item.id" 
+               class="flex-none flex items-center bg-white border rounded-full pl-3 pr-1 py-1 gap-1 shadow-sm group hover:shadow transition-all"
+               :class="item.selectionType === 'priority' ? 'border-red-200' : 'border-amber-200'">
+            <button @click="toggleSelectionType(item)" class="text-[11px] font-bold truncate max-w-[120px] transition-colors" :class="item.selectionType === 'priority' ? 'text-red-600 hover:text-red-700' : 'text-amber-600 hover:text-amber-700'" :title="'Cambiar tipo. ' + (item.type === 'subject' ? item.item.courseTitle : item.subjectInfo.courseTitle)">
+              {{ item.type === 'subject' ? item.item.subject + item.item.courseNumber : item.item.courseReferenceNumber }}
+            </button>
+            <button @click="removeItem(item)" class="w-5 h-5 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-rose-500 opacity-60 group-hover:opacity-100 transition-all ml-1">
+              <span class="material-symbols-outlined text-[14px]">close</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings & Generate Row -->
+      <div class="p-4 flex flex-col sm:flex-row gap-4 sm:items-center">
+        
+        <!-- Options List -->
+        <div class="flex-none flex flex-row justify-center sm:justify-start gap-4">
+          <!-- Only Open Sections Checkbox -->
+          <label class="flex items-center gap-2 cursor-pointer group w-max">
+            <div class="relative w-8 h-4 bg-slate-200 rounded-full transition-colors" :class="{ 'bg-primary': onlyOpenSections }">
+              <input type="checkbox" :checked="onlyOpenSections" class="sr-only" @change="$emit('update:onlyOpenSections', $event.target.checked)">
+              <div class="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full transition-transform shadow-sm" :class="{ 'translate-x-4': onlyOpenSections }"></div>
+            </div>
+            <span class="text-xs font-bold transition-colors text-primary-text">Solo abiertas</span>
+          </label>
+        </div>
+        
+        <!-- Generate Button -->
+        <div class="flex-1 flex gap-2">
+          <!-- Sede Selector Button/Dropdown embedded -->
+          <div class="relative w-1/3 min-w-[100px]">
+            <select :value="selectedCampus" @change="$emit('update:selectedCampus', $event.target.value)" class="w-full h-full appearance-none bg-slate-50 border border-border-color hover:border-slate-300 transition-colors rounded-xl pl-3 pr-8 py-3 text-sm font-bold text-primary-text outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 cursor-pointer">
+               <option value="">Sede: Todas</option>
+               <option v-for="campus in campuses" :key="campus" :value="campus">{{ campus }}</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 text-lg pointer-events-none">expand_more</span>
+          </div>
+
+          <button 
+            @click="generateSchedules" 
+            :disabled="selectedItems.length === 0 || generatingSchedules"
+            :class="[
+              'w-2/3 h-[52px] rounded-full font-bold transition-all flex items-center justify-center gap-2',
+              selectedItems.length === 0 ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-border-color' :
+              generatingSchedules ? 'bg-primary/80 text-white cursor-wait relative overflow-hidden' :
+              hasConflicts ? 'bg-rose-500 hover:bg-rose-600 text-white hover:shadow-lg shadow-sm active:scale-[0.98]' :
+              'bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg active:scale-[0.98]'
+            ]"
+          >
+            <span class="material-symbols-outlined font-bold text-[20px]" :class="{ 'animate-spin': generatingSchedules }">
+              {{ generatingSchedules ? 'sync' : hasConflicts ? 'warning' : 'magic_button' }}
+            </span>
+            <span class="text-sm tracking-wide">{{ generatingSchedules ? 'Generando...' : hasConflicts ? 'Generar Conflictos' : 'Generar Horarios' }}</span>
+          </button>
+        </div>
+
       </div>
     </div>
   `

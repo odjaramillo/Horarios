@@ -1,5 +1,5 @@
-const fs = require('fs');
-const cheerio = require('cheerio');
+import fs from 'fs';
+import * as cheerio from 'cheerio';
 
 /**
  * Improved HTML to JSON converter for UCAB schedule data
@@ -7,7 +7,7 @@ const cheerio = require('cheerio');
  */
 class HTMLToJSONConverter {
     constructor() {
-        this.htmlFiles = ['table-copy-1.html', 'table-copy-2.html'];
+        this.htmlFiles = ['table-copy-1.html', 'table-copy-2.html', 'table-copy-3.html', 'table-copy-4.html', 'table-copy-5.html'];
         this.outputFile = 'generado.json';
         this.debugMode = true;
         this.tableSelector = '#tablepress-temp-horarios-tentativos-202525';
@@ -15,7 +15,7 @@ class HTMLToJSONConverter {
     }
 
     /**
-     * Read and parse HTML files from local directory
+     * Read and parse HTML/JSON files from local directory
      */
     readHTMLFiles() {
         const allData = [];
@@ -23,10 +23,24 @@ class HTMLToJSONConverter {
         for (const fileName of this.htmlFiles) {
             if (fs.existsSync(fileName)) {
                 console.log(`Processing ${fileName}...`);
-                const htmlContent = fs.readFileSync(fileName, 'utf8');
-                const data = this.parseHTMLTable(htmlContent);
+                const fileContent = fs.readFileSync(fileName, 'utf8');
+
+                try {
+                    // Check if the file is already in JSON format (Banner API response)
+                    const parsedJson = JSON.parse(fileContent);
+                    if (parsedJson && parsedJson.data && Array.isArray(parsedJson.data)) {
+                        console.log(`Found raw JSON data in ${fileName}`);
+                        allData.push(...parsedJson.data);
+                        console.log(`Extracted ${parsedJson.data.length} records from ${fileName}`);
+                        continue;
+                    }
+                } catch (e) {
+                    // Not valid JSON, proceed to parse as HTML
+                }
+
+                const data = this.parseHTMLTable(fileContent);
                 allData.push(...data);
-                console.log(`Extracted ${data.length} records from ${fileName}`);
+                console.log(`Extracted ${data.length} records from HTML in ${fileName}`);
             } else {
                 console.warn(`File ${fileName} not found, skipping...`);
             }
@@ -137,7 +151,7 @@ class HTMLToJSONConverter {
                 pageOffset: 0,
                 sectionsFetchedCount: data.length
             };
-            
+
             const jsonData = JSON.stringify(jsonStructure, null, 2);
             // Ensure UTF-8 encoding and add BOM for better compatibility
             fs.writeFileSync(this.outputFile, jsonData, { encoding: 'utf8' });
@@ -180,24 +194,29 @@ class HTMLToJSONConverter {
     }
 
     /**
-     * Remove duplicate records based on NRC
+     * Remove duplicate records based on NRC or courseReferenceNumber
      */
     removeDuplicates(data) {
         const seen = new Set();
         return data.filter(record => {
-            if (seen.has(record.nrc)) {
+            const id = record.nrc || record.courseReferenceNumber || record.id;
+            if (!id) return true; // keep records without ID just in case
+
+            if (seen.has(id)) {
                 return false;
             }
-            seen.add(record.nrc);
+            seen.add(id);
             return true;
         });
     }
 }
 
+import { fileURLToPath } from 'url';
+
 // Run the converter if this file is executed directly
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const converter = new HTMLToJSONConverter();
     converter.convert();
 }
 
-module.exports = HTMLToJSONConverter;
+export default HTMLToJSONConverter;

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "slate-custom": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .mesh-gradient {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .glass-card-red {
+            background: rgba(239, 68, 68, 0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .glass-card-amber {
+            background: rgba(245, 158, 11, 0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen mesh-gradient text-slate-custom overflow-hidden">
+<div class="flex flex-col h-screen w-full max-w-[1600px] mx-auto">
+<!-- Header Section -->
+<header class="flex items-center justify-between px-8 py-4 bg-white/40 backdrop-blur-md border-b border-white/20">
+<div class="flex items-center gap-4">
+<div class="bg-primary p-2 rounded-lg text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-2xl">calendar_month</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900">Planificador de Horarios UCAB</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-1.5 rounded-full border border-emerald-100 text-sm font-semibold">
+<span class="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Datos Integrados
+                </div>
+<div class="h-8 w-px bg-slate-200 mx-2"></div>
+<button class="p-2 text-slate-500 hover:bg-white/50 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center gap-2 p-1.5 pr-4 bg-white/60 hover:bg-white rounded-full border border-white/40 transition-all">
+<div class="size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">JD</div>
+<span class="text-sm font-medium text-slate-700">Juan Diego</span>
+</button>
+</div>
+</header>
+<!-- Main Content Grid -->
+<main class="flex-1 flex overflow-hidden p-6 gap-6">
+<!-- Left Column: Subject Selection (50%) -->
+<section class="w-1/2 flex flex-col glass-panel rounded-xl shadow-xl overflow-hidden">
+<div class="p-6 border-b border-white/20 bg-white/30">
+<div class="flex flex-col gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-white/80 border-none rounded-full ring-1 ring-slate-200 focus:ring-2 focus:ring-primary focus:outline-none transition-all placeholder:text-slate-400" placeholder="Buscar materias..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full text-sm font-medium border border-slate-200 text-slate-700 hover:bg-white transition-all">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                                Campus: Montalbán
+                                <span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full text-sm font-medium border border-slate-200 text-slate-700 hover:bg-white transition-all">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                                Solo Abiertas
+                                <div class="w-8 h-4 bg-emerald-500 rounded-full relative">
+<div class="size-3 bg-white rounded-full absolute right-0.5 top-0.5"></div>
+</div>
+</button>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-4">
+<!-- Subject Card: Priority -->
+<div class="glass-card-red p-5 rounded-xl border-l-4 border-l-red-500 hover:scale-[1.01] transition-transform cursor-pointer shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-red-600 bg-red-100 px-2 py-0.5 rounded">Prioritaria</span>
+<span class="text-xs font-medium text-slate-500 bg-white/50 px-2 py-0.5 rounded">5 Créditos</span>
+</div>
+<h3 class="text-lg font-bold text-slate-800">Cálculo Diferencial</h3>
+<p class="text-sm text-slate-600 mb-4">ING-202 • Facultad de Ingeniería</p>
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2">
+<div class="size-6 rounded-full border-2 border-white bg-slate-200 overflow-hidden">
+<div class="w-full h-full bg-cover" data-alt="Icon of a professor profile" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrKZQYGsqk6dPHjel62-2ht2B5stCYrmCMRyqvtu8LvWWKLU0DGHUudCIdvShxaAKOzLQSTKlOtbo0u8XMP_a1v3XnlKLJLBrwuQlqFot84xgCMEAbpzI-shARYw0B3QjYwSHJQkEbt3yO95ULHYkUVc1CMTjbyJ6chYSPhxbHjLuNk0UyKryxPHNliiJ0Y89KkMiIzMI6kTB5cOSPdcTIx30exmGGT82tYe_gVKEeA3PIh8-SiBBvvlWeIv_sXIuxw0bw_P6geSo')"></div>
+</div>
+<div class="size-6 rounded-full border-2 border-white bg-slate-200 overflow-hidden">
+<div class="w-full h-full bg-cover" data-alt="Icon of another professor profile" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAAnCYjkBooFMetKxE2ZMF3GqbyzCb3LRaIpl__EUfFNb0Bi_wMoEMiS9URJDfPayItk3071Deuty4cDqaxWzu0znxsR1dU5EhsuBrTiPw2VMKzmnvPmaPT4WwT2oKn3FYWRaKNDhDb6XInuAO8Mdpc7rnkUPuRRIWDZB15JpnWGAKeCRDKGHil4JMqdGXgNHUqm95pyWTGJPzrJDu4A5C0tTTOHSDH2V5_gvtmaFNjjiy_ZAK8437zo8eLcELftL7wx5mf7Ta1yw0')"></div>
+</div>
+</div>
+<span class="text-xs text-slate-500">3 Secciones disponibles</span>
+</div>
+</div>
+<!-- Subject Card: Candidate -->
+<div class="glass-card-amber p-5 rounded-xl border-l-4 border-l-amber-500 hover:scale-[1.01] transition-transform cursor-pointer shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-100 px-2 py-0.5 rounded">Candidata</span>
+<span class="text-xs font-medium text-slate-500 bg-white/50 px-2 py-0.5 rounded">3 Créditos</span>
+</div>
+<h3 class="text-lg font-bold text-slate-800">Algoritmos y Programación II</h3>
+<p class="text-sm text-slate-600 mb-4">INF-101 • Facultad de Ingeniería</p>
+<div class="flex items-center gap-3">
+<div class="size-6 rounded-full border-2 border-white bg-emerald-100 text-emerald-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<span class="text-xs text-slate-500">Sin conflictos detectados</span>
+</div>
+</div>
+<!-- Subject Card: Unselected -->
+<div class="glass-card p-5 rounded-xl hover:bg-white/60 hover:scale-[1.01] transition-all cursor-pointer shadow-sm group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Normal</span>
+<span class="text-xs font-medium text-slate-500 bg-white/50 px-2 py-0.5 rounded">4 Créditos</span>
+</div>
+<h3 class="text-lg font-bold text-slate-800 group-hover:text-primary transition-colors">Estructuras Socio-Económicas</h3>
+<p class="text-sm text-slate-600 mb-4">HUM-405 • Facultad de Humanidades</p>
+<div class="flex items-center justify-between">
+<span class="text-xs text-slate-500 italic">2 Secciones abiertas</span>
+<button class="size-8 rounded-full border border-slate-200 text-slate-400 hover:border-primary hover:text-primary transition-all flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+<!-- Subject Card: Unselected -->
+<div class="glass-card p-5 rounded-xl hover:bg-white/60 hover:scale-[1.01] transition-all cursor-pointer shadow-sm group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Normal</span>
+<span class="text-xs font-medium text-slate-500 bg-white/50 px-2 py-0.5 rounded">2 Créditos</span>
+</div>
+<h3 class="text-lg font-bold text-slate-800 group-hover:text-primary transition-colors">Identidad, Liderazgo y Compromiso</h3>
+<p class="text-sm text-slate-600 mb-4">IDL-100 • Centro de Estudios</p>
+<div class="flex items-center justify-between">
+<span class="text-xs text-slate-500 italic">8 Secciones abiertas</span>
+<button class="size-8 rounded-full border border-slate-200 text-slate-400 hover:border-primary hover:text-primary transition-all flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+<!-- Subject Card: Unselected -->
+<div class="glass-card p-5 rounded-xl hover:bg-white/60 hover:scale-[1.01] transition-all cursor-pointer shadow-sm group opacity-75">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Normal</span>
+<span class="text-xs font-medium text-slate-500 bg-white/50 px-2 py-0.5 rounded">4 Créditos</span>
+</div>
+<h3 class="text-lg font-bold text-slate-800">Física I</h3>
+<p class="text-sm text-slate-600 mb-4">FIS-101 • Facultad de Ingeniería</p>
+<div class="flex items-center justify-between">
+<span class="text-xs text-slate-400 italic">Lista de espera solamente</span>
+<button class="size-8 rounded-full border border-slate-200 text-slate-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">lock</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Viewport (50%) -->
+<section class="w-1/2 flex flex-col glass-panel rounded-xl shadow-xl border-dashed border-2 border-primary/20 bg-primary/5">
+<div class="flex-1 flex flex-col items-center justify-center p-12 text-center">
+<div class="relative mb-8">
+<!-- Minimalist Calendar Illustration Container -->
+<div class="relative z-10 p-10 bg-white/60 rounded-3xl border border-white/50 shadow-2xl backdrop-blur-xl">
+<div class="grid grid-cols-4 gap-3 w-48 opacity-40">
+<div class="h-10 bg-primary/10 rounded-lg"></div>
+<div class="h-10 bg-primary/20 rounded-lg border-2 border-primary/30"></div>
+<div class="h-10 bg-primary/10 rounded-lg"></div>
+<div class="h-10 bg-primary/10 rounded-lg"></div>
+<div class="h-10 bg-primary/10 rounded-lg"></div>
+<div class="h-10 bg-primary/10 rounded-lg"></div>
+<div class="h-10 bg-primary/30 rounded-lg border-2 border-primary/50 shadow-lg shadow-primary/20"></div>
+<div class="h-10 bg-primary/10 rounded-lg"></div>
+</div>
+</div>
+<!-- Decorative Sparkles -->
+<span class="material-symbols-outlined absolute -top-4 -right-4 text-primary animate-pulse text-4xl">colors_spark</span>
+<span class="material-symbols-outlined absolute -bottom-6 -left-6 text-indigo-400 text-3xl opacity-60">auto_awesome</span>
+<span class="material-symbols-outlined absolute top-12 -left-12 text-blue-400 text-2xl opacity-40">auto_fix_high</span>
+</div>
+<h2 class="text-2xl font-bold text-slate-800 mb-4">¿Todo listo para tu semestre?</h2>
+<p class="text-slate-500 max-w-sm mb-12">Selecciona materias a tu izquierda para comenzar a generar combinaciones de horarios inteligentes basadas en tus prioridades.</p>
+<button class="group flex items-center gap-3 px-8 py-4 bg-primary text-white text-lg font-bold rounded-full shadow-xl shadow-primary/40 hover:bg-blue-700 hover:shadow-primary/60 hover:-translate-y-1 transition-all active:scale-95">
+<span class="material-symbols-outlined">rocket_launch</span>
+                        Generar Horarios
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<div class="mt-12 flex items-center gap-8 opacity-50">
+<div class="flex flex-col items-center gap-1">
+<span class="text-xl font-bold text-slate-800">1.2k</span>
+<span class="text-xs uppercase tracking-widest text-slate-500 font-medium">Combinaciones</span>
+</div>
+<div class="w-px h-8 bg-slate-300"></div>
+<div class="flex flex-col items-center gap-1">
+<span class="text-xl font-bold text-slate-800">98%</span>
+<span class="text-xs uppercase tracking-widest text-slate-500 font-medium">Eficiencia</span>
+</div>
+<div class="w-px h-8 bg-slate-300"></div>
+<div class="flex flex-col items-center gap-1">
+<span class="text-xl font-bold text-slate-800">Instant</span>
+<span class="text-xs uppercase tracking-widest text-slate-500 font-medium">Validación</span>
+</div>
+</div>
+</div>
+<div class="p-4 bg-white/20 border-t border-white/20 flex justify-between items-center px-8">
+<div class="flex items-center gap-2 text-slate-500 text-sm">
+<span class="material-symbols-outlined text-lg">info</span>
+                        Usa el modo "Prioritaria" para asegurar cupos críticos.
+                    </div>
+<div class="flex gap-1">
+<div class="size-1.5 rounded-full bg-primary"></div>
+<div class="size-1.5 rounded-full bg-slate-300"></div>
+<div class="size-1.5 rounded-full bg-slate-300"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer / Status Bar -->
+<footer class="px-8 py-3 bg-white/40 border-t border-white/20 flex justify-between items-center text-xs font-medium text-slate-500">
+<div class="flex gap-6">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">terminal</span> UCAB v2.4.0-stable</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">history</span> Última sincronización: Hoy 10:42 AM</span>
+</div>
+<div class="flex gap-4">
+<a class="hover:text-primary transition-colors" href="#">Manual de Usuario</a>
+<a class="hover:text-primary transition-colors" href="#">Soporte Técnico</a>
+</div>
+</footer>
+</div>
+</body></html>

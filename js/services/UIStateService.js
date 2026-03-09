@@ -3,6 +3,13 @@
  * Maneja el estado de la UI, preferencias de usuario y persistencia de sesión
  */
 export default {
+  // Keys for selections persistence
+  SELECTION_STORAGE_KEYS: {
+    SELECTIONS: 'horarios_selections',
+    SELECTED_SCHEDULE: 'horarios_selected_schedule',
+    LAST_GENERATED: 'horarios_last_generated'
+  },
+
   // Estado interno del servicio
   _state: {
     viewState: {
@@ -44,6 +51,7 @@ export default {
     this.loadSessionData();
     this._setupAutoSave();
     this._trackActivity();
+    this.setupStorageSync();
   },
 
   /**
@@ -286,6 +294,73 @@ export default {
     
     // Guardar automáticamente
     this.saveUserPreferences();
+  },
+
+  saveSelections(selectedItems, options = {}) {
+    try {
+      const data = {
+        items: selectedItems,
+        options: {
+          onlyOpenSections: options.onlyOpenSections ?? true,
+          selectedCampus: options.selectedCampus ?? ''
+        },
+        timestamp: Date.now(),
+        version: '1.0'
+      };
+      localStorage.setItem(this.SELECTION_STORAGE_KEYS.SELECTIONS, JSON.stringify(data));
+      console.log('[Persistence] Saved selections:', selectedItems?.priority?.length + selectedItems?.candidate?.length, 'items');
+    } catch (error) {
+      console.error('[Persistence] Error saving:', error);
+    }
+  },
+
+  loadSelections() {
+    try {
+      const saved = localStorage.getItem(this.SELECTION_STORAGE_KEYS.SELECTIONS);
+      if (!saved) return null;
+      
+      const data = JSON.parse(saved);
+      if (data.version !== '1.0') {
+        console.warn('[Persistence] Version mismatch, ignoring');
+        return null;
+      }
+      
+      console.log('[Persistence] Loaded selections:', data.items?.priority?.length + data.items?.candidate?.length, 'items');
+      return data;
+    } catch (error) {
+      console.error('[Persistence] Error loading:', error);
+      return null;
+    }
+  },
+
+  saveSelectedSchedule(schedule) {
+    try {
+      const data = { schedule: schedule, timestamp: Date.now() };
+      localStorage.setItem(this.SELECTION_STORAGE_KEYS.SELECTED_SCHEDULE, JSON.stringify(data));
+    } catch (error) {
+      console.error('[Persistence] Error saving schedule:', error);
+    }
+  },
+
+  loadSelectedSchedule() {
+    try {
+      const saved = localStorage.getItem(this.SELECTION_STORAGE_KEYS.SELECTED_SCHEDULE);
+      return saved ? JSON.parse(saved) : null;
+    } catch (error) {
+      console.error('[Persistence] Error loading schedule:', error);
+      return null;
+    }
+  },
+
+  setupStorageSync() {
+    window.addEventListener('storage', (event) => {
+      if (event.key === this.SELECTION_STORAGE_KEYS.SELECTIONS) {
+        console.log('[Persistence] Detected change in another tab');
+        window.dispatchEvent(new CustomEvent('horarios:selections-changed', {
+          detail: event.newValue ? JSON.parse(event.newValue) : null
+        }));
+      }
+    });
   },
 
   /**

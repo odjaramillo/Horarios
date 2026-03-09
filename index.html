@@ -9,36 +9,62 @@
     content="Herramienta para planificar horarios académicos de la Universidad Católica Andrés Bello">
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet">
 
   <!-- Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/subject-card.css">
-  <link rel="stylesheet" href="css/schedule-styles.css">
-  <link rel="stylesheet" href="css/selection-panel.css">
-  <link rel="stylesheet" href="css/filter-panel.css">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#4f46e5", // Indigo-600 looking color for the logo/accents
+            "secondary": "#ebf0fe", // Light blue backgrounds
+            "primary-text": "#1e293b", // Slate-800
+            "muted-text": "#64748b", // Slate-500
+            "background-app": "#f4f5f7", // Very light grey App background
+            "panel-bg": "#ffffff",
+            "border-color": "#e2e8f0",
+            "success-bg": "#ecfdf5",
+            "success-text": "#10b981",
+          },
+          fontFamily: {
+            "display": ["Lexend", "sans-serif"] // The font looks like Lexend or Inter
+          },
+          borderRadius: { "DEFAULT": "0.5rem", "md": "0.75rem", "lg": "1rem", "xl": "1.25rem", "2xl": "1.5rem", "3xl": "2rem", "full": "9999px" },
+          boxShadow: {
+            "panel": "0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 0 3px rgba(0,0,0,0.02)",
+          }
+        },
+      },
+    }
+  </script>
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
 </head>
 
-<body class="preload">
-  <div id="app">
+<body
+  class="font-display bg-background-app text-primary-text min-h-screen relative overflow-x-hidden selection:bg-indigo-100 selection:text-indigo-900">
+
+  <div id="app" class="relative z-10 flex h-auto min-h-screen w-full flex-col p-4 md:p-6 gap-6">
     <!-- Loading State -->
-    <div class="initial-loading">
-      <div class="loading-content">
-        <div class="loading-spinner">
-          <i class="fas fa-graduation-cap fa-spin"></i>
+    <div
+      class="flex items-center justify-center min-h-screen w-full absolute inset-0 bg-background-app/80 backdrop-blur-sm z-50 transition-opacity duration-300">
+      <div class="flex flex-col items-center bg-white p-8 rounded-3xl shadow-panel">
+        <div class="animate-spin text-primary mb-4">
+          <span class="material-symbols-outlined text-4xl">sync</span>
         </div>
-        <h2>Planificador de Horarios UCAB</h2>
-        <p>Cargando aplicación...</p>
+        <h2 class="text-xl font-bold text-primary-text">Cargando Planificador...</h2>
       </div>
     </div>
   </div>
@@ -48,10 +74,15 @@
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script src="js/app.js" type="module"></script>
 
-  <!-- Remove preload class after page loads -->
   <script>
+    // Remove loading state nicely after Vue is ready or window loads
     window.addEventListener('load', () => {
-      document.body.classList.remove('preload');
+      // Small timeout to ensure Vue had time to mount if it isn't blocked
+      setTimeout(() => {
+        const loader = document.querySelector('.flex.items-center.justify-center.min-h-screen.w-full.absolute');
+        if (loader) loader.style.opacity = '0';
+        setTimeout(() => { if (loader) loader.remove(); }, 300);
+      }, 100);
     });
   </script>
 </body>

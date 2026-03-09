@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Planificador UCAB Mobile Timetable V1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "slate-50": "#f8fafc",
+                        "blue-50": "#eff6ff",
+                        "indigo-50": "#eef2ff",
+                        "emerald-50": "#ecfdf5",
+                        "violet-50": "#f5f3ff",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgba(239, 246, 255, 0.8) 0%, rgba(248, 250, 252, 0) 50%),
+                        radial-gradient(circle at 90% 80%, rgba(238, 242, 255, 0.8) 0%, rgba(248, 250, 252, 0) 50%);
+            background-color: #f8fafc;
+            background-attachment: fixed;
+        }
+        
+        .glass-header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .glass-card-blue {
+            background: rgba(37, 99, 235, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-left: 4px solid #2563EB;
+        }
+
+        .glass-card-emerald {
+            background: rgba(16, 185, 129, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10B981;
+        }
+
+        .glass-card-violet {
+            background: rgba(139, 92, 246, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            border-left: 4px solid #8B5CF6;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 -4px 24px -8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sticky-day {
+            position: sticky;
+            top: 64px;
+            background: linear-gradient(to bottom, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0.9) 80%, rgba(248, 250, 252, 0) 100%);
+            z-index: 10;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-slate-900 antialiased min-h-screen flex flex-col font-display">
+<!-- Header -->
+<header class="glass-header sticky top-0 z-20 h-16 flex items-center justify-between px-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">school</span>
+<h1 class="text-xl font-bold tracking-tight text-slate-800">Horarios UCAB</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-slate-700">menu</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto pb-24 px-4">
+<!-- Day Group: Lunes -->
+<div class="mb-6">
+<div class="sticky-day py-3 mb-2">
+<h2 class="text-lg font-bold text-slate-800 pl-2">Lunes</h2>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Course Card 1 -->
+<div class="glass-card-blue rounded-xl p-4 flex items-start gap-4 shadow-sm">
+<div class="flex flex-col items-center justify-center w-20 shrink-0">
+<span class="text-sm font-semibold text-slate-800">07:00</span>
+<div class="w-px h-4 bg-slate-300 my-1"></div>
+<span class="text-sm font-medium text-slate-500">09:00</span>
+</div>
+<div class="flex-1 border-l border-slate-200 pl-4 py-1">
+<h3 class="text-base font-semibold leading-tight text-slate-800 mb-1">Programación Orientada a Objetos</h3>
+<div class="flex items-center gap-1.5 text-slate-600">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-sm font-medium">Aul 42</span>
+</div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="glass-card-emerald rounded-xl p-4 flex items-start gap-4 shadow-sm">
+<div class="flex flex-col items-center justify-center w-20 shrink-0">
+<span class="text-sm font-semibold text-slate-800">09:00</span>
+<div class="w-px h-4 bg-slate-300 my-1"></div>
+<span class="text-sm font-medium text-slate-500">11:00</span>
+</div>
+<div class="flex-1 border-l border-slate-200 pl-4 py-1">
+<h3 class="text-base font-semibold leading-tight text-slate-800 mb-1">Base de Datos</h3>
+<div class="flex items-center gap-1.5 text-slate-600">
+<span class="material-symbols-outlined text-[18px]">computer</span>
+<span class="text-sm font-medium">Lab 2</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Day Group: Martes -->
+<div class="mb-6">
+<div class="sticky-day py-3 mb-2">
+<h2 class="text-lg font-bold text-slate-800 pl-2">Martes</h2>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Course Card 3 -->
+<div class="glass-card-violet rounded-xl p-4 flex items-start gap-4 shadow-sm">
+<div class="flex flex-col items-center justify-center w-20 shrink-0">
+<span class="text-sm font-semibold text-slate-800">13:00</span>
+<div class="w-px h-4 bg-slate-300 my-1"></div>
+<span class="text-sm font-medium text-slate-500">15:00</span>
+</div>
+<div class="flex-1 border-l border-slate-200 pl-4 py-1">
+<h3 class="text-base font-semibold leading-tight text-slate-800 mb-1">Matemática Discreta II</h3>
+<div class="flex items-center gap-1.5 text-slate-600">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-sm font-medium">Aul 21</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<div class="fixed bottom-0 left-0 right-0 z-30">
+<!-- Subtle curve hint -->
+<div class="flex justify-center -mb-2 relative z-40">
+<div class="w-12 h-1.5 bg-slate-300 rounded-full"></div>
+</div>
+<nav class="glass-nav pb-safe pt-2 px-6 pb-6 rounded-t-3xl flex justify-between items-end">
+<a class="flex flex-col items-center gap-1 w-16 group" href="#">
+<div class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-500 group-hover:text-primary group-hover:bg-primary/10 transition-all">
+<span class="material-symbols-outlined text-2xl">book</span>
+</div>
+<span class="text-[10px] font-medium text-slate-500 group-hover:text-primary transition-colors">Materias</span>
+</a>
+<a class="flex flex-col items-center gap-1 -translate-y-4 relative" href="#">
+<div class="absolute inset-0 bg-primary/20 blur-xl rounded-full"></div>
+<div class="w-16 h-16 flex items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-primary/30 relative z-10 transform transition-transform hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-3xl">auto_fix_high</span>
+</div>
+<span class="text-[11px] font-bold text-slate-800 mt-1">Generar</span>
+</a>
+<a class="flex flex-col items-center gap-1 w-16 group" href="#">
+<div class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-500 group-hover:text-primary group-hover:bg-primary/10 transition-all">
+<span class="material-symbols-outlined text-2xl">favorite</span>
+</div>
+<span class="text-[10px] font-medium text-slate-500 group-hover:text-primary transition-colors">Favoritos</span>
+</a>
+</nav>
+</div>
+</body></html>
