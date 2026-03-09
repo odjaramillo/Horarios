@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Planificador UCAB Timetable Grid</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#2463eb",
+            "background-light": "#f6f6f8",
+            "background-dark": "#111621",
+          },
+          fontFamily: {
+            "display": ["Lexend", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-primary/30">
+<!-- Background Mesh Gradient -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-50 dark:opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-100 via-slate-50 to-blue-50 dark:from-indigo-900 dark:via-background-dark dark:to-blue-900"></div>
+<div class="relative z-10 flex h-auto min-h-screen w-full flex-col">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col w-full max-w-[1200px] flex-1">
+<!-- Header -->
+<header class="flex flex-col sm:flex-row items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 px-6 py-4 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-2xl mb-6 shadow-sm border border-white/20">
+<div class="flex items-center gap-4 mb-4 sm:mb-0">
+<div class="size-8 rounded-lg bg-primary text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">Planificador UCAB</h2>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-2">
+<button class="flex items-center justify-center rounded-xl h-10 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 gap-2 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors px-3 shadow-sm border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+<span class="hidden sm:inline">PDF</span>
+</button>
+<button class="flex items-center justify-center rounded-xl h-10 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 gap-2 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors px-3 shadow-sm border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+<span class="hidden sm:inline">Descargar ICS</span>
+</button>
+<button class="flex items-center justify-center rounded-xl h-10 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 gap-2 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors px-3 shadow-sm border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">share</span>
+<span class="hidden sm:inline">Compartir</span>
+</button>
+<button class="flex items-center justify-center rounded-xl h-10 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 gap-2 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors px-3 shadow-sm border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+</header>
+<!-- Title and Pagination -->
+<div class="flex flex-wrap items-center justify-between gap-4 p-4 mb-2 bg-white/40 dark:bg-slate-900/40 backdrop-blur-sm rounded-xl">
+<div class="flex flex-col gap-1">
+<h1 class="text-2xl sm:text-3xl font-bold leading-tight">Horario 1 de 12</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-emerald-500">check_circle</span> Generado exitosamente
+              </p>
+</div>
+<div class="flex items-center gap-2 bg-white dark:bg-slate-800 p-1 rounded-full shadow-sm border border-slate-200 dark:border-slate-700">
+<a class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</a>
+<span class="text-sm font-bold w-12 text-center">1 / 12</span>
+<a class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Timetable Grid -->
+<div class="p-2 @container">
+<div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-lg">
+<div class="min-w-[800px]">
+<!-- Grid Header -->
+<div class="grid grid-cols-7 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+<div class="p-4 text-center text-sm font-semibold text-slate-500 dark:text-slate-400 w-24 flex-shrink-0">Hora</div>
+<div class="p-4 text-center text-sm font-semibold text-slate-700 dark:text-slate-300">Lunes</div>
+<div class="p-4 text-center text-sm font-semibold text-slate-700 dark:text-slate-300">Martes</div>
+<div class="p-4 text-center text-sm font-semibold text-slate-700 dark:text-slate-300">Miércoles</div>
+<div class="p-4 text-center text-sm font-semibold text-slate-700 dark:text-slate-300">Jueves</div>
+<div class="p-4 text-center text-sm font-semibold text-slate-700 dark:text-slate-300">Viernes</div>
+<div class="p-4 text-center text-sm font-semibold text-slate-700 dark:text-slate-300">Sábado</div>
+</div>
+<!-- Grid Body -->
+<div class="relative bg-white/40 dark:bg-slate-900/40">
+<!-- Background Grid Lines -->
+<div class="absolute inset-0 grid grid-cols-7 pointer-events-none">
+<div class="border-r border-slate-100 dark:border-slate-800/50 w-24 flex-shrink-0 bg-slate-50/30 dark:bg-slate-800/20"></div>
+<div class="border-r border-slate-100 dark:border-slate-800/50"></div>
+<div class="border-r border-slate-100 dark:border-slate-800/50"></div>
+<div class="border-r border-slate-100 dark:border-slate-800/50"></div>
+<div class="border-r border-slate-100 dark:border-slate-800/50"></div>
+<div class="border-r border-slate-100 dark:border-slate-800/50"></div>
+<div></div>
+</div>
+<!-- Rows -->
+<!-- 07:00 - 09:00 -->
+<div class="grid grid-cols-7 border-b border-slate-100 dark:border-slate-800/50 min-h-[100px] relative z-10">
+<div class="p-2 text-center text-xs font-medium text-slate-500 dark:text-slate-400 w-24 flex flex-col items-center justify-center gap-1">
+<span>07:00</span>
+<span class="text-slate-300 dark:text-slate-600">|</span>
+<span>09:00</span>
+</div>
+<div class="p-2">
+<div class="h-full bg-blue-100 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-blue-900 dark:text-blue-100 font-bold text-sm leading-tight mb-1">Programación Orientada a Objetos</p>
+<p class="text-blue-700 dark:text-blue-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Aul 42</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2">
+<div class="h-full bg-blue-100 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-blue-900 dark:text-blue-100 font-bold text-sm leading-tight mb-1">Programación Orientada a Objetos</p>
+<p class="text-blue-700 dark:text-blue-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Aul 42</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2"></div>
+<div class="p-2"></div>
+</div>
+<!-- 09:00 - 11:00 -->
+<div class="grid grid-cols-7 border-b border-slate-100 dark:border-slate-800/50 min-h-[100px] relative z-10">
+<div class="p-2 text-center text-xs font-medium text-slate-500 dark:text-slate-400 w-24 flex flex-col items-center justify-center gap-1">
+<span>09:00</span>
+<span class="text-slate-300 dark:text-slate-600">|</span>
+<span>11:00</span>
+</div>
+<div class="p-2"></div>
+<div class="p-2">
+<div class="h-full bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-200 dark:border-emerald-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-emerald-900 dark:text-emerald-100 font-bold text-sm leading-tight mb-1">Cálculo II</p>
+<p class="text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Aul 10</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2">
+<div class="h-full bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-200 dark:border-emerald-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-emerald-900 dark:text-emerald-100 font-bold text-sm leading-tight mb-1">Cálculo II</p>
+<p class="text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Aul 10</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2"></div>
+</div>
+<!-- 11:00 - 13:00 -->
+<div class="grid grid-cols-7 border-b border-slate-100 dark:border-slate-800/50 min-h-[100px] relative z-10">
+<div class="p-2 text-center text-xs font-medium text-slate-500 dark:text-slate-400 w-24 flex flex-col items-center justify-center gap-1">
+<span>11:00</span>
+<span class="text-slate-300 dark:text-slate-600">|</span>
+<span>13:00</span>
+</div>
+<div class="p-2">
+<div class="h-full bg-violet-100 dark:bg-violet-900/40 border border-violet-200 dark:border-violet-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-violet-900 dark:text-violet-100 font-bold text-sm leading-tight mb-1">Física General</p>
+<p class="text-violet-700 dark:text-violet-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Lab 3</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2">
+<div class="h-full bg-violet-100 dark:bg-violet-900/40 border border-violet-200 dark:border-violet-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-violet-900 dark:text-violet-100 font-bold text-sm leading-tight mb-1">Física General</p>
+<p class="text-violet-700 dark:text-violet-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Lab 3</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2"></div>
+<div class="p-2"></div>
+</div>
+<!-- 13:00 - 14:00 Lunch Break -->
+<div class="grid grid-cols-7 border-b border-slate-100 dark:border-slate-800/50 min-h-[60px] relative z-10 bg-slate-50/50 dark:bg-slate-800/30">
+<div class="p-2 text-center text-xs font-medium text-slate-500 dark:text-slate-400 w-24 flex flex-col items-center justify-center gap-1">
+<span>13:00 - 14:00</span>
+</div>
+<div class="col-span-6 flex items-center justify-center">
+<p class="text-slate-400 dark:text-slate-500 text-sm font-medium tracking-widest uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">restaurant</span> Almuerzo
+                       </p>
+</div>
+</div>
+<!-- 14:00 - 16:00 -->
+<div class="grid grid-cols-7 border-b border-slate-100 dark:border-slate-800/50 min-h-[100px] relative z-10">
+<div class="p-2 text-center text-xs font-medium text-slate-500 dark:text-slate-400 w-24 flex flex-col items-center justify-center gap-1">
+<span>14:00</span>
+<span class="text-slate-300 dark:text-slate-600">|</span>
+<span>16:00</span>
+</div>
+<div class="p-2"></div>
+<div class="p-2">
+<div class="h-full bg-amber-100 dark:bg-amber-900/40 border border-amber-200 dark:border-amber-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-amber-900 dark:text-amber-100 font-bold text-sm leading-tight mb-1">Bases de Datos</p>
+<p class="text-amber-700 dark:text-amber-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Aul 22</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2">
+<div class="h-full bg-amber-100 dark:bg-amber-900/40 border border-amber-200 dark:border-amber-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-amber-900 dark:text-amber-100 font-bold text-sm leading-tight mb-1">Bases de Datos</p>
+<p class="text-amber-700 dark:text-amber-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Aul 22</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2"></div>
+</div>
+<!-- 16:00 - 18:00 -->
+<div class="grid grid-cols-7 border-b border-slate-100 dark:border-slate-800/50 min-h-[100px] relative z-10">
+<div class="p-2 text-center text-xs font-medium text-slate-500 dark:text-slate-400 w-24 flex flex-col items-center justify-center gap-1">
+<span>16:00</span>
+<span class="text-slate-300 dark:text-slate-600">|</span>
+<span>18:00</span>
+</div>
+<div class="p-2">
+<div class="h-full bg-rose-100 dark:bg-rose-900/40 border border-rose-200 dark:border-rose-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-rose-900 dark:text-rose-100 font-bold text-sm leading-tight mb-1">Inglés IV</p>
+<p class="text-rose-700 dark:text-rose-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Aul 05</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2">
+<div class="h-full bg-rose-100 dark:bg-rose-900/40 border border-rose-200 dark:border-rose-800 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-center">
+<p class="text-rose-900 dark:text-rose-100 font-bold text-sm leading-tight mb-1">Inglés IV</p>
+<p class="text-rose-700 dark:text-rose-300 text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span> Aul 05</p>
+</div>
+</div>
+<div class="p-2"></div>
+<div class="p-2"></div>
+<div class="p-2"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -191,13 +191,13 @@ flowchart LR
 - [ ] Vue production build
 
 ### Fase 2: Funcionalidades Core (Semana 2-3)
-- [ ] Persistencia local (localStorage)
-- [ ] Exportar a PDF
-- [ ] Exportar a ICS
-- [ ] Compartir horario
+- [-] Persistencia local (localStorage)
+- [x] Exportar a PDF
+- [-] Exportar a ICS
+- [-] Compartir horario
 
 ### Fase 3: Experiencia Premium (Mes 2)
-- [ ] Rediseño visual completo
+- [x] Rediseño visual completo
 - [ ] Migración a Vite + Vue
 - [ ] ARIA labels y focus management
 - [ ] Google Analytics

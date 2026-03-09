@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Planificador UCAB Initial Dashboard V1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                        "ucab-red": "#dc2626",
+                        "ucab-amber": "#d97706",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .mesh-bg {
+            background-color: #f8fafc;
+            background-image: radial-gradient(at 40% 20%, hsla(228,100%,74%,0.15) 0px, transparent 50%),
+                              radial-gradient(at 80% 0%, hsla(189,100%,56%,0.15) 0px, transparent 50%),
+                              radial-gradient(at 0% 50%, hsla(355,100%,93%,0.1) 0px, transparent 50%);
+        }
+        .dark .mesh-bg {
+            background-color: #0f172a;
+            background-image: radial-gradient(at 40% 20%, hsla(228,100%,74%,0.1) 0px, transparent 50%),
+                              radial-gradient(at 80% 0%, hsla(189,100%,56%,0.1) 0px, transparent 50%);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="mesh-bg text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col antialiased">
+<!-- TopNavBar -->
+<header class="glass-panel sticky top-0 z-50 px-6 py-4 mx-4 mt-4 rounded-full shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="bg-primary text-white p-2 rounded-full">
+<span class="material-symbols-outlined text-xl">event_note</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">Planificador de Horarios UCAB</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Datos Integrados
+            </span>
+</div>
+</header>
+<main class="flex-1 flex p-4 gap-6 h-[calc(100vh-88px)]">
+<!-- Left Column: Subjects -->
+<div class="w-1/2 flex flex-col gap-4">
+<!-- Search & Filters -->
+<div class="glass-panel p-4 rounded-xl shadow-sm flex flex-col gap-4 shrink-0">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full bg-white/50 dark:bg-slate-800/50 border-none rounded-full py-3 pl-12 pr-4 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary shadow-inner placeholder:text-slate-500" placeholder="Buscar materias..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 rounded-full text-sm font-medium transition-colors border border-slate-200 dark:border-slate-700">
+                        Campus Montalbán
+                        <span class="material-symbols-outlined text-lg">arrow_drop_down</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 rounded-full text-sm font-medium transition-colors border border-slate-200 dark:border-slate-700">
+                        Solo Abiertas
+                        <span class="material-symbols-outlined text-lg">toggle_on</span>
+</button>
+</div>
+</div>
+<!-- Course List -->
+<div class="glass-panel rounded-xl shadow-sm flex-1 overflow-y-auto p-2 space-y-3 custom-scrollbar">
+<!-- Unselected Card -->
+<div class="bg-white/60 dark:bg-slate-800/60 hover:bg-white dark:hover:bg-slate-800 p-4 rounded-lg border border-slate-100 dark:border-slate-700 transition-all cursor-pointer group flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-sm font-semibold text-slate-500 dark:text-slate-400">INF-101</span>
+<span class="px-2 py-0.5 rounded text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Créditos: 4</span>
+</div>
+<h3 class="font-bold text-lg">Introducción a la Informática</h3>
+<p class="text-sm text-slate-500 mt-1">Semestre 1 • 3 Secciones disponibles</p>
+</div>
+<button class="w-8 h-8 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-transparent group-hover:text-primary/50 text-sm">add</span>
+</button>
+</div>
+<!-- Priority Card -->
+<div class="bg-red-50/80 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800 transition-all cursor-pointer flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-ucab-red text-white">Prioritaria</span>
+<span class="text-sm font-semibold text-red-700 dark:text-red-400">INF-102</span>
+<span class="px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300">Créditos: 3</span>
+</div>
+<h3 class="font-bold text-lg text-red-900 dark:text-red-100">Matemáticas I</h3>
+<p class="text-sm text-red-600/80 dark:text-red-300/80 mt-1">Semestre 1 • 1 Sección disponible</p>
+</div>
+<button class="w-8 h-8 rounded-full bg-ucab-red text-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-sm">check</span>
+</button>
+</div>
+<!-- Candidate Card -->
+<div class="bg-amber-50/80 dark:bg-amber-900/20 p-4 rounded-lg border border-amber-200 dark:border-amber-800 transition-all cursor-pointer flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-ucab-amber text-white">Candidata</span>
+<span class="text-sm font-semibold text-amber-700 dark:text-amber-400">IDM-101</span>
+<span class="px-2 py-0.5 rounded text-xs font-medium bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300">Créditos: 2</span>
+</div>
+<h3 class="font-bold text-lg text-amber-900 dark:text-amber-100">Inglés I</h3>
+<p class="text-sm text-amber-600/80 dark:text-amber-300/80 mt-1">Semestre 1 • 5 Secciones disponibles</p>
+</div>
+<button class="w-8 h-8 rounded-full bg-ucab-amber text-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-sm">check</span>
+</button>
+</div>
+<!-- Another Unselected Card -->
+<div class="bg-white/60 dark:bg-slate-800/60 hover:bg-white dark:hover:bg-slate-800 p-4 rounded-lg border border-slate-100 dark:border-slate-700 transition-all cursor-pointer group flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-sm font-semibold text-slate-500 dark:text-slate-400">INF-103</span>
+<span class="px-2 py-0.5 rounded text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Créditos: 3</span>
+</div>
+<h3 class="font-bold text-lg">Lógica Computacional</h3>
+<p class="text-sm text-slate-500 mt-1">Semestre 1 • 2 Secciones disponibles</p>
+</div>
+<button class="w-8 h-8 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-transparent group-hover:text-primary/50 text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Viewport -->
+<div class="w-1/2 glass-panel rounded-xl shadow-sm flex flex-col items-center justify-center p-8 relative overflow-hidden">
+<!-- Sparkles/Decoration -->
+<div class="absolute top-1/4 left-1/4 text-primary/20">
+<span class="material-symbols-outlined text-4xl">auto_awesome</span>
+</div>
+<div class="absolute bottom-1/3 right-1/4 text-primary/20">
+<span class="material-symbols-outlined text-3xl">colors_spark</span>
+</div>
+<div class="max-w-md text-center flex flex-col items-center z-10">
+<div class="w-48 h-48 mb-6 text-slate-300 dark:text-slate-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-9xl font-light">calendar_month</span>
+</div>
+<h2 class="text-2xl font-bold mb-3">Listo para armar tu horario</h2>
+<p class="text-slate-500 dark:text-slate-400 mb-10 leading-relaxed">
+                    Selecciona materias a tu izquierda para comenzar a generar horarios. Puedes marcar materias como prioritarias para asegurar tu cupo.
+                </p>
+<button class="bg-primary hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-primary/30 transition-all transform hover:-translate-y-0.5 w-full max-w-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">auto_fix_high</span>
+                    Generar Horarios
+                </button>
+</div>
+</div>
+</main>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: rgba(148, 163, 184, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+</body></html>

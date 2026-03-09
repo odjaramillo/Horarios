@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .mesh-gradient {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(147, 51, 234, 0.1) 0px, transparent 50%);
+        }
+        .course-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .sticky-day {
+            background: rgba(248, 250, 252, 0.9);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light text-slate-900 antialiased selection:bg-primary/20">
+<div class="relative min-h-screen flex flex-col mesh-gradient overflow-x-hidden">
+<!-- Header -->
+<header class="sticky top-0 z-50 glass-header px-6 py-4 flex items-center justify-between">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100/50 transition-colors">
+<span class="material-symbols-outlined text-slate-700">menu</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight text-slate-800">Horarios UCAB</h1>
+<div class="size-10 flex items-center justify-center">
+<div class="size-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-4 pt-6 pb-32">
+<!-- Day Section: Lunes -->
+<section class="mb-8">
+<div class="sticky top-[72px] z-40 py-2 mb-4 sticky-day">
+<h2 class="text-xl font-bold text-slate-900 px-2 flex items-center gap-2">
+                        Lunes
+                        <span class="size-1.5 rounded-full bg-primary"></span>
+</h2>
+</div>
+<div class="space-y-4">
+<!-- Course Card 1 -->
+<div class="course-card rounded-xl p-4 flex gap-4 items-center">
+<div class="flex flex-col items-center justify-center border-r border-slate-200/50 pr-4 min-w-[90px]">
+<span class="text-sm font-semibold text-primary">07:00</span>
+<div class="w-px h-4 bg-slate-200 my-1"></div>
+<span class="text-sm font-semibold text-slate-500">09:00</span>
+</div>
+<div class="flex-1">
+<h3 class="font-semibold text-slate-800 leading-tight">Programación Orientada a Objetos</h3>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-xs text-slate-400">location_on</span>
+<p class="text-xs font-medium text-slate-500">Aula 42 • Módulo 2</p>
+</div>
+</div>
+<div class="size-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
+</div>
+<!-- Course Card 2 -->
+<div class="course-card rounded-xl p-4 flex gap-4 items-center">
+<div class="flex flex-col items-center justify-center border-r border-slate-200/50 pr-4 min-w-[90px]">
+<span class="text-sm font-semibold text-primary">09:00</span>
+<div class="w-px h-4 bg-slate-200 my-1"></div>
+<span class="text-sm font-semibold text-slate-500">11:00</span>
+</div>
+<div class="flex-1">
+<h3 class="font-semibold text-slate-800 leading-tight">Cálculo III</h3>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-xs text-slate-400">location_on</span>
+<p class="text-xs font-medium text-slate-500">Aula 15 • Edificio C</p>
+</div>
+</div>
+<div class="size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+</div>
+</div>
+</section>
+<!-- Day Section: Martes -->
+<section class="mb-8">
+<div class="sticky top-[72px] z-40 py-2 mb-4 sticky-day">
+<h2 class="text-xl font-bold text-slate-900 px-2 flex items-center gap-2">
+                        Martes
+                    </h2>
+</div>
+<div class="space-y-4">
+<!-- Course Card 3 -->
+<div class="course-card rounded-xl p-4 flex gap-4 items-center">
+<div class="flex flex-col items-center justify-center border-r border-slate-200/50 pr-4 min-w-[90px]">
+<span class="text-sm font-semibold text-primary">11:00</span>
+<div class="w-px h-4 bg-slate-200 my-1"></div>
+<span class="text-sm font-semibold text-slate-500">13:00</span>
+</div>
+<div class="flex-1">
+<h3 class="font-semibold text-slate-800 leading-tight">Estructuras de Datos</h3>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-xs text-slate-400">location_on</span>
+<p class="text-xs font-medium text-slate-500">Lab 102 • Módulo 5</p>
+</div>
+</div>
+<div class="size-2 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.5)]"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 z-[60] glass-nav pb-8 pt-2 px-6">
+<!-- Draggable indicator -->
+<div class="flex justify-center mb-2">
+<div class="w-12 h-1.5 rounded-full bg-slate-200/80"></div>
+</div>
+<div class="flex items-center justify-between gap-2 max-w-md mx-auto">
+<!-- Nav Item: Materias -->
+<a class="flex flex-col items-center gap-1 flex-1 text-primary" href="#">
+<div class="h-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1">auto_stories</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-wider">Materias</span>
+</a>
+<!-- Nav Item: Generar (Prominent) -->
+<div class="flex-1 flex justify-center -mt-10">
+<button class="size-16 rounded-full bg-primary shadow-lg shadow-primary/40 flex items-center justify-center border-4 border-white">
+<span class="material-symbols-outlined text-white text-3xl">add</span>
+</button>
+</div>
+<!-- Nav Item: Favoritos -->
+<a class="flex flex-col items-center gap-1 flex-1 text-slate-400" href="#">
+<div class="h-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">favorite</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-wider">Favoritos</span>
+</a>
+</div>
+<!-- Label for Center Button -->
+<div class="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Generar</span>
+</div>
+</nav>
+<!-- Optional background decorations -->
+<div class="fixed inset-0 pointer-events-none -z-10">
+<div class="absolute top-1/4 -left-20 size-64 bg-blue-400/10 blur-[100px] rounded-full"></div>
+<div class="absolute bottom-1/4 -right-20 size-80 bg-indigo-400/10 blur-[120px] rounded-full"></div>
+</div>
+</div>
+</body></html>

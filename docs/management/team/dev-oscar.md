@@ -7,6 +7,12 @@
 
 ## Session Summary
 
+### Sprint 3: UI Redesign Implementation
+1. **Frontend Rewrite** - ✅ Working
+   - Implemented Stitch prototype templates
+   - Clean White / Light Mode for panels (`SubjectCard`, `FilterPanel`, `ScheduleResults`)
+   - `html-to-json` updated to handle JSON and HTML payload correctly
+
 ### Sprint 2: Core Features Implementation
 
 Implemented 4 features but with known bugs:
@@ -68,6 +74,7 @@ Fix needed: Format mismatch between saved and expected
 1. **Fix ICS time bug** - Priority High
 2. **Fix URL restoration** - Priority Medium  
 3. **Fix localStorage restore** - Priority Medium
+4. **Deploy new UI update** - Testing UI rebuild against mobile breakpoints
 
 Or defer to Sprint 3 after testing with real users.
 

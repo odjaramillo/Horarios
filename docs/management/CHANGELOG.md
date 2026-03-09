@@ -8,10 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- (Empty)
+- **scripts**: `html-to-json.js` updated to process data from API payloads directly.
 
 ### Changed
-- (Empty)
+- **ui**: Complete UI rebuild based on Stitch prototype (Clean White / Light Mode).
+- **component**: Merged new styling into `SubjectCard.js`, `FilterPanel.js`, `SectionSelector.js`, `SelectionPanel.js`, and `ScheduleResults.js`.
 
 ### Fixed
 - (Empty)

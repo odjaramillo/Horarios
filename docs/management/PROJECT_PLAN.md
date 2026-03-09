@@ -57,7 +57,7 @@
 | Task | Priority |
 |------|----------|
 | Fix Sprint 2 issues | High |
-| Rediseño visual completo | Medium |
+| Rediseño visual completo | ✅ Working | High | Rebuilt into Pro Max Light Mode UI |
 | Migración a Vite + Vue | High |
 | ARIA labels y focus management | High |
 

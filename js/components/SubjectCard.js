@@ -56,7 +56,7 @@ export default {
       const totalSections = this.subject.sections?.length || 0;
       const openSections = this.subject.sections?.filter(section => section.openSection).length || 0;
       const credits = this.subject.creditHourLow || 0;
-      
+
       return {
         totalSections,
         openSections,
@@ -85,7 +85,7 @@ export default {
      */
     selectionIndicator() {
       if (!this.isSelected) return null;
-      
+
       return {
         type: this.selectionType,
         icon: this.selectionType === 'priority' ? '🔴' : '🟡',
@@ -106,11 +106,11 @@ export default {
      */
     availabilityStatus() {
       const { openSections, totalSections, availabilityPercentage } = this.subjectStats;
-      
+
       let status = 'low';
       let icon = '❌';
       let color = 'danger';
-      
+
       if (availabilityPercentage >= 70) {
         status = 'high';
         icon = '✅';
@@ -120,7 +120,7 @@ export default {
         icon = '⚠️';
         color = 'warning';
       }
-      
+
       return {
         status,
         icon,
@@ -146,7 +146,7 @@ export default {
 
       const hasMore = this.subject.sections.length > 2;
       const nrcText = sampleNRCs ? ` (NRCs: ${sampleNRCs}${hasMore ? '...' : ''})` : '';
-      
+
       return `${this.subjectStats.openSections} de ${this.subjectStats.totalSections} secciones abiertas${nrcText}`;
     }
   },
@@ -184,10 +184,10 @@ export default {
       if (!section.meetingsFaculty || section.meetingsFaculty.length === 0) {
         return 'Sin horario definido';
       }
-      
+
       const schedules = section.meetingsFaculty.map(meeting => {
         if (!meeting.meetingTime) return '';
-        
+
         const days = [];
         if (meeting.meetingTime.monday) days.push('L');
         if (meeting.meetingTime.tuesday) days.push('M');
@@ -196,11 +196,11 @@ export default {
         if (meeting.meetingTime.friday) days.push('V');
         if (meeting.meetingTime.saturday) days.push('S');
         if (meeting.meetingTime.sunday) days.push('D');
-        
+
         const time = `${meeting.meetingTime.beginTime}-${meeting.meetingTime.endTime}`;
         return `${days.join('')} ${time}`;
       }).filter(schedule => schedule).join(', ');
-      
+
       return schedules || 'Sin horario definido';
     },
 
@@ -211,22 +211,22 @@ export default {
       if (!section.meetingsFaculty || section.meetingsFaculty.length === 0) {
         return 'Sin profesor asignado';
       }
-      
+
       const allProfessors = [];
-      
+
       section.meetingsFaculty.forEach(meeting => {
         if (meeting.faculty && Array.isArray(meeting.faculty)) {
           meeting.faculty.forEach(faculty => {
-            if (faculty.displayName && 
-                faculty.displayName.trim() !== '' && 
-                faculty.displayName !== 'Por Asignar' &&
-                !allProfessors.includes(faculty.displayName)) {
+            if (faculty.displayName &&
+              faculty.displayName.trim() !== '' &&
+              faculty.displayName !== 'Por Asignar' &&
+              !allProfessors.includes(faculty.displayName)) {
               allProfessors.push(faculty.displayName);
             }
           });
         }
       });
-      
+
       return allProfessors.length > 0 ? allProfessors.join(', ') : 'Sin profesor asignado';
     },
 
@@ -234,7 +234,7 @@ export default {
      * Check if a section is selected
      */
     isSectionSelected(sectionId) {
-      return this.selectedSections.some(item => 
+      return this.selectedSections.some(item =>
         item.type === 'section' && item.item.id === sectionId
       );
     },
@@ -243,7 +243,7 @@ export default {
      * Get section selection type
      */
     getSectionSelectionType(sectionId) {
-      const selectedSection = this.selectedSections.find(item => 
+      const selectedSection = this.selectedSections.find(item =>
         item.type === 'section' && item.item.id === sectionId
       );
       return selectedSection ? selectedSection.selectionType : null;
@@ -252,182 +252,127 @@ export default {
 
   template: `
     <div 
-      :class="cardClasses"
+      :class="[
+        'rounded-2xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer group relative flex flex-col font-display border',
+        isSelected && selectionType === 'priority' ? 'bg-red-50 border-red-200 shadow-[0_0_15px_-3px_rgba(239,68,68,0.2)]' : 
+        isSelected && selectionType === 'candidate' ? 'bg-amber-50 border-amber-200 shadow-[0_0_15px_-3px_rgba(245,158,11,0.2)]' : 
+        'bg-white border-border-color hover:border-primary/30'
+      ]"
       :data-subject-id="subject.id"
       @click="handleCardClick"
     >
-      <!-- Card Header -->
-      <div class="subject-card__header">
-        <!-- Data Source Indicator -->
-        <div v-if="hasHtmlData" 
-             class="data-source-indicator data-source-html"
-             title="Datos actualizados desde HTML">
-          HTML
-        </div>
-        <div v-else 
-             class="data-source-indicator data-source-json"
-             title="Datos desde JSON original">
-          JSON
-        </div>
+      <!-- State Indicator Strip -->
+      <div v-if="isSelected && selectionType === 'priority'" class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-500 rounded-l-[1.25rem]"></div>
+      <div v-if="isSelected && selectionType === 'candidate'" class="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500 rounded-l-[1.25rem]"></div>
+
+      <div class="flex items-start gap-3 sm:gap-4" :class="{ 'pl-2 sm:pl-3': isSelected }">
         
-        <div class="subject-card__main-info">
-          <!-- Subject Code and Title -->
-          <div class="subject-card__identity">
-            <h3 class="subject-card__code">
-              <span class="subject-card__code-icon">📚</span>
-              {{ subject.subject }}{{ subject.courseNumber }}
-            </h3>
-            <p class="subject-card__title">{{ subject.courseTitle }}</p>
-          </div>
-
-          <!-- Subject Statistics -->
-          <div class="subject-card__stats">
-            <div class="subject-card__stat-item">
-              <span class="subject-card__stat-icon">🎓</span>
-              <span class="subject-card__stat-value">{{ subjectStats.credits }}</span>
-              <span class="subject-card__stat-label">créditos</span>
-            </div>
-            
-            <div class="subject-card__stat-item">
-              <span class="subject-card__stat-icon">{{ availabilityStatus.icon }}</span>
-              <span class="subject-card__stat-value">{{ subjectStats.openSections }}</span>
-              <span class="subject-card__stat-label">disponibles</span>
-            </div>
-            
-            <div class="subject-card__stat-item">
-              <span class="subject-card__stat-icon">📊</span>
-              <span class="subject-card__stat-value">{{ availabilityStatus.percentage }}%</span>
-              <span class="subject-card__stat-label">disponibilidad</span>
-            </div>
+        <!-- Checkbox / Selection Circle -->
+        <div class="pt-1 hidden sm:block">
+          <div :class="[
+            'w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors',
+            isSelected && selectionType === 'priority' ? 'border-red-500 bg-red-500 text-white' :
+            isSelected && selectionType === 'candidate' ? 'border-amber-500 bg-amber-500 text-white' :
+            'border-slate-300 group-hover:border-primary text-transparent'
+          ]">
+            <span class="material-symbols-outlined text-[16px] font-bold" v-show="isSelected">check</span>
           </div>
         </div>
 
-        <!-- Selection and Actions -->
-        <div class="subject-card__actions">
-          <!-- Selection Indicator -->
-          <div v-if="selectionIndicator" class="subject-card__selection-indicator">
-            <div :class="['selection-badge', selectionIndicator.class]">
-              <span class="selection-badge__icon">{{ selectionIndicator.icon }}</span>
-              <span class="selection-badge__label">{{ selectionIndicator.label }}</span>
+        <div class="flex-1 flex flex-col min-w-0">
+          
+          <!-- Header Row -->
+          <div class="flex items-start justify-between mb-1 gap-2">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 :class="[
+                'font-bold text-[1.1rem] transition-colors truncate',
+                isSelected && selectionType === 'priority' ? 'text-red-700' :
+                isSelected && selectionType === 'candidate' ? 'text-amber-700' :
+                'text-slate-800 group-hover:text-primary'
+              ]">{{ subject.subject }}{{ subject.courseNumber }}</h3>
+              
+              <!-- Badges -->
+              <span v-if="isSelected && selectionType === 'priority'" class="px-2.5 py-0.5 bg-red-100 text-red-700 text-[10px] font-bold tracking-wide uppercase rounded-full border border-red-200">Prioritaria</span>
+              <span v-if="isSelected && selectionType === 'candidate'" class="px-2.5 py-0.5 bg-amber-100 text-amber-700 text-[10px] font-bold tracking-wide uppercase rounded-full border border-amber-200">Candidata</span>
             </div>
-            <div class="selection-checkmark">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-              </svg>
-            </div>
+            
+            <span class="px-2.5 py-1 bg-slate-100/80 text-slate-600 text-xs font-bold rounded-lg border border-slate-200 flex-none shrink-0">{{ subjectStats.credits }} UC</span>
           </div>
+          
+          <!-- Title -->
+          <p class="text-slate-500 text-sm font-medium leading-tight mb-3 line-clamp-2">{{ subject.courseTitle }}</p>
 
-          <!-- Expand/Collapse Button -->
-          <button 
-            @click="handleExpansionToggle"
-            class="subject-card__expand-btn"
-            :class="{ 'subject-card__expand-btn--expanded': isExpanded }"
-            :aria-expanded="isExpanded"
-            :aria-label="isExpanded ? 'Ocultar secciones' : 'Ver secciones'"
-          >
-            <span class="subject-card__expand-icon">
-              {{ isExpanded ? '🔼' : '🔽' }}
-            </span>
-            <span class="subject-card__expand-text">
-              {{ isExpanded ? 'Ocultar' : 'Ver' }} Secciones
-            </span>
-          </button>
+          <!-- Divider -->
+          <div class="w-full h-px bg-slate-200/60 my-2"></div>
+
+          <!-- Bottom Row: Stats & Expand -->
+          <div class="flex items-center justify-between mt-1">
+            <div class="flex items-center gap-3">
+              <!-- Availability -->
+              <div class="flex items-center gap-1.5" :class="availabilityStatus.color === 'success' ? 'text-emerald-600' : availabilityStatus.color === 'danger' ? 'text-rose-600' : 'text-amber-600'">
+                 <span class="material-symbols-outlined text-[16px]">{{ availabilityStatus.color === 'success' ? 'check_circle' : availabilityStatus.color === 'danger' ? 'cancel' : 'warning' }}</span>
+                 <span class="text-xs font-bold">{{ subjectStats.openSections }}/{{ subjectStats.totalSections }} SEC</span>
+              </div>
+            </div>
+
+            <!-- Expand Button -->
+            <button 
+              @click="handleExpansionToggle"
+              class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200 relative z-10"
+            >
+              <span>{{ isExpanded ? 'Ocultar' : 'Secciones' }}</span>
+              <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="{ 'rotate-180': isExpanded }">keyboard_arrow_down</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Availability Progress Bar -->
-      <div class="subject-card__availability-bar">
-        <div 
-          class="subject-card__availability-fill"
-          :class="'subject-card__availability-fill--' + availabilityStatus.color"
-          :style="{ width: availabilityStatus.percentage + '%' }"
-        ></div>
-      </div>
-
-      <!-- Sections List (Expandable) -->
-      <div v-if="isExpanded" class="subject-card__sections">
-        <div class="subject-card__sections-header">
-          <h4 class="subject-card__sections-title">
-            <span class="subject-card__sections-icon">📋</span>
-            Secciones Disponibles
-          </h4>
-          <div class="subject-card__sections-summary">
-            {{ formattedSections }}
-          </div>
-        </div>
-
-        <div class="subject-card__sections-list">
+      <!-- Sections Dropdown (Expanded State) -->
+      <div v-if="isExpanded" class="mt-4 pt-4 border-t border-slate-200/60" @click.stop>
+        <div class="space-y-3">
           <div 
             v-for="section in subject.sections" 
             :key="section.id"
-            class="section-card"
-            :data-section-id="section.id"
-            :class="{
-              'section-card--selected-priority': isSectionSelected(section.id) && getSectionSelectionType(section.id) === 'priority',
-              'section-card--selected-candidate': isSectionSelected(section.id) && getSectionSelectionType(section.id) === 'candidate',
-              'section-card--closed': !section.openSection,
-              'section-card--clickable': selectionMode === 'section'
-            }"
             @click="selectionMode === 'section' ? handleSectionSelection(section, $event) : null"
+            :class="[
+              'p-3 rounded-xl border transition-all text-sm',
+              !section.openSection ? 'bg-slate-50/50 border-slate-200 opacity-60' :
+              isSectionSelected(section.id) && getSectionSelectionType(section.id) === 'priority' ? 'bg-red-50 border-red-200' :
+              isSectionSelected(section.id) && getSectionSelectionType(section.id) === 'candidate' ? 'bg-amber-50 border-amber-200' :
+              'bg-white border-slate-200 hover:border-primary/30 hover:shadow-sm',
+              selectionMode === 'section' ? 'cursor-pointer hover:scale-[1.01]' : ''
+            ]"
           >
-            <!-- Section Header -->
-            <div class="section-card__header">
-              <!-- Section Data Source Indicator -->
-              <div v-if="section.dataSource === 'html'" 
-                   class="data-source-indicator data-source-html section-data-source"
-                   title="Datos actualizados desde HTML">
-                HTML
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2">
+                <span class="font-bold font-mono text-slate-700 bg-slate-100 px-2 rounded">{{ section.courseReferenceNumber }}</span>
+                <span class="font-bold text-slate-800">Sec. {{ section.sequenceNumber }}</span>
               </div>
-              <div v-else 
-                   class="data-source-indicator data-source-json section-data-source"
-                   title="Datos desde JSON original">
-                JSON
-              </div>
-              
-              <div class="section-card__identity">
-                <div class="section-card__nrc">
-                  <span class="section-card__nrc-icon">🏷️</span>
-                  {{ section.courseReferenceNumber }}
-                </div>
-                <div class="section-card__sequence">
-                  Sec. {{ section.sequenceNumber }}
-                </div>
-                <div class="section-card__status" :class="'section-card__status--' + (section.openSection ? 'open' : 'closed')">
-                  <span class="section-card__status-icon">{{ section.openSection ? '✅' : '❌' }}</span>
-                  <span class="section-card__status-text">{{ section.openSection ? 'Abierta' : 'Cerrada' }}</span>
-                </div>
-                <!-- Show professor name if from HTML -->
-                <div v-if="section.dataSource === 'html' && section.professorName" 
-                     class="section-card__professor"
-                     :class="section.professorName === 'Por Asignar' ? 'section-card__professor--unassigned' : 'section-card__professor--assigned'">
-                  <span class="section-card__professor-icon">👨‍🏫</span>
-                  <span class="section-card__professor-name">{{ section.professorName }}</span>
-                </div>
-              </div>
-
-              <!-- Section Selection Indicator -->
-              <div v-if="isSectionSelected(section.id)" class="section-card__selection">
-                <div class="selection-badge" :class="'selection-badge--' + getSectionSelectionType(section.id)">
-                  <span class="selection-badge__icon">{{ getSectionSelectionType(section.id) === 'priority' ? '🔴' : '🟡' }}</span>
-                  <span class="selection-badge__label">{{ getSectionSelectionType(section.id) === 'priority' ? 'Prioritaria' : 'Candidata' }}</span>
-                </div>
-              </div>
+              <!-- Status Badge -->
+              <span :class="[
+                'text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full border',
+                section.openSection ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200'
+              ]">
+                {{ section.openSection ? 'Abierta' : 'Cerrada' }}
+              </span>
             </div>
 
-            <!-- Section Details -->
-            <div class="section-card__details">
-              <div class="section-card__schedule">
-                <span class="section-card__schedule-icon">⏰</span>
-                <span class="section-card__schedule-text">{{ formatSectionSchedule(section) }}</span>
+            <div class="space-y-1.5 mt-2">
+              <div class="flex items-start gap-2 text-slate-600 text-[13px] font-medium">
+                <span class="material-symbols-outlined text-[16px] text-slate-400 mt-0.5 flex-none">schedule</span>
+                <span class="leading-tight">{{ formatSectionSchedule(section) }}</span>
               </div>
-              <div class="section-card__professor">
-                <span class="section-card__professor-icon">👨‍🏫</span>
-                <span class="section-card__professor-text">{{ formatSectionProfessor(section) }}</span>
+              <div class="flex items-start gap-2 text-slate-600 text-[13px] font-medium">
+                <span class="material-symbols-outlined text-[16px] text-slate-400 mt-0.5 flex-none">person</span>
+                <span class="leading-tight line-clamp-2">{{ formatSectionProfessor(section) }}</span>
               </div>
-              <div class="section-card__campus">
-                <span class="section-card__campus-icon">🏢</span>
-                <span class="section-card__campus-text">{{ section.campusDescription }}</span>
-              </div>
+            </div>
+            
+            <div v-if="isSectionSelected(section.id)" class="mt-3 pt-2 text-xs font-bold flex items-center justify-end border-t" :class="getSectionSelectionType(section.id) === 'priority' ? 'border-red-200' : 'border-amber-200'">
+               <span :class="getSectionSelectionType(section.id) === 'priority' ? 'text-red-600' : 'text-amber-600'">
+                 <span class="material-symbols-outlined text-[14px] align-text-bottom mr-1">check_circle</span>
+                 {{ getSectionSelectionType(section.id) === 'priority' ? 'Prioritaria' : 'Candidata' }} Seleccionada
+               </span>
             </div>
           </div>
         </div>

@@ -19,31 +19,43 @@ export default {
       default: ''
     }
   },
-  
-data() {
+
+  data() {
     return {
       currentScheduleIndex: 0,
       daysOfWeek: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
       dayProperties: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
       timeSlots: [],
-      displayFormat: 'list', // 'list' o 'grid'
-      subjectColors: {}, // Mapa para almacenar colores por asignatura
-      showSaveModal: false, // Control para mostrar/ocultar el modal de descarga
-      isExporting: false
+      displayFormat: 'grid', // Force grid as default
+      subjectColors: {},
+      showSaveModal: false,
+      isExporting: false,
+      themes: [
+        { bg: 'bg-blue-100/80', border: 'border-blue-200', text: 'text-blue-900', textSub: 'text-blue-700', icon: 'text-blue-500' },
+        { bg: 'bg-emerald-100/80', border: 'border-emerald-200', text: 'text-emerald-900', textSub: 'text-emerald-700', icon: 'text-emerald-500' },
+        { bg: 'bg-violet-100/80', border: 'border-violet-200', text: 'text-violet-900', textSub: 'text-violet-700', icon: 'text-violet-500' },
+        { bg: 'bg-amber-100/80', border: 'border-amber-200', text: 'text-amber-900', textSub: 'text-amber-700', icon: 'text-amber-500' },
+        { bg: 'bg-rose-100/80', border: 'border-rose-200', text: 'text-rose-900', textSub: 'text-rose-700', icon: 'text-rose-500' },
+        { bg: 'bg-cyan-100/80', border: 'border-cyan-200', text: 'text-cyan-900', textSub: 'text-cyan-700', icon: 'text-cyan-500' },
+        { bg: 'bg-fuchsia-100/80', border: 'border-fuchsia-200', text: 'text-fuchsia-900', textSub: 'text-fuchsia-700', icon: 'text-fuchsia-500' },
+        { bg: 'bg-teal-100/80', border: 'border-teal-200', text: 'text-teal-900', textSub: 'text-teal-700', icon: 'text-teal-500' },
+        { bg: 'bg-orange-100/80', border: 'border-orange-200', text: 'text-orange-900', textSub: 'text-orange-700', icon: 'text-orange-500' },
+        { bg: 'bg-lime-100/80', border: 'border-lime-200', text: 'text-lime-900', textSub: 'text-lime-700', icon: 'text-lime-500' }
+      ]
     };
   },
-  
+
   created() {
     // Crear horarios de 7:00 AM a 9:00 PM solo con horas completas (sin medias horas)
     const startHour = 7;
     const endHour = 22; // Aumentamos una hora para incluir hasta las 21:00
-    
+
     for (let hour = startHour; hour < endHour; hour++) {
       this.timeSlots.push(`${hour}:00`);
       // Ya no incluimos las medias horas: this.timeSlots.push(`${hour}:30`);
     }
   },
-  
+
   watch: {
     // Cuando cambia el horario actual, asignar colores a las materias
     currentSchedule: {
@@ -55,39 +67,39 @@ data() {
       }
     }
   },
-  
+
   computed: {
     hasResults() {
-      return this.generatedSchedules && 
-             this.generatedSchedules.schedules && 
-             this.generatedSchedules.schedules.length > 0;
+      return this.generatedSchedules &&
+        this.generatedSchedules.schedules &&
+        this.generatedSchedules.schedules.length > 0;
     },
-    
+
     hasErrors() {
-      return this.generatedSchedules && 
-             this.generatedSchedules.errors && 
-             this.generatedSchedules.errors.length > 0;
+      return this.generatedSchedules &&
+        this.generatedSchedules.errors &&
+        this.generatedSchedules.errors.length > 0;
     },
-    
+
     totalSchedules() {
       return this.generatedSchedules?.schedules?.length || 0;
     },
-    
+
     currentSchedule() {
       return this.hasResults ? this.generatedSchedules.schedules[this.currentScheduleIndex] : null;
     },
-    
+
     totalCredits() {
       if (!this.currentSchedule) return 0;
-      
+
       return this.currentSchedule.reduce((total, course) => {
         return total + (parseFloat(course.creditHourLow) || 0);
       }, 0);
     },
-    
+
     scheduleMatrix() {
       if (!this.currentSchedule) return null;
-      
+
       // Crear matriz vacía para la semana
       const matrix = {};
       this.dayProperties.forEach(day => {
@@ -96,12 +108,12 @@ data() {
           matrix[day][slot] = [];
         });
       });
-      
+
       // Rellenar con las clases
       this.currentSchedule.forEach(course => {
         course.section.meetingsFaculty.forEach(meeting => {
           if (!meeting.meetingTime) return;
-          
+
           const mt = meeting.meetingTime;
           this.dayProperties.forEach((day, index) => {
             if (mt[day]) {
@@ -124,33 +136,33 @@ data() {
           });
         });
       });
-      
+
       return matrix;
     }
   },
-  
+
   methods: {
     previousSchedule() {
       if (this.currentScheduleIndex > 0) {
         this.currentScheduleIndex--;
       }
     },
-    
+
     nextSchedule() {
       if (this.currentScheduleIndex < this.totalSchedules - 1) {
         this.currentScheduleIndex++;
       }
     },
-    
+
     formatTime(timeStr) {
       if (!timeStr) return '';
-      
+
       const hours = parseInt(timeStr.substring(0, 2), 10);
       const minutes = timeStr.substring(2);
-      
+
       return `${hours}:${minutes}`;
     },
-    
+
     getSlotsForClass(beginTime, endTime) {
       // Convertir horarios a minutos desde medianoche
       const toMinutes = timeStr => {
@@ -158,35 +170,35 @@ data() {
         const minutes = parseInt(timeStr.substring(2), 10);
         return hours * 60 + minutes;
       };
-      
+
       const beginMinutes = toMinutes(beginTime);
       const endMinutes = toMinutes(endTime);
-      
+
       // Encontrar qué slots de tiempo están cubiertos por esta clase
       // Esta lógica ya existente funcionará con los nuevos slots de hora completa
       return this.timeSlots.filter(slot => {
         const [slotHour, slotMinute] = slot.split(':').map(Number);
         const slotMinutes = slotHour * 60 + slotMinute;
         const nextSlotMinutes = slotMinutes + 60; // Consideramos que cada slot ahora es de 1 hora
-        
+
         // Una clase se muestra en un slot si:
         // - Comienza durante este slot, O
         // - Termina durante este slot, O
         // - Abarca completamente el slot
         return (beginMinutes >= slotMinutes && beginMinutes < nextSlotMinutes) || // Comienza en este slot
-               (endMinutes > slotMinutes && endMinutes <= nextSlotMinutes) ||     // Termina en este slot
-               (beginMinutes <= slotMinutes && endMinutes >= nextSlotMinutes);    // Abarca el slot completo
+          (endMinutes > slotMinutes && endMinutes <= nextSlotMinutes) ||     // Termina en este slot
+          (beginMinutes <= slotMinutes && endMinutes >= nextSlotMinutes);    // Abarca el slot completo
       });
     },
-    
+
     getCoursesForDay(day) {
       if (!this.currentSchedule) return [];
-      
+
       const courses = [];
       this.currentSchedule.forEach(course => {
         course.section.meetingsFaculty.forEach(meeting => {
           if (!meeting.meetingTime) return;
-          
+
           const mt = meeting.meetingTime;
           if (mt[day]) {
             courses.push({
@@ -202,23 +214,23 @@ data() {
           }
         });
       });
-      
+
       // Ordenar por hora de inicio
       return courses.sort((a, b) => {
         return a.beginTime.localeCompare(b.beginTime);
       });
     },
-    
+
     getMeetingDaysText(course) {
       if (!course || !course.section || !course.section.meetingsFaculty) {
         return '';
       }
-      
+
       const days = [];
-      
+
       course.section.meetingsFaculty.forEach(meeting => {
         if (!meeting.meetingTime) return;
-        
+
         const mt = meeting.meetingTime;
         if (mt.monday) days.push('Lun');
         if (mt.tuesday) days.push('Mar');
@@ -228,14 +240,14 @@ data() {
         if (mt.saturday) days.push('Sáb');
         if (mt.sunday) days.push('Dom');
       });
-      
+
       return days.join('/');
     },
-    
+
     // Nuevo método para obtener el NRC correctamente
     getCourseNRC(course) {
-      return course && course.section && course.section.courseReferenceNumber 
-        ? course.section.courseReferenceNumber 
+      return course && course.section && course.section.courseReferenceNumber
+        ? course.section.courseReferenceNumber
         : 'N/A';
     },
 
@@ -243,30 +255,30 @@ data() {
       if (!courses || courses.length === 0) {
         return 'empty-cell';
       }
-      
+
       // Si hay conflicto, usar clase de conflicto
       if (courses.length > 1) {
         return 'conflict-cell';
       }
-      
+
       // Si es un solo curso, asignar el color correspondiente
       const colorClass = this.getCourseColorClass(courses[0]);
       return `course-cell ${colorClass}`;
     },
-    
+
     toggleDisplayFormat() {
       this.displayFormat = this.displayFormat === 'list' ? 'grid' : 'list';
     },
-    
+
     // Asignar colores a cada materia para la visualización en grilla
     assignColorsToSubjects(schedule) {
       this.subjectColors = {};
-      
+
       if (!schedule) return;
-      
+
       // Obtener IDs únicos de las materias
       const subjectIds = [...new Set(schedule.map(course => course.subjectId))];
-      
+
       // Asignar un color a cada materia
       subjectIds.forEach((id, index) => {
         // Usar módulo para ciclar a través de los 10 colores disponibles
@@ -274,26 +286,23 @@ data() {
         this.subjectColors[id] = colorIndex;
       });
     },
-    
+
     // Obtener la clase CSS para el color de una celda
-    getCourseColorClass(course) {
-      if (!course || !course.id) return '';
-      
-      // Obtener el índice de color asignado a esta materia
+    getCourseTheme(course) {
+      if (!course || !course.id) return this.themes[0];
       const colorIndex = this.subjectColors[course.id];
-      if (colorIndex === undefined) return '';
-      
-      return `course-color-${colorIndex}`;
+      if (colorIndex === undefined) return this.themes[0];
+      return this.themes[colorIndex % this.themes.length];
     },
 
     // Vista de Grilla - Asegurar que el NRC se muestre en cada celda
     getCellContent(courses) {
       if (!courses || courses.length === 0) return '';
-      
+
       return courses.map(course => {
         // Obtener versión corta del título para mostrar (p.ej. "Cálculo Diferencial" en vez de "FING02003")
         const shortTitle = this.getShortTitle(course.courseTitle);
-        
+
         return `
           <div>
             <strong class="course-title">${shortTitle} - ${course.section}</strong>
@@ -312,13 +321,13 @@ data() {
     // Método para obtener versión corta del título de la materia
     getShortTitle(fullTitle) {
       if (!fullTitle) return '';
-      
+
       // Quitamos puntos y caracteres especiales que puedan estar al final
       const cleanTitle = fullTitle.replace(/\.$/, '');
-      
+
       // Si el título es corto, lo devolvemos completo
       if (cleanTitle.length < 30) return cleanTitle;
-      
+
       // Si es largo, obtenemos las primeras palabras (hasta 25 caracteres)
       return cleanTitle.substring(0, 25) + '...';
     },
@@ -326,11 +335,11 @@ data() {
     // Métodos de descarga
     downloadAsImage() {
       this.showSaveModal = false;
-      
+
       // Asegurarnos de que estamos en vista de grilla
       const originalFormat = this.displayFormat;
       this.displayFormat = 'grid';
-      
+
       // Esperar a que el DOM se actualice
       this.$nextTick(() => {
         const element = document.querySelector('.schedule-grid-view');
@@ -339,7 +348,7 @@ data() {
           this.displayFormat = originalFormat;
           return;
         }
-        
+
         html2canvas(element, {
           scale: 2, // Mejor calidad
           useCORS: true,
@@ -351,16 +360,16 @@ data() {
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-          
+
           // Restaurar formato original
           this.displayFormat = originalFormat;
         });
       });
     },
-    
+
     downloadAsList() {
       this.showSaveModal = false;
-      
+
       let content = '<!DOCTYPE html><html><head><meta charset="UTF-8">';
       content += '<title>Horario UCAB</title>';
       content += '<style>';
@@ -374,13 +383,13 @@ data() {
       content += 'th { background-color: #f2f2f2; }';
       content += 'footer { margin-top: 20px; text-align: center; font-size: 12px; color: #666; }';
       content += '</style></head><body>';
-      
+
       content += `<h1>Horario UCAB - ${new Date().toLocaleDateString()}</h1>`;
-      
+
       // Añadir tabla de resumen
       content += '<h2>Resumen de Materias</h2>';
       content += '<table><thead><tr><th>Materia</th><th>Sección</th><th>NRC</th><th>Créditos</th></tr></thead><tbody>';
-      
+
       this.currentSchedule.forEach(course => {
         content += `<tr>
           <td>${course.subject}${course.courseNumber} - ${course.courseTitle}</td>
@@ -389,18 +398,18 @@ data() {
           <td>${course.creditHourLow}</td>
         </tr>`;
       });
-      
+
       content += '</tbody></table>';
-      
+
       // Añadir detalle por días
       content += '<h2>Horario por Días</h2>';
-      
+
       this.daysOfWeek.forEach((day, index) => {
         const courses = this.getCoursesForDay(this.dayProperties[index]);
-        
+
         content += `<div class="day-section">`;
         content += `<h3>${day}</h3>`;
-        
+
         if (courses.length === 0) {
           content += `<p class="no-classes">No hay clases programadas</p>`;
         } else {
@@ -413,13 +422,13 @@ data() {
             </div>`;
           });
         }
-        
+
         content += `</div>`;
       });
-      
+
       content += '<footer>Generado por Horario UCAB</footer>';
       content += '</body></html>';
-      
+
       // Crear y descargar el archivo
       const blob = new Blob([content], { type: 'text/html' });
       const link = document.createElement('a');
@@ -429,25 +438,25 @@ data() {
       link.click();
       document.body.removeChild(link);
     },
-    
+
     downloadNRCsOnly() {
       this.showSaveModal = false;
-      
+
       // Extraer todos los NRCs únicos
-      const nrcs = [...new Set(this.currentSchedule.map(course => 
+      const nrcs = [...new Set(this.currentSchedule.map(course =>
         course.section.courseReferenceNumber
       ))];
-      
+
       // Crear contenido con los NRCs, uno por línea
       let content = 'NRCs para inscripción:\n\n';
       nrcs.forEach(nrc => {
         content += nrc + '\n';
       });
-      
+
       // También añadir una sección con NRCs en formato copiable (sin espacios)
       content += '\n\nFormato para copiar y pegar:\n';
       content += nrcs.join(', ');
-      
+
       // Crear y descargar el archivo
       const blob = new Blob([content], { type: 'text/plain' });
       const link = document.createElement('a');
@@ -457,15 +466,15 @@ data() {
       link.click();
       document.body.removeChild(link);
     },
-    
+
     openSaveModal() {
       this.showSaveModal = true;
     },
-    
-closeSaveModal() {
+
+    closeSaveModal() {
       this.showSaveModal = false;
     },
-    
+
     async handleExportPdf() {
       if (!this.currentSchedule) return;
       try {
@@ -481,7 +490,7 @@ closeSaveModal() {
         this.isExporting = false;
       }
     },
-    
+
     handleExportIcs() {
       if (!this.currentSchedule) return;
       try {
@@ -495,7 +504,7 @@ closeSaveModal() {
         this.showNotification('Error al generar ICS', 'error');
       }
     },
-    
+
     showNotification(message, type) {
       this.$emit('notification', { message, type });
     },
@@ -505,7 +514,7 @@ closeSaveModal() {
       console.log('[Share] selectedItems:', this.selectedItems);
       console.log('[Share] onlyOpenSections:', this.onlyOpenSections);
       console.log('[Share] selectedCampus:', this.selectedCampus);
-      
+
       // Handle both formats: array or {priority: [], candidate: []}
       let allItems = [];
       if (Array.isArray(this.selectedItems)) {
@@ -517,20 +526,20 @@ closeSaveModal() {
           ...(this.selectedItems.candidate || [])
         ];
       }
-      
+
       console.log('[Share] Flattened items:', allItems);
-      
+
       const state = {
         selectedItems: allItems,
         onlyOpenSections: this.onlyOpenSections,
         selectedCampus: this.selectedCampus
       };
-      
+
       const url = ShareService.generateShareUrl(state);
       console.log('[Share] Generated URL length:', url.length);
-      
+
       const copied = await ShareService.copyToClipboard(url);
-      
+
       if (copied) {
         this.showNotification('URL copiada al portapapeles', 'success');
       } else {
@@ -538,204 +547,162 @@ closeSaveModal() {
       }
     }
   },
-  
+
   template: `
-    <div class="schedule-results">
-      <div v-if="hasErrors" class="alert alert-warning">
-        <h4 class="alert-heading">Advertencias</h4>
-        <ul>
-          <li v-for="(error, index) in generatedSchedules.errors" :key="index">
-            {{ error }}
-          </li>
-        </ul>
+    <div class="h-full w-full flex flex-col relative font-display overflow-hidden">
+      <!-- Empty State -->
+      <div v-if="!hasResults" class="absolute inset-0 flex flex-col items-center justify-center">
+        <div class="relative z-10 text-center max-w-sm px-6 animate-in fade-in zoom-in duration-500">
+          <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-border-color">
+            <span class="material-symbols-outlined text-5xl text-slate-400">calendar_month</span>
+          </div>
+          <h3 class="text-2xl font-bold text-primary-text mb-3 tracking-tight">Listo para Planificar</h3>
+          <p class="text-slate-500 font-medium leading-relaxed">Selecciona tus materias en el panel izquierdo y haz clic en "Generar Horarios" para ver las opciones disponibles.</p>
+        </div>
       </div>
       
-<div v-if="hasResults" class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h2 class="m-0">Horarios Posibles</h2>
-          <div>
-            <button @click="toggleDisplayFormat" class="btn btn-outline-secondary btn-sm me-2">
-              {{ displayFormat === 'list' ? 'Ver como Grilla' : 'Ver como Lista' }}
-            </button>
-            <button @click="handleExportPdf" class="btn btn-outline-primary btn-sm me-2" :disabled="isExporting">
-              {{ isExporting ? 'Generando...' : '📄 Exportar PDF' }}
-            </button>
-            <button @click="handleExportIcs" class="btn btn-outline-success btn-sm me-2">
-              📅 Exportar ICS
-            </button>
-            <button @click="handleShare" class="btn btn-outline-info btn-sm me-2">
-              🔗 Compartir
-            </button>
-            <span class="badge bg-info">{{ currentScheduleIndex + 1 }} de {{ totalSchedules }}</span>
-          </div>
-        </div>
-        
-        <div class="card-body">
-          <div class="mb-3 d-flex justify-content-between align-items-center">
-            <button 
-              @click="previousSchedule" 
-              class="btn btn-outline-primary"
-              :disabled="currentScheduleIndex === 0"
-            >
-              &laquo; Anterior
-            </button>
-            
-            <div>
-              <strong>Total de créditos: {{ totalCredits }}</strong>
+      <!-- Results State -->
+      <div v-else class="flex flex-col h-full w-full">
+        <!-- Header Controls -->
+        <header class="flex-none flex flex-col sm:flex-row items-center justify-between whitespace-nowrap border-b border-border-color px-4 sm:px-6 py-4 bg-white rounded-t-2xl shadow-sm border-t border-x z-20">
+          <div class="flex items-center gap-3 mb-4 sm:mb-0">
+            <div class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-lg shadow-slate-800/20">
+              <span class="material-symbols-outlined text-[20px]">calendar_view_week</span>
             </div>
-            
-            <button 
-              @click="nextSchedule" 
-              class="btn btn-outline-primary"
-              :disabled="currentScheduleIndex >= totalSchedules - 1"
-            >
-              Siguiente &raquo;
+            <div class="flex flex-col">
+              <h2 class="text-lg font-bold leading-tight tracking-tight text-primary-text">Horarios Generados</h2>
+              <p class="text-[11px] font-bold text-emerald-600 tracking-wide uppercase flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check_circle</span> {{ totalSchedules }} Posibilidades</p>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap items-center justify-center gap-2">
+            <button @click="handleExportPdf" :disabled="isExporting" class="flex items-center justify-center rounded-xl h-10 bg-white text-slate-700 gap-2 text-sm font-bold hover:bg-slate-50 transition-colors px-3 shadow-sm border border-border-color">
+              <span class="material-symbols-outlined text-[20px]">{{ isExporting ? 'sync' : 'picture_as_pdf' }}</span>
+              <span class="hidden sm:inline">{{ isExporting ? 'Generando...' : 'PDF' }}</span>
+            </button>
+            <button @click="openSaveModal" class="flex items-center justify-center rounded-xl h-10 bg-white text-slate-700 gap-2 text-sm font-bold hover:bg-slate-50 transition-colors px-3 shadow-sm border border-slate-200 hover:border-slate-300">
+              <span class="material-symbols-outlined text-[20px]">download</span>
+              <span class="hidden sm:inline">Exportar</span>
+            </button>
+            <button @click="handleShare" class="flex items-center justify-center rounded-xl h-10 bg-primary/10 text-primary gap-2 text-sm font-bold hover:bg-primary/20 transition-colors px-3 shadow-sm border border-primary/20">
+              <span class="material-symbols-outlined text-[20px]">share</span>
+              <span class="hidden sm:inline">Compartir</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Pagination & Stats -->
+        <div class="flex-none flex flex-wrap items-center justify-between gap-4 px-4 sm:px-6 py-3 bg-slate-50 border-b border-border-color z-10 shadow-sm">
+          <div class="flex items-center gap-1 bg-white p-1 rounded-full shadow-sm border border-border-color">
+            <button @click="previousSchedule" :disabled="currentScheduleIndex === 0" class="flex w-10 h-10 items-center justify-center rounded-full hover:bg-slate-100 transition-colors text-slate-600 disabled:opacity-30 disabled:hover:bg-transparent">
+              <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+            </button>
+            <span class="text-sm font-bold w-20 text-center tracking-wide text-primary-text">Opción {{ currentScheduleIndex + 1 }}</span>
+            <button @click="nextSchedule" :disabled="currentScheduleIndex >= totalSchedules - 1" class="flex w-10 h-10 items-center justify-center rounded-full hover:bg-slate-100 transition-colors text-slate-600 disabled:opacity-30 disabled:hover:bg-transparent">
+              <span class="material-symbols-outlined text-[20px]">chevron_right</span>
             </button>
           </div>
           
-          <!-- Vista de Lista -->
-          <div v-if="displayFormat === 'list'" class="schedule-list-view">
-            <div v-for="(dayName, dayIndex) in daysOfWeek" :key="dayIndex" class="day-block mb-3">
-              <h3 class="day-title">{{ dayName }}</h3>
-              
-              <div v-if="getCoursesForDay(dayProperties[dayIndex]).length === 0" class="text-muted">
-                No hay clases programadas
+          <div class="flex items-center gap-3">
+             <div class="flex flex-col items-end">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Carga Académica</span>
+                <span class="text-sm font-bold text-primary-text">{{ totalCredits }} UC en Total</span>
+             </div>
+          </div>
+        </div>
+
+        <!-- Timetable Grid -->
+        <div class="flex-1 overflow-auto bg-slate-50 p-2 sm:p-4 custom-scrollbar">
+          <div class="min-w-[800px] h-full flex flex-col bg-white rounded-2xl border border-border-color shadow-sm overflow-hidden">
+            <!-- Grid Header -->
+            <div class="grid grid-cols-7 border-b border-border-color bg-slate-50">
+              <div class="p-3 text-center text-xs font-bold text-slate-400 uppercase tracking-widest w-20 flex-shrink-0">Hora</div>
+              <div v-for="day in daysOfWeek" :key="day" class="p-3 text-center text-xs font-bold text-slate-600 uppercase tracking-wider">{{ day }}</div>
+            </div>
+            
+            <!-- Grid Body -->
+            <div class="relative flex-1 bg-transparent overflow-y-auto">
+              <!-- Background separator lines -->
+              <div class="absolute inset-0 grid grid-cols-7 pointer-events-none">
+                <div class="border-r border-slate-100 w-20 flex-shrink-0 bg-slate-50/30"></div>
+                <div v-for="i in 6" :key="i" class="border-r border-slate-100/70"></div>
               </div>
-              
-              <div v-else class="course-list">
-                <div v-for="course in getCoursesForDay(dayProperties[dayIndex])" :key="course.id + course.beginTime" 
-                     :class="['course-item p-2 mb-2 border rounded', getCourseColorClass(course)]">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <strong>{{ course.title }} - {{ course.section }}</strong> 
-                      <span class="badge bg-secondary ms-1">NRC: {{ course.nrc }}</span>
-                      <div>{{ course.fullTitle }}</div>
-                      <div class="text-muted">
-                        {{ course.beginTime }} - {{ course.endTime }}
-                        <span v-if="course.room !== 'N/A'"> | Aula: {{ course.room }}</span>
-                      </div>
+
+              <!-- Time Rows -->
+              <div v-for="timeSlot in timeSlots" :key="timeSlot" class="grid grid-cols-7 border-b border-slate-100 min-h-[90px] relative z-10 group">
+                <div class="p-2 text-center text-[11px] font-bold text-slate-400 w-20 flex flex-col items-center justify-center gap-0.5 group-hover:bg-slate-50/50 transition-colors">
+                  <span>{{ timeSlot }}</span>
+                  <span class="text-slate-200">|</span>
+                </div>
+                
+                <div v-for="(day, dayIndex) in dayProperties" :key="day" class="p-1 relative">
+                  <div v-if="scheduleMatrix[day][timeSlot].length > 0" class="absolute inset-1 flex flex-col gap-1 z-20">
+                    <div v-for="course in scheduleMatrix[day][timeSlot]" :key="course.id" 
+                         :class="[
+                           'h-full flex flex-col justify-center rounded-xl p-2 sm:p-2.5 shadow-sm hover:shadow-md transition-all cursor-pointer border backdrop-blur-sm overflow-hidden group/card',
+                           getCourseTheme(course).bg, getCourseTheme(course).border
+                         ]">
+                       <div class="flex items-start justify-between gap-1 mb-0.5">
+                         <p class="font-bold text-[11px] leading-tight line-clamp-2" :class="getCourseTheme(course).text" :title="course.fullTitle">{{ getShortTitle(course.courseTitle) }}</p>
+                       </div>
+                       
+                       <div class="flex items-center gap-1 opacity-80 mt-auto">
+                         <span class="material-symbols-outlined text-[12px]" :class="getCourseTheme(course).textSub">location_on</span>
+                         <span class="text-[10px] font-bold tracking-wide truncate" :class="getCourseTheme(course).textSub">{{ course.room !== 'N/A' ? course.room : 'Por Asignar' }}</span>
+                       </div>
+                       
+                       <div class="text-[9px] font-bold mt-1 tracking-wider opacity-60 uppercase" :class="getCourseTheme(course).textSub">
+                         NRC: {{ course.nrc }} • Sec: {{ course.section }}
+                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      
+      <!-- Export Modal -->
+      <div v-if="showSaveModal" class="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-border-color animate-in zoom-in-95 duration-200">
+          <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <h5 class="text-lg font-bold text-primary-text">Exportar Horario</h5>
+            <button @click="closeSaveModal" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
+              <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+          </div>
           
-          <!-- Vista de Grilla -->
-          <div v-else-if="displayFormat === 'grid'" class="schedule-grid-view table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th class="time-header">Hora</th>
-                  <th v-for="(day, index) in daysOfWeek" :key="index">{{ day }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="timeSlot in timeSlots" :key="timeSlot">
-                  <td class="time-cell">{{ timeSlot }}</td>
-                  <td v-for="(day, dayIndex) in dayProperties" :key="day" 
-                      :class="getCellClasses(scheduleMatrix[day][timeSlot])">
-                    <div v-for="course in scheduleMatrix[day][timeSlot]" :key="course.id">
-                      <div v-if="scheduleMatrix[day][timeSlot].length > 0">
-                        <strong class="course-title">{{ getShortTitle(course.courseTitle) }} - {{ course.section }}</strong>
-                        <div class="badge bg-secondary mb-1">NRC: {{ course.nrc }}</div>
-                        <div class="course-details">
-                          {{ course.beginTime }} - {{ course.endTime }}
-                        </div>
-                        <div class="course-room" v-if="course.room !== 'N/A'">
-                          Aula: {{ course.room }}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="p-5 space-y-3">
+            <button @click="downloadAsImage" class="w-full flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-primary hover:bg-primary/5 transition-all text-left group">
+              <div class="w-10 h-10 rounded-lg bg-blue-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined">image</span>
+              </div>
+              <div>
+                <strong class="block text-sm text-slate-800">Descargar como Imagen (PNG)</strong>
+                <span class="text-xs text-slate-500 font-medium">Captura pixel-perfect del horario semanal</span>
+              </div>
+            </button>
             
-            <!-- Leyenda de colores mejorada -->
-            <div class="mt-3 p-2 bg-light rounded">
-              <h5>Materias:</h5>
-              <div class="d-flex flex-wrap">
-                <div v-for="(course, index) in currentSchedule" :key="course.subjectId"
-                    class="me-3 mb-2 d-flex align-items-center">
-                  <div :class="['color-sample', 'course-color-' + (subjectColors[course.subjectId] || 0)]"></div>
-                  <span>{{ getShortTitle(course.courseTitle) }}</span>
-                </div>
+            <button @click="downloadAsList" class="w-full flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all text-left group">
+              <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined">description</span>
               </div>
-            </div>
-          </div>
-          
-          <!-- Resumen del horario actual -->
-          <div class="mt-4 p-3 bg-light rounded">
-            <h4>Resumen</h4>
-            <div class="row">
-              <div v-for="course in currentSchedule" :key="course.id" class="col-md-6 mb-2">
-                <div class="schedule-summary-item">
-                  <strong>{{ course.subject }}{{ course.courseNumber }} - {{ course.section.sequenceNumber }}</strong>
-                  <div>{{ course.courseTitle }}</div>
-                  <div class="text-muted">
-                    {{ getMeetingDaysText(course) }} 
-                  </div>
-                  <div class="badge bg-secondary">NRC: {{ getCourseNRC(course) }}</div>
-                  <span class="ms-2">{{ course.creditHourLow }} créditos</span>
-                </div>
+              <div>
+                <strong class="block text-sm text-slate-800">Descargar Lista (HTML)</strong>
+                <span class="text-xs text-slate-500 font-medium">Documento imprimible con aulas y profesores</span>
               </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card-footer text-center">
-          <button class="btn btn-success" @click="openSaveModal">
-            Guardar este horario
-          </button>
-        </div>
-      </div>
-      
-      <div v-else-if="generatedSchedules && generatedSchedules.schedules && generatedSchedules.schedules.length === 0" class="alert alert-info">
-        <h4 class="alert-heading">No se encontraron horarios válidos</h4>
-        <p>No fue posible encontrar combinaciones de horarios sin conflictos para las materias seleccionadas.</p>
-        <p>Prueba seleccionando diferentes materias o secciones.</p>
-      </div>
-      
-      <div v-else-if="!generatedSchedules" class="text-center p-4">
-        <p class="text-muted">Selecciona materias y genera horarios para ver resultados aquí.</p>
-      </div>
-      
-      <!-- Modal de opciones de descarga - Estructura corregida -->
-      <div v-if="showSaveModal">
-        <!-- Backdrop separado del diálogo del modal -->
-        <div class="modal-backdrop fade show"></div>
-        
-        <!-- Modal dialog -->
-        <div class="modal fade show d-block" tabindex="-1" role="dialog" aria-modal="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Guardar Horario</h5>
-                <button type="button" class="btn-close" @click="closeSaveModal"></button>
+            </button>
+            
+            <button @click="downloadNRCsOnly" class="w-full flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50 transition-all text-left group">
+              <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined">content_paste</span>
               </div>
-              <div class="modal-body">
-                <div class="d-grid gap-2">
-                  <button @click="downloadAsImage" class="btn btn-primary btn-lg">
-                    <i class="bi bi-file-image"></i> Descargar como Imagen
-                    <div class="small text-light">Guarda la vista de grilla como una imagen PNG</div>
-                  </button>
-                  
-                  <button @click="downloadAsList" class="btn btn-info btn-lg">
-                    <i class="bi bi-file-text"></i> Descargar como Lista
-                    <div class="small text-light">Guarda el horario como un documento HTML detallado</div>
-                  </button>
-                  
-                  <button @click="downloadNRCsOnly" class="btn btn-success btn-lg">
-                    <i class="bi bi-clipboard"></i> Solo texto NRC para inscribir
-                    <div class="small text-light">Guarda solo los NRCs para copiar y pegar</div>
-                  </button>
-                </div>
+              <div>
+                <strong class="block text-sm text-slate-800">Copiar códigos NRC</strong>
+                <span class="text-xs text-slate-500 font-medium">Texto plano ideal para el módulo de inscripción</span>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @click="closeSaveModal">Cerrar</button>
-              </div>
-            </div>
+            </button>
           </div>
         </div>
       </div>
