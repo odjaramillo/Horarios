@@ -31,16 +31,16 @@ export default {
       showSaveModal: false,
       isExporting: false,
       themes: [
-        { bg: 'bg-blue-100/80', border: 'border-blue-200', text: 'text-blue-900', textSub: 'text-blue-700', icon: 'text-blue-500' },
-        { bg: 'bg-emerald-100/80', border: 'border-emerald-200', text: 'text-emerald-900', textSub: 'text-emerald-700', icon: 'text-emerald-500' },
-        { bg: 'bg-violet-100/80', border: 'border-violet-200', text: 'text-violet-900', textSub: 'text-violet-700', icon: 'text-violet-500' },
-        { bg: 'bg-amber-100/80', border: 'border-amber-200', text: 'text-amber-900', textSub: 'text-amber-700', icon: 'text-amber-500' },
-        { bg: 'bg-rose-100/80', border: 'border-rose-200', text: 'text-rose-900', textSub: 'text-rose-700', icon: 'text-rose-500' },
-        { bg: 'bg-cyan-100/80', border: 'border-cyan-200', text: 'text-cyan-900', textSub: 'text-cyan-700', icon: 'text-cyan-500' },
-        { bg: 'bg-fuchsia-100/80', border: 'border-fuchsia-200', text: 'text-fuchsia-900', textSub: 'text-fuchsia-700', icon: 'text-fuchsia-500' },
-        { bg: 'bg-teal-100/80', border: 'border-teal-200', text: 'text-teal-900', textSub: 'text-teal-700', icon: 'text-teal-500' },
-        { bg: 'bg-orange-100/80', border: 'border-orange-200', text: 'text-orange-900', textSub: 'text-orange-700', icon: 'text-orange-500' },
-        { bg: 'bg-lime-100/80', border: 'border-lime-200', text: 'text-lime-900', textSub: 'text-lime-700', icon: 'text-lime-500' }
+        { bg: 'bg-blue-100', border: 'border-blue-200', text: 'text-blue-900', textSub: 'text-blue-700', icon: 'text-blue-500' },
+        { bg: 'bg-emerald-100', border: 'border-emerald-200', text: 'text-emerald-900', textSub: 'text-emerald-700', icon: 'text-emerald-500' },
+        { bg: 'bg-violet-100', border: 'border-violet-200', text: 'text-violet-900', textSub: 'text-violet-700', icon: 'text-violet-500' },
+        { bg: 'bg-amber-100', border: 'border-amber-200', text: 'text-amber-900', textSub: 'text-amber-700', icon: 'text-amber-500' },
+        { bg: 'bg-rose-100', border: 'border-rose-200', text: 'text-rose-900', textSub: 'text-rose-700', icon: 'text-rose-500' },
+        { bg: 'bg-cyan-100', border: 'border-cyan-200', text: 'text-cyan-900', textSub: 'text-cyan-700', icon: 'text-cyan-500' },
+        { bg: 'bg-fuchsia-100', border: 'border-fuchsia-200', text: 'text-fuchsia-900', textSub: 'text-fuchsia-700', icon: 'text-fuchsia-500' },
+        { bg: 'bg-teal-100', border: 'border-teal-200', text: 'text-teal-900', textSub: 'text-teal-700', icon: 'text-teal-500' },
+        { bg: 'bg-orange-100', border: 'border-orange-200', text: 'text-orange-900', textSub: 'text-orange-700', icon: 'text-orange-500' },
+        { bg: 'bg-lime-100', border: 'border-lime-200', text: 'text-lime-900', textSub: 'text-lime-700', icon: 'text-lime-500' }
       ]
     };
   },
@@ -138,6 +138,47 @@ export default {
       });
 
       return matrix;
+    },
+
+    mergedMatrix() {
+      if (!this.scheduleMatrix) return null;
+
+      const result = {};
+      this.dayProperties.forEach(day => {
+        result[day] = {};
+        let skipUntil = -1;
+
+        this.timeSlots.forEach((slot, idx) => {
+          if (idx <= skipUntil) {
+            result[day][slot] = { type: 'continuation' };
+            return;
+          }
+
+          const courses = this.scheduleMatrix[day][slot];
+          if (!courses || courses.length === 0) {
+            result[day][slot] = { type: 'empty' };
+            return;
+          }
+
+          // Find how many consecutive slots this same course spans
+          const key = courses[0].id + '-' + courses[0].section;
+          let span = 1;
+
+          for (let i = idx + 1; i < this.timeSlots.length; i++) {
+            const next = this.scheduleMatrix[day][this.timeSlots[i]];
+            if (next && next.length > 0 && (next[0].id + '-' + next[0].section) === key) {
+              span++;
+            } else {
+              break;
+            }
+          }
+
+          skipUntil = idx + span - 1;
+          result[day][slot] = { type: 'start', courses, span };
+        });
+      });
+
+      return result;
     }
   },
 
@@ -326,10 +367,10 @@ export default {
       const cleanTitle = fullTitle.replace(/\.$/, '');
 
       // Si el título es corto, lo devolvemos completo
-      if (cleanTitle.length < 30) return cleanTitle;
+      if (cleanTitle.length < 40) return cleanTitle;
 
-      // Si es largo, obtenemos las primeras palabras (hasta 25 caracteres)
-      return cleanTitle.substring(0, 25) + '...';
+      // Si es largo, obtenemos las primeras palabras (hasta 35 caracteres)
+      return cleanTitle.substring(0, 35) + '...';
     },
 
     // Métodos de descarga
@@ -349,11 +390,25 @@ export default {
           return;
         }
 
+        // Temporarily expand the scroll container and grid to full height
+        const scrollParent = element.parentElement;
+        const savedParentStyle = scrollParent.style.cssText;
+        const savedElementStyle = element.style.cssText;
+
+        scrollParent.style.overflow = 'visible';
+        scrollParent.style.height = 'auto';
+        scrollParent.style.maxHeight = 'none';
+        element.style.height = 'auto';
+
         html2canvas(element, {
-          scale: 2, // Mejor calidad
+          scale: 3,
           useCORS: true,
           backgroundColor: '#ffffff'
         }).then(canvas => {
+          // Restore original styles
+          scrollParent.style.cssText = savedParentStyle;
+          element.style.cssText = savedElementStyle;
+
           const link = document.createElement('a');
           link.download = `horario-${new Date().toLocaleDateString().replace(/\//g, '-')}.png`;
           link.href = canvas.toDataURL('image/png');
@@ -363,81 +418,15 @@ export default {
 
           // Restaurar formato original
           this.displayFormat = originalFormat;
+        }).catch(() => {
+          scrollParent.style.cssText = savedParentStyle;
+          element.style.cssText = savedElementStyle;
+          this.displayFormat = originalFormat;
         });
       });
     },
 
-    downloadAsList() {
-      this.showSaveModal = false;
 
-      let content = '<!DOCTYPE html><html><head><meta charset="UTF-8">';
-      content += '<title>Horario UCAB</title>';
-      content += '<style>';
-      content += 'body { font-family: Arial, sans-serif; margin: 20px; }';
-      content += 'h1 { text-align: center; }';
-      content += '.day-section { margin-bottom: 20px; }';
-      content += '.course-item { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }';
-      content += '.no-classes { color: #666; font-style: italic; }';
-      content += 'table { width: 100%; border-collapse: collapse; }';
-      content += 'th, td { border: 1px solid #ddd; padding: 8px; }';
-      content += 'th { background-color: #f2f2f2; }';
-      content += 'footer { margin-top: 20px; text-align: center; font-size: 12px; color: #666; }';
-      content += '</style></head><body>';
-
-      content += `<h1>Horario UCAB - ${new Date().toLocaleDateString()}</h1>`;
-
-      // Añadir tabla de resumen
-      content += '<h2>Resumen de Materias</h2>';
-      content += '<table><thead><tr><th>Materia</th><th>Sección</th><th>NRC</th><th>Créditos</th></tr></thead><tbody>';
-
-      this.currentSchedule.forEach(course => {
-        content += `<tr>
-          <td>${course.subject}${course.courseNumber} - ${course.courseTitle}</td>
-          <td>${course.section.sequenceNumber}</td>
-          <td>${course.section.courseReferenceNumber}</td>
-          <td>${course.creditHourLow}</td>
-        </tr>`;
-      });
-
-      content += '</tbody></table>';
-
-      // Añadir detalle por días
-      content += '<h2>Horario por Días</h2>';
-
-      this.daysOfWeek.forEach((day, index) => {
-        const courses = this.getCoursesForDay(this.dayProperties[index]);
-
-        content += `<div class="day-section">`;
-        content += `<h3>${day}</h3>`;
-
-        if (courses.length === 0) {
-          content += `<p class="no-classes">No hay clases programadas</p>`;
-        } else {
-          courses.forEach(course => {
-            content += `<div class="course-item">
-              <strong>${course.title} - ${course.section}</strong> (NRC: ${course.nrc})<br>
-              ${course.fullTitle}<br>
-              Hora: ${course.beginTime} - ${course.endTime}
-              ${course.room !== 'N/A' ? '<br>Aula: ' + course.room : ''}
-            </div>`;
-          });
-        }
-
-        content += `</div>`;
-      });
-
-      content += '<footer>Generado por Horario UCAB</footer>';
-      content += '</body></html>';
-
-      // Crear y descargar el archivo
-      const blob = new Blob([content], { type: 'text/html' });
-      const link = document.createElement('a');
-      link.download = `horario-lista-${new Date().toLocaleDateString().replace(/\//g, '-')}.html`;
-      link.href = URL.createObjectURL(blob);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    },
 
     downloadNRCsOnly() {
       this.showSaveModal = false;
@@ -509,42 +498,37 @@ export default {
       this.$emit('notification', { message, type });
     },
 
-    async handleShare() {
-      console.log('[Share] handleShare called');
-      console.log('[Share] selectedItems:', this.selectedItems);
-      console.log('[Share] onlyOpenSections:', this.onlyOpenSections);
-      console.log('[Share] selectedCampus:', this.selectedCampus);
+    handleShare() {
+      if (!this.currentSchedule) return;
 
-      // Handle both formats: array or {priority: [], candidate: []}
-      let allItems = [];
-      if (Array.isArray(this.selectedItems)) {
-        allItems = this.selectedItems;
-      } else if (this.selectedItems && typeof this.selectedItems === 'object') {
-        // Convert from {priority: [], candidate: []} to flat array
-        allItems = [
-          ...(this.selectedItems.priority || []),
-          ...(this.selectedItems.candidate || [])
-        ];
-      }
+      const message = this._buildWhatsAppMessage(this.currentSchedule);
+      const encoded = encodeURIComponent(message);
+      window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
+    },
 
-      console.log('[Share] Flattened items:', allItems);
+    _buildWhatsAppMessage(schedule) {
+      let msg = `📚 *Mi Horario UCAB*\n`;
+      msg += `📊 ${schedule.length} materias | ${this.totalCredits} UC\n\n`;
 
-      const state = {
-        selectedItems: allItems,
-        onlyOpenSections: this.onlyOpenSections,
-        selectedCampus: this.selectedCampus
+      const dayNames = {
+        monday: 'Lunes', tuesday: 'Martes', wednesday: 'Miércoles',
+        thursday: 'Jueves', friday: 'Viernes', saturday: 'Sábado'
       };
+      const dayOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
-      const url = ShareService.generateShareUrl(state);
-      console.log('[Share] Generated URL length:', url.length);
+      dayOrder.forEach(day => {
+        const courses = this.getCoursesForDay(day);
+        if (courses.length === 0) return;
 
-      const copied = await ShareService.copyToClipboard(url);
+        msg += `📅 *${dayNames[day]}*\n`;
+        courses.forEach(c => {
+          msg += `  ${c.beginTime}-${c.endTime} ${c.title} (Sec ${c.section})\n`;
+        });
+        msg += `\n`;
+      });
 
-      if (copied) {
-        this.showNotification('URL copiada al portapapeles', 'success');
-      } else {
-        this.showNotification('Error al copiar URL', 'error');
-      }
+      msg += `_Generado con Planificador UCAB_`;
+      return msg;
     }
   },
 
@@ -613,7 +597,7 @@ export default {
 
         <!-- Timetable Grid -->
         <div class="flex-1 overflow-auto bg-slate-50 p-2 sm:p-4 custom-scrollbar">
-          <div class="min-w-[800px] h-full flex flex-col bg-white rounded-2xl border border-border-color shadow-sm overflow-hidden">
+          <div class="schedule-grid-view min-w-[800px] h-full flex flex-col bg-white rounded-2xl border border-border-color shadow-sm overflow-hidden">
             <!-- Grid Header -->
             <div class="grid grid-cols-7 border-b border-border-color bg-slate-50">
               <div class="p-3 text-center text-xs font-bold text-slate-400 uppercase tracking-widest w-20 flex-shrink-0">Hora</div>
@@ -636,22 +620,22 @@ export default {
                 </div>
                 
                 <div v-for="(day, dayIndex) in dayProperties" :key="day" class="p-1 relative">
-                  <div v-if="scheduleMatrix[day][timeSlot].length > 0" class="absolute inset-1 flex flex-col gap-1 z-20">
-                    <div v-for="course in scheduleMatrix[day][timeSlot]" :key="course.id" 
+                  <div v-if="mergedMatrix && mergedMatrix[day][timeSlot].type === 'start'" class="absolute inset-x-1 top-1 flex flex-col gap-1 z-20" :style="{ height: 'calc(' + mergedMatrix[day][timeSlot].span + ' * 90px - 8px)' }">
+                    <div v-for="course in mergedMatrix[day][timeSlot].courses" :key="course.id" 
                          :class="[
-                           'h-full flex flex-col justify-center rounded-xl p-2 sm:p-2.5 shadow-sm hover:shadow-md transition-all cursor-pointer border backdrop-blur-sm overflow-hidden group/card',
+                           'h-full flex flex-col justify-center rounded-xl p-2 sm:p-2.5 shadow-sm hover:shadow-md transition-all cursor-pointer border overflow-hidden group/card',
                            getCourseTheme(course).bg, getCourseTheme(course).border
                          ]">
                        <div class="flex items-start justify-between gap-1 mb-0.5">
-                         <p class="font-bold text-[11px] leading-tight line-clamp-2" :class="getCourseTheme(course).text" :title="course.fullTitle">{{ getShortTitle(course.courseTitle) }}</p>
+                         <p class="font-bold text-xs leading-normal pb-0.5" :class="getCourseTheme(course).text" :title="course.fullTitle">{{ getShortTitle(course.courseTitle) }}</p>
                        </div>
                        
                        <div class="flex items-center gap-1 opacity-80 mt-auto">
                          <span class="material-symbols-outlined text-[12px]" :class="getCourseTheme(course).textSub">location_on</span>
-                         <span class="text-[10px] font-bold tracking-wide truncate" :class="getCourseTheme(course).textSub">{{ course.room !== 'N/A' ? course.room : 'Por Asignar' }}</span>
+                         <span class="text-\[11px\] font-semibold tracking-wide pb-0.5" :class="getCourseTheme(course).textSub">{{ course.room !== 'N/A' ? course.room : 'Por Asignar' }}</span>
                        </div>
                        
-                       <div class="text-[9px] font-bold mt-1 tracking-wider opacity-60 uppercase" :class="getCourseTheme(course).textSub">
+                       <div class="text-\[10px\] font-semibold mt-1 tracking-wide opacity-70 uppercase" :class="getCourseTheme(course).textSub">
                          NRC: {{ course.nrc }} • Sec: {{ course.section }}
                        </div>
                     </div>
@@ -684,13 +668,13 @@ export default {
               </div>
             </button>
             
-            <button @click="downloadAsList" class="w-full flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all text-left group">
+            <button @click="handleExportIcs" class="w-full flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all text-left group">
               <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <span class="material-symbols-outlined">description</span>
+                <span class="material-symbols-outlined">event</span>
               </div>
               <div>
-                <strong class="block text-sm text-slate-800">Descargar Lista (HTML)</strong>
-                <span class="text-xs text-slate-500 font-medium">Documento imprimible con aulas y profesores</span>
+                <strong class="block text-sm text-slate-800">Agregar a Calendario (ICS)</strong>
+                <span class="text-xs text-slate-500 font-medium">Compatible con Google Calendar, Outlook y Apple</span>
               </div>
             </button>
             

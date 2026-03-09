@@ -9,15 +9,15 @@ export default {
    */
   downloadIcs(scheduleItems, filename = 'horario-ucab.ics') {
     console.log('[ICS] Starting export with', scheduleItems?.length, 'items');
-    
+
     if (!scheduleItems || scheduleItems.length === 0) {
       throw new Error('No hay materias para exportar');
     }
-    
+
     const icsContent = this._generateIcs(scheduleItems);
     console.log('[ICS] Generated content length:', icsContent.length);
     console.log('[ICS] First 500 chars:', icsContent.substring(0, 500));
-    
+
     this._downloadFile(icsContent, filename);
     console.log('[ICS] Downloaded:', filename);
   },
@@ -104,16 +104,16 @@ export default {
     // Use first day of semester as start date, adjusted for the day of week
     const firstSemesterDay = dates.start;
     const dayOfWeek = firstSemesterDay.getDay(); // 0 = Sunday
-    
+
     // Day abbreviations in ICS order (Monday = 1)
     const icsDayMap = { 1: 'MO', 2: 'TU', 3: 'WE', 4: 'TH', 5: 'FR', 6: 'SA' };
-    
+
     // Find the first occurrence of each day in the semester
     const adjustedDates = days.map(dayAbbr => {
       const targetDayNum = { MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 }[dayAbbr];
       let daysToAdd = targetDayNum - dayOfWeek;
       if (daysToAdd < 0) daysToAdd += 7;
-      
+
       const date = new Date(firstSemesterDay);
       date.setDate(firstSemesterDay.getDate() + daysToAdd);
       return date;
@@ -149,16 +149,20 @@ export default {
     const year = now.getFullYear();
     const month = now.getMonth();
 
-    let start, end;
-    if (month >= 0 && month <= 4) {
-      start = new Date(year, 0, 15);
-      end = new Date(year, 4, 31);
-    } else if (month >= 5 && month <= 7) {
-      start = new Date(year, 6, 15);
-      end = new Date(year, 7, 31);
+    // Start from the coming Monday (or today if Monday)
+    const start = new Date(now);
+    const dayOfWeek = start.getDay();
+    const daysUntilMonday = dayOfWeek === 0 ? 1 : dayOfWeek === 1 ? 0 : 8 - dayOfWeek;
+    start.setDate(start.getDate() + daysUntilMonday);
+
+    // End based on academic period
+    let end;
+    if (month >= 0 && month <= 5) {
+      end = new Date(year, 6, 14); // July 14 - fin de clases UCAB
+    } else if (month >= 6 && month <= 7) {
+      end = new Date(year, 7, 31); // End of August
     } else {
-      start = new Date(year, 8, 1);
-      end = new Date(year, 11, 15);
+      end = new Date(year, 11, 15); // Mid December
     }
 
     return { start, end };

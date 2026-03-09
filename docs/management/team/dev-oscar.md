@@ -18,20 +18,20 @@
 Implemented 4 features but with known bugs:
 
 1. **PDF Export** - ✅ Working
-   - Uses pdfMake 0.2.12 from CDN
-   - Fixed loading issue with correct version
+   - Layout completely rebuilt into a schedule grid matrix.
+   - Text rendering and font issues fixed.
 
-2. **ICS Export** - ⚠️ Partial
-   - Generates valid RFC 5545 file
-   - BUG: Time shows 19:00 instead of 08:30 (timezone issue)
+2. **ICS Export** - ✅ Working
+   - Time calculations fixed to align with exact class hours.
+   - Semester dates set properly (Starts next Monday, ends July 14).
 
-3. **URL Sharing** - ⚠️ Partial
-   - Generates shareable URL with selections
-   - BUG: Restoration from URL not fully working
+3. **URL Sharing / WhatsApp** - ✅ Working
+   - Transitioned from URL sharing to direct WhatsApp message sharing.
+   - Dynamically builds text with subjects, NRCs, and locations.
 
-4. **LocalStorage Persistence** - ⚠️ Partial
-   - Added auto-save watcher
-   - BUG: Restoration on page load not working correctly
+4. **LocalStorage Persistence** - ⚠️ Partial (Pending Verification)
+   - Added auto-save watcher.
+   - Need to explicitly test restoration logic in the next flow.
 
 ---
 
@@ -46,37 +46,20 @@ Implemented 4 features but with known bugs:
 
 ## Known Issues (Need Fixing)
 
-### 1. ICS Time Bug
+### 1. LocalStorage Restore
 ```
-Problem: Shows 19:00 instead of 08:30
-Location: IcsExportService.js _formatDateTimeWithTz
-Fix needed: Timezone offset calculation is wrong
-```
-
-### 2. URL Restoration
-```
-Problem: URL restores but selections don't appear
-Location: app.js _restoreFromSharedState
-Fix needed: CourseService lookup not finding courses
-```
-
-### 3. LocalStorage Restore
-```
-Problem: Page reload doesn't restore selections
-Location: app.js mounted() loadSelections
-Fix needed: Format mismatch between saved and expected
+Problem: Page reload doesn't systematically restore selections
+Location: app.js mounted() loadSelections / UIStateService
+Fix needed: Validate state format and ensure CourseService is ready before setting active courses.
 ```
 
 ---
 
 ## Next Steps
 
-1. **Fix ICS time bug** - Priority High
-2. **Fix URL restoration** - Priority Medium  
-3. **Fix localStorage restore** - Priority Medium
-4. **Deploy new UI update** - Testing UI rebuild against mobile breakpoints
-
-Or defer to Sprint 3 after testing with real users.
+1. **Verify LocalStorage restore** - Priority High
+2. **Deploy new export features** - Priority Medium
+3. **Responsive UI testing** - Priority Medium
 
 ---
 

@@ -152,29 +152,22 @@ const app = createApp({
     },
 
     showNotification(message, type = 'info') {
+      const bgMap = { error: 'bg-red-600', success: 'bg-emerald-600', info: 'bg-blue-600' };
+      const bg = bgMap[type] || bgMap.info;
+
       const toast = document.createElement('div');
-      toast.className = `toast align-items-center text-white bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'} border-0`;
-      toast.setAttribute('role', 'alert');
-      toast.setAttribute('aria-live', 'assertive');
-      toast.setAttribute('aria-atomic', 'true');
-      toast.style.position = 'fixed';
-      toast.style.top = '20px';
-      toast.style.right = '20px';
-      toast.style.zIndex = '9999';
+      toast.className = `fixed top-5 right-5 z-[9999] flex items-center gap-3 px-5 py-3 rounded-xl text-white text-sm font-semibold shadow-lg ${bg} animate-in slide-in-from-right duration-300`;
       toast.innerHTML = `
-        <div class="d-flex">
-          <div class="toast-body">${message}</div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-        </div>
+        <span class="material-symbols-outlined text-lg">${type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info'}</span>
+        <span>${message}</span>
       `;
       document.body.appendChild(toast);
 
-      const bsToast = new bootstrap.Toast(toast);
-      bsToast.show();
-
       setTimeout(() => {
-        toast.remove();
-      }, 5000);
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 300ms';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
     },
 
     _restoreFromSharedState(sharedState) {
@@ -256,6 +249,7 @@ const app = createApp({
             :selected-items="selectedItems"
             :only-open-sections="onlyOpenSections"
             :selected-campus="selectedCampus"
+            @notification="showNotification($event.message, $event.type)"
           />
         </div>
       </main>

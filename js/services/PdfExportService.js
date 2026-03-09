@@ -1,7 +1,7 @@
 import { loadPdfMake } from '../utils/PdfLoader.js';
 
 /**
- * Servicio para exportar horarios a formato PDF
+ * Servicio para exportar horarios a formato PDF con layout de grilla (estilo horario escolar)
  */
 export default {
   /**
@@ -11,243 +11,278 @@ export default {
    * @return {Promise<void>}
    */
   async downloadSchedule(scheduleItems, filename = 'horario.pdf') {
-    console.log('[PDF] Starting export with', scheduleItems?.length, 'items');
-    
     if (!scheduleItems || scheduleItems.length === 0) {
       throw new Error('No hay materias en el horario para exportar');
     }
-    
+
     await loadPdfMake();
-    
+
     const docDefinition = this._buildDocDefinition(scheduleItems);
-    
-    console.log('[PDF] Doc definition built, generating PDF...');
     window.pdfMake.createPdf(docDefinition).download(filename);
-    console.log('[PDF] Download triggered:', filename);
   },
-  
+
   /**
-   * Construye la definición del documento PDF
+   * Construye la definición del documento PDF con formato de grilla
    * @param {Array} scheduleItems - Lista de materias del horario
    * @return {Object} Definición del documento pdfMake
    */
   _buildDocDefinition(scheduleItems) {
-    console.log('[PDF] Building doc for', scheduleItems?.length, 'courses');
-    
     if (!scheduleItems || scheduleItems.length === 0) {
       return {
         pageSize: 'A4',
         content: [{ text: 'No hay materias para mostrar', alignment: 'center' }]
       };
     }
-    
+
     const totalCredits = scheduleItems.reduce((sum, course) => {
       return sum + (parseFloat(course.creditHourLow) || 0);
     }, 0);
-    
-    const totalSubjects = scheduleItems.length;
-    
+
+    const matrix = this._buildMatrix(scheduleItems);
+
+    // Color palette for subjects
+    const subjectColors = {};
+    const colors = [
+      '#DBEAFE', '#D1FAE5', '#EDE9FE', '#FEF3C7', '#FFE4E6',
+      '#CFFAFE', '#FAE8FF', '#CCFBF1', '#FFEDD5', '#ECFCCB'
+    ];
+    const textColors = [
+      '#1E40AF', '#065F46', '#5B21B6', '#92400E', '#9F1239',
+      '#155E75', '#86198F', '#115E59', '#C2410C', '#3F6212'
+    ];
+    const uniqueSubjects = [...new Set(scheduleItems.map(c => c.subjectId))];
+    uniqueSubjects.forEach((id, i) => {
+      subjectColors[id] = { bg: colors[i % colors.length], text: textColors[i % textColors.length] };
+    });
+
     return {
       pageSize: 'A4',
       pageOrientation: 'landscape',
-      pageMargins: [20, 30, 20, 30],
+      pageMargins: [15, 25, 15, 25],
       content: [
         { text: 'Horario UCAB', style: 'title' },
-        { text: `Total de créditos: ${totalCredits} | Materias: ${totalSubjects}`, style: 'subtitle' },
+        { text: `${scheduleItems.length} materias | ${totalCredits} UC`, style: 'subtitle' },
         { text: '\n' },
-        ...this._buildScheduleTable(scheduleItems)
+        this._renderGridTable(matrix, subjectColors)
       ],
       styles: {
         title: {
-          fontSize: 18,
+          fontSize: 16,
           bold: true,
           alignment: 'center',
-          margin: [0, 0, 0, 10]
+          margin: [0, 0, 0, 4]
         },
         subtitle: {
-          fontSize: 12,
-          alignment: 'center',
-          margin: [0, 0, 0, 20],
-          color: '#666666'
-        },
-        dayHeader: {
-          fontSize: 12,
-          bold: true,
-          fillColor: '#4a90d9',
-          color: '#ffffff',
-          alignment: 'center'
-        },
-        tableHeader: {
           fontSize: 10,
-          bold: true,
-          fillColor: '#f2f2f2',
-          alignment: 'center'
-        },
-        tableCell: {
-          fontSize: 9,
-          alignment: 'left'
-        },
-        timeCell: {
-          fontSize: 9,
-          bold: true,
-          alignment: 'center'
+          alignment: 'center',
+          margin: [0, 0, 0, 8],
+          color: '#666666'
         }
       },
       defaultStyle: {
-        fontSize: 10
+        fontSize: 7
       }
     };
   },
-  
+
   /**
-   * Construye las tablas del horario agrupadas por día
-   * @param {Array} scheduleItems - Lista de materias del horario
-   * @return {Array} Array de elementos de contenido para el PDF
+   * Construye la matriz horario-día con los cursos asignados
+   * @param {Array} scheduleItems - Lista de materias
+   * @return {Object} Matriz { timeSlots, dayOrder, grid }
    */
-  _buildScheduleTable(scheduleItems) {
-    const dayOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+  _buildMatrix(scheduleItems) {
+    const dayOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     const dayNames = {
-      monday: 'Lunes',
-      tuesday: 'Martes',
-      wednesday: 'Miércoles',
-      thursday: 'Jueves',
-      friday: 'Viernes'
+      monday: 'Lunes', tuesday: 'Martes', wednesday: 'Miércoles',
+      thursday: 'Jueves', friday: 'Viernes', saturday: 'Sábado'
     };
-    
-    const content = [];
-    
-    dayOrder.forEach(day => {
-      const dayItems = this._getItemsForDay(scheduleItems, day);
-      
-      if (dayItems.length === 0) return;
-      
-      const sortedItems = dayItems.sort((a, b) => 
-        a.beginTime.localeCompare(b.beginTime)
-      );
-      
-      const tableBody = [
-        [
-          { text: dayNames[day], style: 'dayHeader', colSpan: 6 },
-          {}, {}, {}, {}, {}
-        ],
-        [
-          { text: 'Hora', style: 'tableHeader' },
-          { text: 'Materia', style: 'tableHeader' },
-          { text: 'Sección', style: 'tableHeader' },
-          { text: 'Salón', style: 'tableHeader' },
-          { text: 'Profesor', style: 'tableHeader' },
-          { text: 'NRC', style: 'tableHeader' }
-        ]
-      ];
-      
-      sortedItems.forEach(item => {
-        tableBody.push([
-          { text: `${item.beginTime} - ${item.endTime}`, style: 'timeCell' },
-          { text: `${item.subject}${item.courseNumber}\n${item.courseTitle}`, style: 'tableCell' },
-          { text: item.section, style: 'tableCell' },
-          { text: item.room || 'N/A', style: 'tableCell' },
-          { text: item.professor || 'N/A', style: 'tableCell' },
-          { text: item.nrc, style: 'tableCell' }
-        ]);
-      });
-      
-      content.push({
-        table: {
-          headerRows: 2,
-          widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
-          body: tableBody
-        },
-        layout: 'lightHorizontalLines',
-        margin: [0, 0, 0, 15]
-      });
-    });
-    
-    return content;
-  },
-  
-  /**
-   * Extrae los items de un día específico
-   * @param {Array} scheduleItems - Lista de materias del horario
-   * @param {String} day - Día de la semana (monday, tuesday, etc.)
-   * @return {Array} Items para ese día
-   */
-  _getItemsForDay(scheduleItems, day) {
-    console.log(`[PDF] Getting items for ${day}, input:`, JSON.stringify(scheduleItems, null, 2).substring(0, 500));
-    
-    const items = [];
-    
+
+    // Find the actual hour range used
+    let minHour = 22;
+    let maxHour = 7;
+
     scheduleItems.forEach(course => {
-      console.log('[PDF] Processing course:', course.subject, course.courseNumber);
-      console.log('[PDF] Section:', course.section);
-      
-      if (!course.section) {
-        console.log('[PDF] No section found for course');
-        return;
-      }
-      if (!course.section.meetingsFaculty) {
-        console.log('[PDF] No meetingsFaculty for section', course.section.sequenceNumber);
-        return;
-      }
-      
+      if (!course.section || !course.section.meetingsFaculty) return;
       course.section.meetingsFaculty.forEach(meeting => {
         if (!meeting.meetingTime) return;
-        
         const mt = meeting.meetingTime;
-        if (mt[day]) {
-          items.push({
-            subject: course.subject,
-            courseNumber: course.courseNumber,
-            courseTitle: this._decodeHtmlEntities(course.courseTitle),
-            section: course.section.sequenceNumber,
-            nrc: course.section.courseReferenceNumber,
-            beginTime: this._formatTime(mt.beginTime),
-            endTime: this._formatTime(mt.endTime),
-            room: this._extractRoom(mt),
-            professor: this._extractProfessor(meeting)
+        const begin = parseInt(mt.beginTime?.substring(0, 2), 10);
+        const end = parseInt(mt.endTime?.substring(0, 2), 10);
+        if (!isNaN(begin) && begin < minHour) minHour = begin;
+        if (!isNaN(end) && end >= maxHour) maxHour = end + 1;
+      });
+    });
+
+    // Generate time slots for the range
+    const timeSlots = [];
+    for (let h = minHour; h < maxHour; h++) {
+      timeSlots.push(`${String(h).padStart(2, '0')}:00`);
+    }
+
+    // Build grid[timeSlot][day] = [courses]
+    const grid = {};
+    timeSlots.forEach(slot => {
+      grid[slot] = {};
+      dayOrder.forEach(day => {
+        grid[slot][day] = [];
+      });
+    });
+
+    // Fill grid
+    scheduleItems.forEach(course => {
+      if (!course.section || !course.section.meetingsFaculty) return;
+
+      course.section.meetingsFaculty.forEach(meeting => {
+        if (!meeting.meetingTime) return;
+        const mt = meeting.meetingTime;
+
+        dayOrder.forEach(day => {
+          if (!mt[day]) return;
+
+          const beginH = parseInt(mt.beginTime?.substring(0, 2), 10);
+          const beginM = parseInt(mt.beginTime?.substring(2), 10);
+          const endH = parseInt(mt.endTime?.substring(0, 2), 10);
+          const endM = parseInt(mt.endTime?.substring(2), 10);
+          const beginMin = beginH * 60 + beginM;
+          const endMin = endH * 60 + endM;
+
+          timeSlots.forEach(slot => {
+            const [slotH] = slot.split(':').map(Number);
+            const slotMin = slotH * 60;
+            const nextSlotMin = slotMin + 60;
+
+            const overlaps =
+              (beginMin >= slotMin && beginMin < nextSlotMin) ||
+              (endMin > slotMin && endMin <= nextSlotMin) ||
+              (beginMin <= slotMin && endMin >= nextSlotMin);
+
+            if (overlaps) {
+              grid[slot][day].push({
+                subjectId: course.subjectId,
+                title: this._decodeHtmlEntities(course.courseTitle),
+                code: `${course.subject}${course.courseNumber}`,
+                section: course.section.sequenceNumber,
+                nrc: course.section.courseReferenceNumber,
+                time: `${this._formatTime(mt.beginTime)}-${this._formatTime(mt.endTime)}`,
+                room: mt.room || ''
+              });
+            }
+          });
+        });
+      });
+    });
+
+    return { timeSlots, dayOrder, dayNames, grid };
+  },
+
+  /**
+   * Renders the grid table for pdfMake
+   * @param {Object} matrix - The schedule matrix
+   * @param {Object} subjectColors - Color map by subjectId
+   * @return {Object} pdfMake table element
+   */
+  _renderGridTable(matrix, subjectColors) {
+    const { timeSlots, dayOrder, dayNames, grid } = matrix;
+
+    // Filter out days with no classes at all
+    const activeDays = dayOrder.filter(day =>
+      timeSlots.some(slot => grid[slot][day].length > 0)
+    );
+
+    if (activeDays.length === 0) {
+      return { text: 'No hay clases programadas', alignment: 'center' };
+    }
+
+    // Header row
+    const headerRow = [
+      { text: 'Hora', bold: true, fillColor: '#1E293B', color: '#FFFFFF', alignment: 'center', margin: [2, 4, 2, 4] },
+      ...activeDays.map(day => ({
+        text: dayNames[day],
+        bold: true,
+        fillColor: '#1E293B',
+        color: '#FFFFFF',
+        alignment: 'center',
+        margin: [2, 4, 2, 4]
+      }))
+    ];
+
+    // Data rows
+    const dataRows = timeSlots.map(slot => {
+      const row = [
+        { text: slot, bold: true, alignment: 'center', fillColor: '#F8FAFC', color: '#334155', margin: [2, 3, 2, 3] }
+      ];
+
+      activeDays.forEach(day => {
+        const courses = grid[slot][day];
+        if (courses.length === 0) {
+          row.push({ text: '', fillColor: '#FFFFFF', margin: [1, 1, 1, 1] });
+        } else {
+          // Deduplicate by subjectId (same class spans multiple slots)
+          const seen = new Set();
+          const uniqueCourses = courses.filter(c => {
+            if (seen.has(c.subjectId + c.section)) return false;
+            seen.add(c.subjectId + c.section);
+            return true;
+          });
+
+          const cellContent = uniqueCourses.map(c => {
+            const color = subjectColors[c.subjectId] || { bg: '#F1F5F9', text: '#334155' };
+            return {
+              stack: [
+                { text: c.title, bold: true, fontSize: 7, color: color.text },
+                { text: `Sec ${c.section}`, fontSize: 6, color: color.text },
+                { text: c.time, fontSize: 5.5, color: '#64748B', italics: true }
+              ],
+              margin: [1, 1, 1, 1]
+            };
+          });
+
+          const bgColor = subjectColors[uniqueCourses[0].subjectId]?.bg || '#F1F5F9';
+
+          row.push({
+            stack: cellContent.length === 1 ? cellContent[0].stack : cellContent.map(c => c.stack).flat(),
+            fillColor: bgColor,
+            margin: [2, 2, 2, 2]
           });
         }
       });
+
+      return row;
     });
-    
-    return items;
+
+    const colWidths = ['auto', ...activeDays.map(() => '*')];
+
+    return {
+      table: {
+        headerRows: 1,
+        widths: colWidths,
+        body: [headerRow, ...dataRows]
+      },
+      layout: {
+        hLineWidth: () => 0.5,
+        vLineWidth: () => 0.5,
+        hLineColor: () => '#E2E8F0',
+        vLineColor: () => '#E2E8F0',
+        paddingLeft: () => 3,
+        paddingRight: () => 3,
+        paddingTop: () => 2,
+        paddingBottom: () => 2
+      }
+    };
   },
-  
+
   /**
-   * Formatea tiempo de HHMM a HH:MM
+   * Formatea tiempo de HHMM a H:MM
    * @param {String} time - Tiempo en formato HHMM
    * @return {String} Tiempo formateado
    */
   _formatTime(time) {
     if (!time) return '';
-    
-    const hours = time.substring(0, 2);
+    const hours = parseInt(time.substring(0, 2), 10);
     const minutes = time.substring(2);
-    
     return `${hours}:${minutes}`;
   },
-  
-  /**
-   * Extrae el salón de la reunión
-   * @param {Object} meetingTime - Objeto meetingTime
-   * @return {String} Salón o 'N/A'
-   */
-  _extractRoom(meetingTime) {
-    return meetingTime?.room || 'N/A';
-  },
-  
-  /**
-   * Extrae el profesor de la reunión
-   * @param {Object} meeting - Objeto meeting
-   * @return {String} Nombre del profesor o 'N/A'
-   */
-  _extractProfessor(meeting) {
-    if (meeting.faculty && meeting.faculty.length > 0) {
-      const prof = meeting.faculty[0];
-      return `${prof.firstName || ''} ${prof.lastName || ''}`.trim() || 'N/A';
-    }
-    return 'N/A';
-  },
-  
+
   /**
    * Decodifica entidades HTML
    * @param {String} text - Texto con entidades HTML

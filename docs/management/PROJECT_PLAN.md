@@ -8,9 +8,9 @@
 
 ### Sprint Goals
 - [ ] Persistencia local (localStorage) - Need fixes
-- [x] Exportar a PDF - Working
-- [ ] Exportar a ICS - Partial (hora incorrecta)
-- [ ] Compartir horario - Partial (restauración no funciona)
+- [x] Exportar a PDF - Working (Grid layout)
+- [x] Exportar a ICS - Working
+- [x] Compartir horario - Working (WhatsApp)
 
 ---
 
@@ -24,20 +24,15 @@
 
 ### Exportar a PDF
 - **Status**: ✅ Working
-- **Notes**: pdfMake 0.2.12 desde CDN funciona
+- **Notes**: pdfMake 0.2.12 desde CDN, layout convertido a tabla de horarios.
 
 ### Exportar a ICS  
-- **Status**: ⚠️ Parcial
-- **Issues**:
-  - La hora se calcula incorrectamente (19:00 vs 08:30)
-  - Fechas usan UTC en vez de hora local
+- **Status**: ✅ Working
+- **Notes**: Genera archivo válido en fechas correspondientes del semestre.
 
 ### Compartir horario
-- **Status**: ⚠️ Parcial
-- **Issues**:
-  - URL se genera correctamente
-  - Restauración desde URL no funciona completamente
-  - Falta integrarse con CourseService para buscar materias
+- **Status**: ✅ Working
+- **Notes**: Se reemplazó el link con texto dinámico directo a WhatsApp para compartir más fácil.
 
 ---
 
@@ -47,10 +42,10 @@
 
 | Task | Status | Priority | Notes |
 |------|--------|----------|-------|
-| Persistencia local | ⚠️ Need Fixes | High | Restauración no funciona |
-| Exportar a PDF | ✅ Working | High | - |
-| Exportar a ICS | ⚠️ Need Fixes | High | Hora incorrecta |
-| Compartir horario | ⚠️ Need Fixes | Medium | Restauración falla |
+| Persistencia local | ⚠️ Need Fixes | High | Pendiente validación de restauración |
+| Exportar a PDF | ✅ Working | High | Layout grid completado |
+| Exportar a ICS | ✅ Working | High | - |
+| Compartir horario | ✅ Working | Medium | WhatsApp feature añadido |
 
 ### Sprint 3
 

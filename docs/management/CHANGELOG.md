@@ -9,13 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **scripts**: `html-to-json.js` updated to process data from API payloads directly.
+- **export**: Integrated robust ICS calendar file generation with proper UCAB semester dates.
+- **share**: Added WhatsApp sharing integration with dynamic message generation.
 
 ### Changed
 - **ui**: Complete UI rebuild based on Stitch prototype (Clean White / Light Mode).
 - **component**: Merged new styling into `SubjectCard.js`, `FilterPanel.js`, `SectionSelector.js`, `SelectionPanel.js`, and `ScheduleResults.js`.
+- **export**: Overhauled PDF layout into a schedule grid format instead of plain text list.
+- **ui**: Migrated toast notifications from Bootstrap to Tailwind CSS.
+- **export**: Replaced simple URL sharing button with ICS download and WhatsApp sharing.
 
 ### Fixed
-- (Empty)
+- **export**: PNG generation fixes (resolved layout truncation by expanding `scrollHeight`, corrected blurry text from `backdrop-blur`, merged multi-hour blocks into single spanning cells).
+- **export**: Fixed ICS date offset and time generation.
+- **export**: Removed invalid font definitions in pdfMake configuration.
 
 ---
 
