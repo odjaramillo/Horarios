@@ -127,6 +127,7 @@ export default {
                   fullTitle: course.courseTitle,
                   nrc: course.section.courseReferenceNumber,
                   section: course.section.sequenceNumber,
+                  professor: course.section.meetingsFaculty?.[0]?.faculty?.[0]?.displayName || course.profesor || 'Por Asignar',
                   room: mt.room || 'N/A',
                   beginTime: this.formatTime(mt.beginTime),
                   endTime: this.formatTime(mt.endTime)
@@ -248,6 +249,7 @@ export default {
               fullTitle: course.courseTitle,
               nrc: course.section.courseReferenceNumber,
               section: course.section.sequenceNumber,
+              professor: course.section.meetingsFaculty?.[0]?.faculty?.[0]?.displayName || course.profesor || 'Por Asignar',
               room: mt.room || 'N/A',
               beginTime: this.formatTime(mt.beginTime),
               endTime: this.formatTime(mt.endTime)
@@ -630,9 +632,13 @@ export default {
                          <p class="font-bold text-xs leading-normal pb-0.5" :class="getCourseTheme(course).text" :title="course.fullTitle">{{ getShortTitle(course.courseTitle) }}</p>
                        </div>
                        
-                       <div class="flex items-center gap-1 opacity-80 mt-auto">
-                         <span class="material-symbols-outlined text-[12px]" :class="getCourseTheme(course).textSub">location_on</span>
-                         <span class="text-\[11px\] font-semibold tracking-wide pb-0.5" :class="getCourseTheme(course).textSub">{{ course.room !== 'N/A' ? course.room : 'Por Asignar' }}</span>
+                       <div class="flex items-center gap-1 opacity-80 mt-auto min-w-0">
+                         <span class="material-symbols-outlined text-[12px] flex-shrink-0" :class="getCourseTheme(course).textSub">location_on</span>
+                         <span class="text-\[11px\] font-semibold tracking-wide pb-0.5 truncate" :class="getCourseTheme(course).textSub" :title="course.room !== 'N/A' ? course.room : 'Por Asignar'">{{ course.room !== 'N/A' ? course.room : 'Por Asignar' }}</span>
+                       </div>
+                       <div class="text-\[10px\] font-semibold mt-0.5 tracking-wide opacity-80 flex items-center gap-1 min-w-0" :class="getCourseTheme(course).textSub">
+                         <span class="material-symbols-outlined text-[10px] flex-shrink-0">person</span> 
+                         <span class="truncate" :title="course.professor">{{ course.professor }}</span>
                        </div>
                        
                        <div class="text-\[10px\] font-semibold mt-1 tracking-wide opacity-70 uppercase" :class="getCourseTheme(course).textSub">
