@@ -1,5 +1,6 @@
 import CourseService from '../services/CourseService.js';
 import ScheduleGeneratorService from '../services/ScheduleGeneratorService.js';
+import UIStateService from '../services/UIStateService.js';
 import SubjectCard from './SubjectCard.js';
 import FilterPanel from './FilterPanel.js';
 import SelectionPanel from './SelectionPanel.js';
@@ -38,6 +39,35 @@ export default {
     };
   },
 
+  emits: ['schedules-generated', 'selections-changed', 'subjects-filtered'],
+
+  watch: {
+    selectedItems: {
+      handler(items) {
+        this.$emit('selections-changed', {
+          items,
+          onlyOpenSections: this.onlyOpenSections,
+          selectedCampus: this.selectedCampus
+        });
+      },
+      deep: true
+    },
+    onlyOpenSections(val) {
+      this.$emit('selections-changed', {
+        items: this.selectedItems,
+        onlyOpenSections: val,
+        selectedCampus: this.selectedCampus
+      });
+    },
+    selectedCampus(val) {
+      this.$emit('selections-changed', {
+        items: this.selectedItems,
+        onlyOpenSections: this.onlyOpenSections,
+        selectedCampus: val
+      });
+    }
+  },
+
   async mounted() {
     try {
       this.loading = true;
@@ -49,6 +79,9 @@ export default {
       this.subjects = ScheduleGeneratorService.groupCoursesBySubject(this.courses);
       this.filteredSubjects = [...this.subjects];
       this.initializeFilters();
+
+      // Restore saved selections from localStorage
+      this._restoreSelectionsFromStorage();
 
       // Animate initial load
       this.$nextTick(() => {

@@ -147,6 +147,12 @@ const app = createApp({
       this.generatedSchedules = schedules;
     },
 
+    handleSelectionsChanged(data) {
+      this.selectedItems = data.items || [];
+      this.onlyOpenSections = data.onlyOpenSections ?? true;
+      this.selectedCampus = data.selectedCampus ?? '';
+    },
+
     toggleAdvancedOptions() {
       this.showAdvancedOptions = !this.showAdvancedOptions;
     },
@@ -240,7 +246,7 @@ const app = createApp({
       <main class="flex-1 flex flex-col lg:flex-row overflow-hidden p-0 lg:p-0 gap-4 lg:gap-6 w-full max-w-[1800px] mx-auto relative z-10">
         <!-- Main Hybrid Selector -->
         <div class="w-full lg:w-[45%] flex flex-col bg-panel-bg border border-border-color rounded-2xl shadow-panel overflow-hidden flex-none">
-          <section-selector @schedules-generated="handleSchedulesGenerated" />
+          <section-selector @schedules-generated="handleSchedulesGenerated" @selections-changed="handleSelectionsChanged" />
         </div>
         
         <div class="w-full lg:w-[55%] flex flex-col bg-panel-bg border border-border-color rounded-2xl shadow-panel overflow-hidden relative">
