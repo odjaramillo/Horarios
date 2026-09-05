@@ -1,5 +1,8 @@
 import { decodeHtmlEntities } from '../utils/HtmlUtils.js';
 
+// Dataset unificado de secciones; se regenera con "npm run merge"
+const DATA_FILE = 'data/courses.json';
+
 export default {
   _courses: [],
   
@@ -39,46 +42,14 @@ export default {
 
   async loadJsonData() {
     try {
-      // Array con los nombres de los archivos de resultados
-      const resultFiles = [];
-      
-      // Archivo base sin número
-      resultFiles.push('results.json');
-      
-      // Archivo generado desde HTML
-      resultFiles.push('generado.json');
-      
-      // Añadir archivos numerados (results1.json, results2.json, etc.)
-      for (let i = 1; i <= 20; i++) {
-        resultFiles.push(`results${i}.json`);
+      // Dataset unificado que genera scripts/merge-search-results.js
+      const response = await fetch(DATA_FILE);
+
+      if (!response.ok) {
+        throw new Error(`Error HTTP ${response.status} al cargar ${DATA_FILE}. Ejecuta "npm run merge".`);
       }
-      
-      // Filtramos para incluir solo archivos que existen
-      const existingFiles = await Promise.all(
-        resultFiles.map(async file => {
-          try {
-            const response = await fetch(file, { method: 'HEAD' });
-            return response.ok ? file : null;
-          } catch (e) {
-            return null;
-          }
-        })
-      );
-      
-      // Cargamos todos los archivos existentes
-      const responses = await Promise.all(
-        existingFiles.filter(Boolean).map(file => fetch(file))
-      );
-      
-      // Procesamos la respuesta de cada archivo
-      const jsonDataArray = await Promise.all(
-        responses.map(response => {
-          if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-          }
-          return response.json();
-        })
-      );
+
+      const jsonDataArray = [await response.json()];
       
       // Combinamos todos los datos de los cursos
       const combinedCourses = [];
@@ -139,7 +110,7 @@ export default {
       
     } catch (error) {
       console.error('Error cargando datos JSON:', error);
-      return [];
+      throw error;
     }
   },
   
