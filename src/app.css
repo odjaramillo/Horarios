@@ -1,0 +1,183 @@
+@import 'tailwindcss';
+
+/* El tema se controla con una clase en <html>, no solo con la preferencia del SO */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* --------------------------------------------------------------------------
+   Capa semántica.
+   Los componentes nombran el papel que cumple un color ("panel", "borde"),
+   nunca el color en sí. Cambiar de tema solo reescribe estas variables.
+   -------------------------------------------------------------------------- */
+:root {
+  --surface: oklch(0.976 0.002 260);
+  --panel: oklch(1 0 0);
+  --panel-soft: oklch(0.98 0.003 260);
+  --line: oklch(0.912 0.005 260);
+  --line-strong: oklch(0.85 0.008 260);
+  --ink: oklch(0.21 0.012 260);
+  --ink-soft: oklch(0.48 0.014 260);
+  --ink-faint: oklch(0.62 0.012 260);
+  --brand: oklch(0.53 0.21 275);
+  --brand-ink: oklch(1 0 0);
+  --brand-soft: oklch(0.955 0.025 275);
+  --accent: oklch(0.72 0.16 65);
+  --accent-soft: oklch(0.96 0.04 80);
+  --danger: oklch(0.6 0.21 20);
+  --danger-soft: oklch(0.96 0.03 20);
+  --ok: oklch(0.62 0.15 155);
+  --ok-soft: oklch(0.95 0.04 155);
+  --ring: oklch(0.53 0.21 275 / 0.55);
+  --shadow-panel: 0 1px 2px oklch(0 0 0 / 0.04), 0 8px 24px -12px oklch(0 0 0 / 0.12);
+}
+
+.dark {
+  --surface: oklch(0.17 0.008 265);
+  --panel: oklch(0.219 0.011 265);
+  --panel-soft: oklch(0.26 0.012 265);
+  --line: oklch(0.31 0.012 265);
+  --line-strong: oklch(0.39 0.014 265);
+  --ink: oklch(0.955 0.004 265);
+  --ink-soft: oklch(0.75 0.012 265);
+  --ink-faint: oklch(0.6 0.012 265);
+  --brand: oklch(0.72 0.15 275);
+  --brand-ink: oklch(0.17 0.02 275);
+  --brand-soft: oklch(0.3 0.06 275);
+  --accent: oklch(0.79 0.14 70);
+  --accent-soft: oklch(0.32 0.06 70);
+  --danger: oklch(0.7 0.17 20);
+  --danger-soft: oklch(0.32 0.07 20);
+  --ok: oklch(0.75 0.14 155);
+  --ok-soft: oklch(0.3 0.06 155);
+  --ring: oklch(0.72 0.15 275 / 0.6);
+  --shadow-panel: 0 1px 2px oklch(0 0 0 / 0.3), 0 8px 24px -12px oklch(0 0 0 / 0.6);
+}
+
+@theme inline {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Lexend', 'Inter', ui-sans-serif, sans-serif;
+
+  --color-surface: var(--surface);
+  --color-panel: var(--panel);
+  --color-panel-soft: var(--panel-soft);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+
+  --shadow-panel: var(--shadow-panel);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Las horas y los NRC se leen en columna: números de ancho fijo */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Un solo anillo de foco para toda la app, visible en ambos temas */
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  ::selection {
+    background: var(--brand-soft);
+    color: var(--ink);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Color por materia.
+   Una sola regla sirve para cualquier cantidad de materias: el componente pasa
+   un tono en --h y el resto (fondo, borde, texto) se deriva de él. Así el
+   contraste queda garantizado por construcción en vez de elegido a mano.
+   -------------------------------------------------------------------------- */
+.hued {
+  background-color: oklch(0.955 0.045 var(--h));
+  border-color: oklch(0.85 0.085 var(--h));
+  color: oklch(0.42 0.13 var(--h));
+}
+
+.dark .hued {
+  background-color: oklch(0.315 0.055 var(--h));
+  border-color: oklch(0.44 0.09 var(--h));
+  color: oklch(0.9 0.08 var(--h));
+}
+
+.hued-dot {
+  background-color: oklch(0.62 0.16 var(--h));
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+
+  /* Barra ancha y con contraste: la fina de por defecto no se ve ni se agarra */
+  .scrollbar-wide {
+    scrollbar-width: auto;
+    scrollbar-color: var(--line-strong) var(--panel-soft);
+  }
+
+  .scrollbar-wide::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  .scrollbar-wide::-webkit-scrollbar-track {
+    background: var(--panel-soft);
+    border-radius: 999px;
+  }
+
+  .scrollbar-wide::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border: 3px solid var(--panel-soft);
+    border-radius: 999px;
+  }
+
+  .scrollbar-wide::-webkit-scrollbar-thumb:hover {
+    background: var(--ink-faint);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
