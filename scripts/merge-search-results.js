@@ -11,7 +11,10 @@
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 
+import { applyUcabRows } from '../src/lib/domain/ucab.js';
+
 const DATA_DIR = 'data';
+const UCAB_FILE = join('data', 'ucab-schedules.json');
 const PLAN_FILE = join('data', 'malla-informatica.json');
 const OUTPUT_FILE = join('public', 'courses.json');
 const SOURCE_PATTERN = /^searchResults\d*(\.json)?$/;
@@ -351,6 +354,39 @@ async function attachPlan(subjects) {
   };
 }
 
+/**
+ * Suma lo que solo publica la Escuela: profesor y modalidad.
+ *
+ * Es opcional a propósito. Si el archivo no está, el merge sigue dando datos
+ * correctos, solo que sin profesores; así nadie queda bloqueado por no haber
+ * corrido `npm run ucab`.
+ *
+ * @param {Array} subjects - Materias agrupadas desde Banner
+ * @return {Promise<Object|null>} Resumen del cruce, o null si no hay archivo
+ */
+async function applyUcabSchedules(subjects) {
+  let file;
+
+  try {
+    file = JSON.parse(await readFile(UCAB_FILE, 'utf8'));
+  } catch {
+    console.warn(`\u26a0\ufe0f  No se encontró ${UCAB_FILE}; las secciones quedan sin profesor.`);
+    console.warn('   Corre `npm run ucab` para bajarlo de la página de la Escuela.');
+    return null;
+  }
+
+  const report = applyUcabRows({ subjects, rows: file.rows ?? [] });
+
+  console.log(
+    `\ud83d\udc64 Escuela: ${report.withProfessor} secciones con profesor, ` +
+      `${report.added} que Banner no trajo (${report.newSubjects} materias nuevas)`
+  );
+
+  if (report.skipped > 0) console.warn(`\u26a0\ufe0f  ${report.skipped} filas de la Escuela sin NRC.`);
+
+  return { fetchedAt: file.fetchedAt, term: file.term, ...report };
+}
+
 const { sections: rawSections, files } = await readPages();
 
 const byCrn = new Map();
@@ -366,6 +402,10 @@ if (terms.length > 1) {
 }
 
 const subjects = groupIntoSubjects(unique);
+const ucab = await applyUcabSchedules(subjects);
+
+// El cruce va antes de unir el plan a propósito: si la Escuela publica una
+// materia que Banner no trajo, el plan tiene que verla como dictada.
 const plan = await attachPlan(subjects);
 const termCode = unique[0]?.term ?? '';
 const termLabel = decodeEntities(terms[0] ?? '').replace(/^\d+\s*/, '');
@@ -379,16 +419,23 @@ await writeFile(
     term: { code: termCode, label: termLabel, start, end },
     plan,
     sourceFiles: files,
+    ucab,
     subjects
   })
 );
 
-const withSchedule = unique.filter(section => toMeetings(section.meetingsFaculty).length > 0).length;
+// Se cuenta sobre la salida y no sobre Banner: si no, el resumen deja fuera
+// las secciones que aportó la Escuela.
+const allSections = subjects.flatMap(subject => subject.sections);
+const withSchedule = allSections.filter(section => section.meetings.length > 0).length;
 const bytes = (await readFile(OUTPUT_FILE)).length;
 
 console.log(`📄 ${files.length} páginas leídas: ${files.join(', ')}`);
 console.log(`🎓 Período: ${termCode} ${termLabel} (${start} → ${end})`);
-console.log(`✅ ${subjects.length} materias, ${unique.length} secciones (${unique.length - withSchedule} sin horario)`);
+console.log(
+  `✅ ${subjects.length} materias, ${allSections.length} secciones ` +
+    `(${allSections.length - withSchedule} sin horario)`
+);
 if (plan) {
   const conPlan = subjects.filter(subject => subject.semester !== undefined).length;
   const sinDictar = plan.subjects.filter(entry => !entry.offered).length;

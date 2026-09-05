@@ -180,9 +180,10 @@ return {
 
 1. **No Build Required**: Edit `.js` files directly; browser loads ES modules
 2. **Testing**: Open `test-*.html` files in browser for manual testing
-3. **Data Files**: two generated artifacts, neither edited by hand.
+3. **Data Files**: three generated artifacts, none edited by hand.
    - `npm run plan` reads `data/plan-de-estudio.pdf` (the official curriculum) and writes `data/malla-informatica.json`. Page 1 of that PDF is a table whose "Prelaciones" column spells out every prerequisite, so nothing is transcribed from the diagram. Visual placement — area colour and row — lives in `data/diagrama-informatica.json`, which is hand-maintained and only ever read.
    - `npm run merge` reads the paginated `data/searchResults*` responses downloaded from Banner, joins the curriculum, and writes `public/courses.json`. It validates the join against the credit totals the curriculum declares per semester and warns on any mismatch.
+   - `npm run ucab` calls the two public RPCs behind the School's enrolment page and writes `data/ucab-schedules.json`. Banner returns an empty `faculty` array for every section, so this is the only source for the lecturer's name and for the P/V modality; it also lists sections Banner's search never returned. `npm run merge` folds it in by CRN, and skips it with a warning when the file is absent.
    - Requires `pdftotext` (poppler-utils) for `npm run plan` only.
 4. **No TypeScript**: Use JSDoc and plain JavaScript
 5. **Browser Compatibility**: Target modern browsers (Chrome, Firefox, Safari, Edge)

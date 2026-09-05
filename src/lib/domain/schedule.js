@@ -108,8 +108,10 @@ export function usableSections(subject, options = {}) {
 
   return subject.sections.filter(section => {
     if (section.meetings.length === 0) return false;
-    if (availability === 'open' && !section.open) return false;
-    if (availability === 'closed' && section.open) return false;
+    // `open` en null significa que no sabemos: la Escuela publica esas
+    // secciones sin cupos. Esconderlas sería afirmar que están cerradas.
+    if (availability === 'open' && section.open === false) return false;
+    if (availability === 'closed' && section.open !== false) return false;
     if (campus && section.campus !== campus) return false;
     if (allowedCrns && !allowedCrns.has(section.crn)) return false;
 

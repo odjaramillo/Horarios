@@ -170,10 +170,12 @@
               <span class="flex flex-wrap items-center gap-x-2">
                 <span class="tabular font-semibold">SEC {section.seq}</span>
                 <span class="tabular text-ink-faint">NRC {section.crn}</span>
-                {#if !section.open}
+                {#if section.open === false}
                   <span class="rounded bg-danger-soft px-1.5 py-px font-semibold text-danger">Cerrada</span>
-                {:else}
+                {:else if section.seats}
                   <span class="tabular text-ok">{section.seats.free} cupos</span>
+                {:else}
+                  <span class="text-ink-faint">sin datos de cupos</span>
                 {/if}
               </span>
               <span class="mt-0.5 block text-ink-soft">{describeMeetings(section)}</span>

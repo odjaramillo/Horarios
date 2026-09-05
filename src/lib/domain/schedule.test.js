@@ -82,6 +82,17 @@ test('usableSections filtra por disponibilidad en sus tres estados', () => {
   assert.equal(usableSections(target, { availability: 'all' }).length, 2);
 });
 
+test('una sección sin dato de cupos no se esconde como si estuviera cerrada', () => {
+  const target = subject('FING00001', [
+    section('a', monday9to11, { open: false }),
+    section('b', tuesday9to11, { open: null })
+  ]);
+
+  assert.deepEqual(usableSections(target, { availability: 'open' }).map(entry => entry.crn), ['b']);
+  assert.deepEqual(usableSections(target, { availability: 'closed' }).map(entry => entry.crn), ['a']);
+  assert.equal(usableSections(target, { availability: 'all' }).length, 2);
+});
+
 test('usableSections descarta la sección que cae en un día vetado', () => {
   const target = subject('FING00001', [section('a', monday9to11), section('b', tuesday9to11)]);
 
