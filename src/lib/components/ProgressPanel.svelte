@@ -334,13 +334,25 @@
           {#each semesters as semester (semester)}
             <header
               data-column={semester}
-              class="relative flex items-baseline justify-between gap-2 px-0.5 pb-1"
+              class="relative space-y-1 px-0.5 pb-1"
               style="grid-column: {semesters.indexOf(semester) + 1}; grid-row: 1"
             >
-              <h3 class="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
-                Sem {semester}
-              </h3>
-              <span class="tabular text-[11px] text-ink-faint">{creditsOf(semester)} UC</span>
+              <div class="flex items-baseline justify-between gap-2">
+                <h3 class="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+                  Sem {semester}
+                </h3>
+                <span class="tabular text-[11px] text-ink-faint">{creditsOf(semester)} UC</span>
+              </div>
+
+              <button
+                type="button"
+                onclick={() => planner.approveUpTo(semester)}
+                disabled={isDone(semester)}
+                class="w-full rounded-lg border border-line py-1 text-[11px] font-semibold text-ink-soft
+                       transition-colors hover:bg-panel-soft disabled:opacity-40"
+              >
+                {isDone(semester) ? 'Completo' : 'Aprobé hasta aquí'}
+              </button>
             </header>
           {/each}
 

@@ -5,8 +5,10 @@ import { readFile } from 'node:fs/promises';
 import {
   approvedCredits,
   availableNow,
+  electiveEligibility,
   eligibility,
   expandApproved,
+  openElectiveSlots,
   subjectsUpTo,
   withoutApproved
 } from './progress.js';
@@ -164,4 +166,43 @@ test('un ciclo en los datos no cuelga el desmarcado', () => {
   ];
 
   assert.deepEqual(withoutApproved(['X', 'Y'], 'X', roto), []);
+});
+
+const electivePlan = [
+  ...plan,
+  { id: 'SLOT-A', name: 'Electiva (Informática)', semester: 7, credits: 3, offered: false, electiveSlot: true, creditGate: 172 },
+  { id: 'SLOT-B', name: 'Electiva (Complementaria)', semester: 7, credits: 3, offered: false, electiveSlot: true, creditGate: 138 }
+];
+
+test('openElectiveSlots devuelve las ranuras que faltan por cubrir', () => {
+  assert.deepEqual(openElectiveSlots(electivePlan, new Set()).map(s => s.id), ['SLOT-A', 'SLOT-B']);
+  assert.deepEqual(openElectiveSlots(electivePlan, new Set(['SLOT-B'])).map(s => s.id), ['SLOT-A']);
+  assert.deepEqual(openElectiveSlots(electivePlan, new Set(['SLOT-A', 'SLOT-B'])), []);
+});
+
+test('una electiva concreta se mide contra la ranura menos exigente', () => {
+  const slots = openElectiveSlots(electivePlan, new Set());
+
+  assert.equal(electiveEligibility(slots, 140).ok, true, '140 UC pasan la ranura de 138');
+  assert.equal(electiveEligibility(slots, 100).ok, false);
+  assert.equal(electiveEligibility(slots, 100).creditsShort, 38);
+  assert.equal(electiveEligibility(slots, 100).slot.id, 'SLOT-B');
+});
+
+test('cubierta la ranura barata, la electiva se mide contra la que queda', () => {
+  const slots = openElectiveSlots(electivePlan, new Set(['SLOT-B']));
+
+  assert.equal(electiveEligibility(slots, 140).ok, false, 'ahora hay que llegar a 172');
+  assert.equal(electiveEligibility(slots, 140).creditsShort, 32);
+});
+
+test('sin ranuras libres la electiva ya no aporta nada', () => {
+  const result = electiveEligibility([], 240);
+
+  assert.equal(result.ok, false);
+  assert.equal(result.slotsFilled, true);
+});
+
+test('una electiva nunca se bloquea por prerrequisitos', () => {
+  assert.deepEqual(electiveEligibility(openElectiveSlots(electivePlan, new Set()), 200).missing, []);
 });

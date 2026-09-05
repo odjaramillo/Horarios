@@ -1,9 +1,10 @@
 import { generateSchedules, parseTime } from '../domain/schedule.js';
 import {
   approvedCredits,
-  availableNow,
+  electiveEligibility,
   eligibility,
   expandApproved,
+  openElectiveSlots,
   withoutApproved
 } from '../domain/progress.js';
 
@@ -140,8 +141,15 @@ class Planner {
 
   earnedCredits = $derived(approvedCredits(this.progress.approved, this.planSubjects));
 
-  /** Materias que se dictan y que el avance actual habilita */
-  eligibleNow = $derived(availableNow(this.progress.approved, this.planSubjects));
+  /** Ranuras de electiva del plan que siguen libres */
+  openElectives = $derived(openElectiveSlots(this.planSubjects, this.progress.approved));
+
+  /**
+   * Materias que se dictan y que el avance actual habilita.
+   * Se cuenta sobre el catálogo, no sobre el plan, para que el número coincida
+   * con lo que el filtro deja ver: las electivas concretas también entran.
+   */
+  eligibleNow = $derived(this.data.subjects.filter(subject => this.eligibilityOf(subject)?.ok));
 
   campuses = $derived(
     [...new Set(this.data.subjects.flatMap(subject => subject.sections.map(section => section.campus)))]
@@ -351,9 +359,13 @@ class Planner {
    */
   eligibilityOf(subject) {
     const entry = this.planSubjects.find(current => current.id === subject.id);
-    if (!entry) return null;
 
-    return eligibility(entry, this.progress.approved, this.earnedCredits);
+    if (entry) return eligibility(entry, this.progress.approved, this.earnedCredits);
+
+    // Una electiva concreta no figura en el plan, pero llena una de sus ranuras
+    if (subject.elective) return electiveEligibility(this.openElectives, this.earnedCredits);
+
+    return null;
   }
 
   /**

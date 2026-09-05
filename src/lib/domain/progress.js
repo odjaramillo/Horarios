@@ -120,6 +120,43 @@ export function eligibility(subject, approved, credits) {
 }
 
 /**
+ * Ranuras de electiva del plan que todavía no están cubiertas
+ * @param {Array} planSubjects - Materias del plan
+ * @param {Set<String>} approved - Identificadores aprobados
+ * @return {Array} Ranuras libres
+ */
+export function openElectiveSlots(planSubjects, approved) {
+  return planSubjects.filter(subject => subject.electiveSlot && !approved.has(subject.id));
+}
+
+/**
+ * Comprueba si una electiva concreta se puede inscribir.
+ *
+ * El plan reserva ranuras ("Electiva (Informática)", "Electiva
+ * (Complementaria)") sin decir qué asignatura las llena; Banner ofrece
+ * electivas concretas que no figuran en el plan. Una concreta sirve para
+ * cualquier ranura libre, así que se mide contra la menos exigente: decir que
+ * no puedes inscribirla cuando sí puedes es peor que lo contrario.
+ *
+ * @param {Array} slots - Ranuras de electiva libres
+ * @param {Number} credits - Créditos acumulados
+ * @return {Object} Motivos del bloqueo, con la ranura elegida
+ */
+export function electiveEligibility(slots, credits) {
+  if (slots.length === 0) {
+    return { ok: false, missing: [], creditsShort: 0, slotsFilled: true };
+  }
+
+  const cheapest = slots.reduce((best, slot) =>
+    (slot.creditGate ?? 0) < (best.creditGate ?? 0) ? slot : best
+  );
+
+  const creditsShort = Math.max(0, (cheapest.creditGate ?? 0) - credits);
+
+  return { ok: creditsShort === 0, missing: [], creditsShort, slot: cheapest };
+}
+
+/**
  * Materias que se pueden inscribir ahora mismo
  * @param {Set<String>} approved - Identificadores aprobados
  * @param {Array} planSubjects - Materias del plan
