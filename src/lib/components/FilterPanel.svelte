@@ -190,13 +190,19 @@
       </div>
 
       {#if planner.approvedIds.length > 0}
-        <label
-          class="flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-panel px-2.5 py-2
-                 text-xs font-medium"
-        >
-          <input type="checkbox" bind:checked={planner.filters.eligibleOnly} class="accent-[var(--brand)]" />
-          Solo las que puedo inscribir ahora
-          <span class="tabular ml-auto text-ink-faint">{planner.eligibleNow.length}</span>
+        <label class="block">
+          <span class="mb-1 block text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+            Según mi avance
+          </span>
+          <select
+            bind:value={planner.filters.progress}
+            class="w-full rounded-lg border border-line bg-panel px-2.5 py-1.5 text-xs font-medium"
+          >
+            <option value="">Todas las materias</option>
+            <option value="inscribibles">Las que puedo inscribir ahora ({planner.eligibleNow.length})</option>
+            <option value="pendientes">Las que me faltan por aprobar</option>
+            <option value="aprobadas">Las que ya aprobé</option>
+          </select>
         </label>
       {/if}
 

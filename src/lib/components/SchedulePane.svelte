@@ -61,6 +61,19 @@
         <span>{weeklyHours(current)} h/sem</span>
       </div>
 
+      {#if planner.lockedCount > 0}
+        <button
+          type="button"
+          onclick={() => planner.unlockAll()}
+          class="flex items-center gap-1 rounded-lg border border-accent/50 bg-accent-soft px-2.5 py-1
+                 text-[11px] font-semibold text-accent transition-colors hover:opacity-80"
+          title="Vuelve a considerar todas las secciones de cada materia"
+        >
+          <Icon name="pin" size={12} />
+          {planner.lockedCount} fijada{planner.lockedCount > 1 ? 's' : ''} · soltar
+        </button>
+      {/if}
+
       <div class="ml-auto flex items-center gap-1">
         <div class="mr-1 flex items-center rounded-xl border border-line p-0.5 lg:hidden">
           <button
