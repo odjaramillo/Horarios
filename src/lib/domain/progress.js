@@ -40,6 +40,44 @@ export function expandApproved(declared, planSubjects) {
 }
 
 /**
+ * Quita una materia de lo aprobado, y con ella todo lo que dependía.
+ *
+ * Es el reverso exacto de expandApproved. Si aprobar Cálculo Integral implica
+ * haber aprobado Cálculo Diferencial, entonces decir que NO aprobaste
+ * Diferencial implica que tampoco aprobaste Integral. Dejar Integral marcada
+ * volvería a deducir Diferencial y el clic no tendría efecto visible.
+ *
+ * @param {Array<String>} declared - Identificadores marcados a mano
+ * @param {String} id - Materia que se desmarca
+ * @param {Array} planSubjects - Materias del plan
+ * @return {Array<String>} Lo marcado que sobrevive
+ */
+export function withoutApproved(declared, id, planSubjects) {
+  const dependents = new Map();
+
+  for (const subject of planSubjects) {
+    for (const required of subject.requires ?? []) {
+      if (!dependents.has(required)) dependents.set(required, []);
+      dependents.get(required).push(subject.id);
+    }
+  }
+
+  const doomed = new Set([id]);
+  const pending = [id];
+
+  while (pending.length > 0) {
+    for (const dependent of dependents.get(pending.pop()) ?? []) {
+      if (doomed.has(dependent)) continue;
+
+      doomed.add(dependent);
+      pending.push(dependent);
+    }
+  }
+
+  return declared.filter(current => !doomed.has(current));
+}
+
+/**
  * Créditos acumulados por lo aprobado
  * @param {Set<String>|Array<String>} approved - Identificadores aprobados
  * @param {Array} planSubjects - Materias del plan

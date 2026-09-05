@@ -7,7 +7,8 @@ import {
   availableNow,
   eligibility,
   expandApproved,
-  subjectsUpTo
+  subjectsUpTo,
+  withoutApproved
 } from './progress.js';
 
 const plan = [
@@ -99,7 +100,9 @@ test('availableNow deja fuera lo aprobado, lo bloqueado y lo que no se dicta', (
   assert.deepEqual(ids.sort(), ['C', 'D'], 'A está aprobada, E no alcanza créditos, F no se dicta');
 });
 
-test('el plan real no tiene prerrequisitos que apunten a un semestre igual o posterior', async () => {
+test('el plan real no tiene prerrequisitos que apunten a un semestre posterior', async () => {
+  // El mismo semestre es válido: el Trabajo de Grado exige el Curso de Trabajo
+  // de Grado, y los dos están en el octavo.
   const courses = JSON.parse(
     await readFile(new URL('../../../public/courses.json', import.meta.url), 'utf8')
   );
@@ -109,7 +112,7 @@ test('el plan real no tiene prerrequisitos que apunten a un semestre igual o pos
     for (const required of subject.requires ?? []) {
       assert.ok(semesterOf.has(required), `${subject.name} requiere un id inexistente`);
       assert.ok(
-        semesterOf.get(required) < subject.semester,
+        semesterOf.get(required) <= subject.semester,
         `${subject.name} (sem ${subject.semester}) requiere algo de sem ${semesterOf.get(required)}`
       );
     }
@@ -126,4 +129,39 @@ test('sobre el plan real, marcar Cálculo Integral deduce toda su cadena', async
   assert.ok(inferred.has('FING02003'), 'debería deducir Cálculo Diferencial');
   assert.ok(inferred.has('FING02002'), 'y Álgebra y Trigonometría');
   assert.equal(approved.size, 3);
+});
+
+test('desmarcar una materia suelta también lo que dependía de ella', () => {
+  // Con A, B y C marcadas a mano, quitar A debe llevarse B y C
+  const result = withoutApproved(['A', 'B', 'C', 'D'], 'A', plan);
+
+  assert.deepEqual(result, ['D']);
+});
+
+test('desmarcar no toca cadenas ajenas', () => {
+  assert.deepEqual(withoutApproved(['C', 'D'], 'D', plan), ['C']);
+});
+
+test('desmarcar en medio de la cadena arrastra solo hacia adelante', () => {
+  const result = withoutApproved(['A', 'B', 'C'], 'B', plan);
+
+  assert.deepEqual(result, ['A'], 'A es anterior a B y sobrevive');
+});
+
+test('desmarcar y volver a expandir deja el estado consistente', () => {
+  const declared = withoutApproved(['C', 'D'], 'B', plan);
+  const { approved } = expandApproved(declared, plan);
+
+  assert.equal(approved.has('C'), false, 'C dependía de B');
+  assert.equal(approved.has('B'), false);
+  assert.deepEqual([...approved], ['D']);
+});
+
+test('un ciclo en los datos no cuelga el desmarcado', () => {
+  const roto = [
+    { id: 'X', semester: 1, credits: 1, requires: ['Y'] },
+    { id: 'Y', semester: 2, credits: 1, requires: ['X'] }
+  ];
+
+  assert.deepEqual(withoutApproved(['X', 'Y'], 'X', roto), []);
 });
