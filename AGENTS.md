@@ -180,7 +180,10 @@ return {
 
 1. **No Build Required**: Edit `.js` files directly; browser loads ES modules
 2. **Testing**: Open `test-*.html` files in browser for manual testing
-3. **Data Files**: `public/courses.json` is generated — never edit it by hand. Run `npm run merge` to rebuild it from the paginated `data/searchResults*` responses downloaded from Banner, joined with the curriculum map in `data/malla-informatica.json`. The script validates the join against the credit totals the curriculum declares per semester and warns on any mismatch.
+3. **Data Files**: two generated artifacts, neither edited by hand.
+   - `npm run plan` reads `data/plan-de-estudio.pdf` (the official curriculum) and writes `data/malla-informatica.json`. Page 1 of that PDF is a table whose "Prelaciones" column spells out every prerequisite, so nothing is transcribed from the diagram. Visual placement — area colour and row — lives in `data/diagrama-informatica.json`, which is hand-maintained and only ever read.
+   - `npm run merge` reads the paginated `data/searchResults*` responses downloaded from Banner, joins the curriculum, and writes `public/courses.json`. It validates the join against the credit totals the curriculum declares per semester and warns on any mismatch.
+   - Requires `pdftotext` (poppler-utils) for `npm run plan` only.
 4. **No TypeScript**: Use JSDoc and plain JavaScript
 5. **Browser Compatibility**: Target modern browsers (Chrome, Firefox, Safari, Edge)
 

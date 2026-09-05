@@ -241,64 +241,59 @@ async function attachPlan(subjects) {
   }
 
   const byTitle = new Map(subjects.map(subject => [titleKey(subject.title), subject]));
-
-  /**
-   * Identificador para una materia del plan que no se dicta este período
-   * @param {String} name - Nombre de la materia
-   * @return {String} Identificador estable
-   */
-  const planId = name => `plan:${titleKey(name)}`;
-
-  const idOf = name => byTitle.get(titleKey(name))?.id ?? planId(name);
+  const idOf = new Map(plan.subjects.map(entry => [entry.name, entry.id]));
 
   const creditGaps = [];
+  const codeGaps = [];
 
-  // El plan completo: las 54 materias de la carrera, se dicten o no este
+  // El plan completo: las 55 materias de la carrera, se dicten o no este
   // período. Los créditos de las que no se dictan igual cuentan para los
   // requisitos por créditos acumulados.
   const planSubjects = plan.subjects.map(entry => {
     const match = byTitle.get(titleKey(entry.name));
+    const requires = (entry.requires ?? []).map(name => idOf.get(name)).filter(Boolean);
+    const coreq = (entry.coreq ?? []).map(name => idOf.get(name)).filter(Boolean);
 
     if (match) {
+      if (match.id !== entry.id) codeGaps.push({ name: entry.name, plan: entry.id, banner: match.id });
+      if (entry.credits !== match.credits) {
+        creditGaps.push({ name: entry.name, plan: entry.credits, banner: match.credits });
+      }
+
       match.semester = entry.semester;
       match.area = entry.area;
+      match.row = entry.row;
       match.hue = plan.areas[entry.area]?.hue ?? null;
       if (entry.creditGate) match.creditGate = entry.creditGate;
-      if (entry.requires) match.requires = entry.requires.map(idOf);
-
-      if (entry.planCredits != null && entry.planCredits !== match.credits) {
-        creditGaps.push({ id: match.id, name: entry.name, plan: entry.planCredits, banner: match.credits });
-      }
+      if (requires.length > 0) match.requires = requires;
+      if (coreq.length > 0) match.coreq = coreq;
     }
 
     return {
-      id: match?.id ?? planId(entry.name),
+      id: entry.id,
       name: entry.name,
       semester: entry.semester,
+      row: entry.row,
       area: entry.area,
       hue: plan.areas[entry.area]?.hue ?? null,
-      credits: match ? match.credits : (entry.planCredits ?? 0),
+      credits: entry.credits,
       offered: Boolean(match),
-      ...(entry.requires ? { requires: entry.requires.map(idOf) } : {}),
+      ...(requires.length > 0 ? { requires } : {}),
+      ...(coreq.length > 0 ? { coreq } : {}),
       ...(entry.creditGate ? { creditGate: entry.creditGate } : {})
     };
   });
 
-  // Lo único comprobable de una flecha: su origen tiene que estar en un
-  // semestre anterior. No prueba que la flecha exista, pero atrapa las
-  // invertidas y las imposibles.
+  // Lo único comprobable de un requisito: no puede estar en un semestre
+  // posterior. El mismo semestre sí es válido: el Trabajo de Grado exige el
+  // Curso de Trabajo de Grado y ambos están en el octavo.
   const semesterOf = new Map(planSubjects.map(entry => [entry.id, entry.semester]));
 
   for (const entry of planSubjects) {
     for (const requiredId of entry.requires ?? []) {
-      if (!semesterOf.has(requiredId)) {
-        console.warn(`⚠️  ${entry.name} requiere una materia que no está en el plan.`);
-        continue;
-      }
-
-      if (semesterOf.get(requiredId) >= entry.semester) {
+      if (semesterOf.get(requiredId) > entry.semester) {
         console.warn(
-          `⚠️  ${entry.name} (sem ${entry.semester}) requiere algo de un semestre igual o posterior.`
+          `⚠️  ${entry.name} (sem ${entry.semester}) requiere algo de un semestre posterior.`
         );
       }
     }
@@ -306,23 +301,22 @@ async function attachPlan(subjects) {
 
   // La malla declara cuántos créditos suma cada semestre: sirve de suma de
   // control para detectar una materia mal ubicada al transcribirla.
-  const mismatched = [];
   for (const [semester, expected] of Object.entries(plan.semesterCredits ?? {})) {
     const actual = planSubjects
       .filter(entry => entry.semester === Number(semester))
       .reduce((sum, entry) => sum + entry.credits, 0);
 
-    if (actual !== expected) mismatched.push({ semester, actual, expected });
+    if (actual !== expected) {
+      console.warn(`⚠️  Semestre ${semester}: ${actual} UC calculadas contra ${expected} declaradas.`);
+    }
   }
 
-  for (const gap of mismatched) {
-    console.warn(
-      `⚠️  Semestre ${gap.semester}: ${gap.actual} UC calculadas contra ${gap.expected} declaradas en la malla.`
-    );
+  for (const gap of codeGaps) {
+    console.warn(`⚠️  ${gap.name}: el plan la codifica ${gap.plan} y Banner ${gap.banner}.`);
   }
 
   for (const gap of creditGaps) {
-    console.warn(`⚠️  ${gap.id} ${gap.name}: la malla dice ${gap.plan} UC y Banner ${gap.banner}.`);
+    console.warn(`⚠️  ${gap.name}: el plan dice ${gap.plan} UC y Banner ${gap.banner}.`);
   }
 
   const orphans = subjects.filter(subject => subject.semester === undefined).length;
@@ -333,11 +327,11 @@ async function attachPlan(subjects) {
   return {
     career: plan.career,
     plan: plan.plan,
+    source: plan.source,
     totalCredits: plan.totalCredits,
     semesters: plan.semesters,
     semesterCredits: plan.semesterCredits,
     areas: plan.areas,
-    prerequisiteNote: plan.prerequisiteNote,
     subjects: planSubjects
   };
 }
