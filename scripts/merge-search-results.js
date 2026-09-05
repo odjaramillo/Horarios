@@ -11,6 +11,7 @@
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 
+import { linkPractices } from '../src/lib/domain/practices.js';
 import { applyUcabRows, electiveKindOf } from '../src/lib/domain/ucab.js';
 
 const DATA_DIR = 'data';
@@ -424,6 +425,15 @@ const ucab = await applyUcabSchedules(subjects);
 // El cruce va antes de unir el plan a propósito: si la Escuela publica una
 // materia que Banner no trajo, el plan tiene que verla como dictada.
 const plan = await attachPlan(subjects, ucab !== null);
+
+// Va después de unir el plan: la práctica hereda el semestre de su teoría, y
+// la teoría solo lo tiene una vez cruzada con la malla.
+const practices = linkPractices(subjects);
+
+console.log(`\ud83e\uddea ${practices.linked} prácticas atadas a su teoría`);
+for (const id of practices.orphans) {
+  console.warn(`\u26a0\ufe0f  ${id}: es una práctica y su teoría no se dicta este período.`);
+}
 const termCode = unique[0]?.term ?? '';
 const termLabel = decodeEntities(terms[0] ?? '').replace(/^\d+\s*/, '');
 const { start, end } = termDates(unique);
@@ -454,8 +464,10 @@ console.log(
     `(${allSections.length - withSchedule} sin horario)`
 );
 if (plan) {
-  const conPlan = subjects.filter(subject => subject.semester !== undefined).length;
-  const sinDictar = plan.subjects.filter(entry => !entry.offered).length;
+  // Sobre las entradas del plan, no sobre las materias dictadas: una práctica
+  // hereda el semestre de su teoría y haría que la cuenta pasara de 55.
+  const conPlan = plan.subjects.filter(entry => entry.offered).length;
+  const sinDictar = plan.subjects.length - conPlan;
   console.log(`🎯 plan de ${plan.subjects.length} materias: ${conPlan} se dictan, ${sinDictar} no`);
 }
 console.log(`💾 ${OUTPUT_FILE} — ${(bytes / 1024).toFixed(0)} KB`);

@@ -362,6 +362,14 @@ class Planner {
 
     if (entry) return eligibility(entry, this.progress.approved, this.earnedCredits);
 
+    // La práctica se inscribe aparte, pero es la misma materia del plan: si
+    // puedes con la teoría, puedes con ella.
+    if (subject.practiceOf) {
+      const theory = this.planSubjects.find(current => current.id === subject.practiceOf);
+
+      if (theory) return eligibility(theory, this.progress.approved, this.earnedCredits);
+    }
+
     // Una electiva concreta no figura en el plan, pero llena la ranura de su
     // clase: las de INFO y FING la de Informática, el resto la Complementaria.
     if (subject.elective) {

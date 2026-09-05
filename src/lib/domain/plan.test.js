@@ -149,3 +149,27 @@ test('los identificadores del plan son únicos', () => {
 
   assert.equal(new Set(ids).size, ids.length, `repetidos: ${ids.filter((id, i) => ids.indexOf(id) !== i)}`);
 });
+
+test('cada práctica apunta a una teoría que existe y comparte su semestre', () => {
+  const byId = new Map(courses.subjects.map(subject => [subject.id, subject]));
+  const practices = courses.subjects.filter(subject => subject.practiceOf);
+
+  assert.ok(practices.length >= 10, `solo ${practices.length} prácticas atadas`);
+
+  for (const practice of practices) {
+    const theory = byId.get(practice.practiceOf);
+
+    assert.ok(theory, `${practice.id} apunta a ${practice.practiceOf}, que no está en la oferta`);
+    assert.equal(practice.semester, theory.semester, `${practice.id} y su teoría difieren de semestre`);
+  }
+});
+
+test('ninguna práctica se cuela entre las materias del plan', () => {
+  // Heredan el semestre para que los filtros las sitúen, pero la malla solo
+  // nombra la teoría: si entran al plan, los créditos se contarían dos veces.
+  const planIds = new Set(plan.map(subject => subject.id));
+
+  for (const practice of courses.subjects.filter(subject => subject.practiceOf)) {
+    assert.ok(!planIds.has(practice.id), `${practice.id} no debería estar en el plan`);
+  }
+});
