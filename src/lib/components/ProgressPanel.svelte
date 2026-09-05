@@ -286,7 +286,7 @@
       {/each}
     </nav>
 
-    <div class="relative min-h-0 min-w-0 flex-1">
+    <div class="relative flex min-h-0 min-w-0 flex-1 flex-col">
       <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
       <div
         bind:this={scroller}
@@ -300,7 +300,7 @@
         onpointercancel={onPointerUp}
         onclickcapture={onClickCapture}
         onkeydown={onKeydown}
-        class="scrollbar-wide h-full touch-pan-x overflow-auto scroll-p-4 p-4 outline-none
+        class="scrollbar-wide min-h-0 min-w-0 flex-1 overflow-auto scroll-p-4 p-4 outline-none
                {dragging ? 'cursor-grabbing select-none' : 'lg:cursor-grab'}"
       >
         <div
