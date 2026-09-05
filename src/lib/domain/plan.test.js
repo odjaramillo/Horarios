@@ -185,8 +185,18 @@ test('ningún horario junta una teoría con la práctica de otra sección', () =
 
   assert.ok(paired.length >= 5, `solo ${paired.length} prácticas con correspondencia declarada`);
 
+  let restringidas = 0;
+
   for (const practice of paired) {
     const theory = byId.get(practice.practiceOf);
+
+    // Sin esto la prueba pasaría en vacío: `pairingAllows` deja pasar todo lo
+    // que la tabla no nombra, así que hay que exigir que la teoría esté marcada.
+    assert.ok(
+      theory.sections.some(section => section.practiceCrns),
+      `ninguna sección de ${theory.id} quedó marcada con sus prácticas`
+    );
+
     const { schedules } = generateSchedules([theory, practice], { availability: 'all' });
 
     assert.ok(schedules.length > 0, `${practice.id} no produce ningún horario`);
@@ -197,10 +207,29 @@ test('ningún horario junta una teoría con la práctica de otra sección', () =
 
       if (!t || !p) continue;
 
+      restringidas += 1;
       assert.ok(
         pairingAllows(t, p),
         `${theory.id} ${t.crn} quedó con la práctica ${p.crn}, que no le corresponde`
       );
     }
   }
+
+  assert.ok(restringidas > 0, 'no se comprobó ninguna combinación real');
+});
+
+test('la correspondencia descarta combinaciones que sin ella existirían', () => {
+  const byId = new Map(courses.subjects.map(subject => [subject.id, subject]));
+  const practice = byId.get('INFOP2028');
+  const theory = byId.get(practice.practiceOf);
+
+  const { schedules } = generateSchedules([theory, practice], { availability: 'all' });
+
+  const combinaciones = schedules.filter(combo => combo.length === 2).length;
+  const sinRestriccion = theory.sections.length * practice.sections.length;
+
+  assert.ok(
+    combinaciones < sinRestriccion,
+    `salieron ${combinaciones} de ${sinRestriccion}: la restricción no está mordiendo`
+  );
 });
