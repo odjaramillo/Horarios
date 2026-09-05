@@ -180,7 +180,7 @@ return {
 
 1. **No Build Required**: Edit `.js` files directly; browser loads ES modules
 2. **Testing**: Open `test-*.html` files in browser for manual testing
-3. **Data Files**: `results.json` contains course data; `html-to-json.js` scrapes from HTML
+3. **Data Files**: `public/courses.json` is generated — never edit it by hand. Run `npm run merge` to rebuild it from the paginated `data/searchResults*` responses downloaded from Banner, joined with the curriculum map in `data/malla-informatica.json`. The script validates the join against the credit totals the curriculum declares per semester and warns on any mismatch.
 4. **No TypeScript**: Use JSDoc and plain JavaScript
 5. **Browser Compatibility**: Target modern browsers (Chrome, Firefox, Safari, Edge)
 

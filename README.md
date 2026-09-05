@@ -96,7 +96,7 @@ npm install
 │   │   └── ...
 │   └── utils/            # Utilidades
 ├── css/                   # Estilos
-├── results.json          # Datos de cursos
+├── public/courses.json   # Datos de cursos (generado con npm run merge)
 ├── docs/                 # Documentación
 │   ├── PRD.md           # Product Requirements
 │   ├── UIRD.md          # UI/UX Requirements  
@@ -179,7 +179,7 @@ ISC License - mira el archivo [LICENSE](LICENSE) para detalles.
 
 ## ⚠️ Notas
 
-- Los datos de cursos se actualizan manualmente desde `results.json`
+- Los datos de cursos se actualizan bajando las páginas del buscador de Banner a `data/searchResults*` y ejecutando `npm run merge`, que además cruza el plan de estudios de `data/malla-informatica.json` para asignar semestre y área a cada materia
 - La aplicación funciona sin backend - todos los datos se procesan en el navegador
 - Compatible con Chrome, Firefox, Safari y Edge (versiones actuales)
 

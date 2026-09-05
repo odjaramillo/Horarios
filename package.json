@@ -1,57 +1,43 @@
 {
   "name": "horarios-ucab",
   "version": "1.0.0",
-  "description": "Planificador de Horarios UCAB - Aplicación web para planificar horarios académicos de la Universidad Católica Andrés Bello",
+  "description": "Planificador de Horarios UCAB \u2014 arma y compara horarios acad\u00e9micos antes de inscribir",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Poletron/Horarios.git"
+    "url": "git+https://github.com/odjaramillo/Horarios.git"
   },
   "keywords": [
     "ucab",
     "schedule",
     "university",
     "planner",
-    "vue",
+    "svelte",
     "timetable"
   ],
   "author": "Oscar",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Poletron/Horarios/issues"
+    "url": "https://github.com/odjaramillo/Horarios/issues"
   },
-  "homepage": "https://github.com/Poletron/Horarios#readme",
-
+  "homepage": "https://github.com/odjaramillo/Horarios#readme",
   "scripts": {
-    "dev": "serve .",
-    "serve": "serve . -l 3000",
-    "serve:open": "serve . -l 3000 -o",
-    "lint": "echo 'No linter configured yet'",
-    "format": "echo 'No formatter configured yet'",
-    
-    "build": "echo 'Build not required for CDN-based setup'",
-    "build:vite": "echo 'Run npm install && npm run build:vite after Vite migration'",
-    
-    "deploy": "npx gh-pages -d . -m 'chore: deploy to GitHub Pages'",
-    "deploy:ci": "npx gh-pages -d . -m 'chore: deploy to GitHub Pages' --ci",
-    
-    "scrape": "node html-to-json.js",
-    "scrape:check": "node --check html-to-json.js",
-    
-    "test": "echo 'No tests configured yet. Consider adding Vitest after Vite migration.'"
+    "dev": "vite",
+    "build": "vite build --base=/Horarios/",
+    "preview": "vite preview",
+    "test": "node --test \"src/**/*.test.js\"",
+    "merge": "node scripts/merge-search-results.js",
+    "deploy": "npm run build && npx gh-pages -d dist -m \"chore: deploy to GitHub Pages\""
   },
-
-  "dependencies": {
-    "cheerio": "^1.1.2"
-  },
-
   "devDependencies": {
-    "serve": "^14.2.0"
+    "@sveltejs/vite-plugin-svelte": "^7.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "svelte": "^5.57.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.2.2"
   },
-
   "engines": {
     "node": ">=18.0.0"
   },
-
   "private": true
 }
