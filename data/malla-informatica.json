@@ -1,8 +1,19 @@
 {
   "career": "Ingeniería Informática",
   "plan": "Sept. 2026",
+  "source": "data/plan-de-estudio.pdf",
   "semesters": 8,
   "totalCredits": 241,
+  "semesterCredits": {
+    "1": 25,
+    "2": 31,
+    "3": 32,
+    "4": 33,
+    "5": 33,
+    "6": 30,
+    "7": 34,
+    "8": 23
+  },
   "areas": {
     "fundamentos": {
       "label": "Fundamentos de Ingeniería",
@@ -41,432 +52,578 @@
       "hue": 265
     }
   },
+  "note": "Generado por scripts/parse-plan-pdf.js desde la tabla del PDF oficial. El area y la fila salen de data/diagrama-informatica.json.",
   "subjects": [
     {
-      "code": "FING02002",
+      "id": "FING02002",
       "name": "Álgebra y Trigonometría",
+      "credits": 5,
       "semester": 1,
-      "area": "fundamentos"
-    },
-    {
-      "code": null,
-      "name": "Competencia Textual en Español",
-      "semester": 1,
-      "area": "integral",
-      "planCredits": 5
-    },
-    {
-      "code": "INFO02030",
-      "name": "Inglés",
-      "semester": 1,
-      "area": "integral"
-    },
-    {
-      "code": "FING02009",
-      "name": "Lógica",
-      "semester": 1,
-      "area": "programacion"
-    },
-    {
-      "code": "INFO02032",
-      "name": "Estrategia y Proyección Profesional",
-      "semester": 1,
-      "area": "software"
-    },
-    {
-      "code": null,
-      "name": "Identidad, Liderazgo y Compromiso I",
-      "semester": 1,
-      "area": "integral",
-      "planCredits": 3
-    },
-    {
-      "code": "FING02003",
-      "name": "Cálculo Diferencial",
-      "semester": 2,
       "area": "fundamentos",
+      "row": 0
+    },
+    {
+      "id": "UCAB00009",
+      "name": "Competencia Textual en Español",
+      "credits": 5,
+      "semester": 1,
+      "area": "integral",
+      "row": 1
+    },
+    {
+      "id": "INFO02030",
+      "name": "Inglés",
+      "credits": 3,
+      "semester": 1,
+      "area": "integral",
+      "row": 2
+    },
+    {
+      "id": "FING02009",
+      "name": "Lógica",
+      "credits": 4,
+      "semester": 1,
+      "area": "programacion",
+      "row": 3
+    },
+    {
+      "id": "INFO02032",
+      "name": "Estrategia y Proyección Profesional",
+      "credits": 5,
+      "semester": 1,
+      "area": "software",
+      "row": 4
+    },
+    {
+      "id": "UCAB00001",
+      "name": "Identidad, Liderazgo y Compromiso I",
+      "credits": 3,
+      "semester": 1,
+      "area": "integral",
+      "row": 5
+    },
+    {
+      "id": "FING02003",
+      "name": "Cálculo Diferencial",
+      "credits": 6,
+      "semester": 2,
       "requires": [
         "Álgebra y Trigonometría"
-      ]
+      ],
+      "area": "fundamentos",
+      "row": 0
     },
     {
-      "code": "FING02101",
+      "id": "FING02101",
       "name": "Álgebra Lineal",
+      "credits": 5,
       "semester": 2,
-      "area": "fundamentos"
+      "requires": [
+        "Álgebra y Trigonometría"
+      ],
+      "area": "fundamentos",
+      "row": 1
     },
     {
-      "code": "INFO02026",
+      "id": "INFO02026",
       "name": "Inglés Técnico",
+      "credits": 4,
       "semester": 2,
-      "area": "integral",
       "requires": [
         "Inglés"
-      ]
+      ],
+      "area": "integral",
+      "row": 2
     },
     {
-      "code": "INFO02000",
+      "id": "INFO02000",
       "name": "Matemáticas Discretas",
+      "credits": 6,
       "semester": 2,
-      "area": "programacion",
       "requires": [
         "Lógica"
-      ]
+      ],
+      "area": "programacion",
+      "row": 3
     },
     {
-      "code": "INFO02101",
+      "id": "INFO02101",
       "name": "Algoritmos y Programación",
+      "credits": 7,
       "semester": 2,
-      "area": "programacion"
+      "requires": [
+        "Lógica"
+      ],
+      "area": "programacion",
+      "row": 4
     },
     {
-      "code": null,
+      "id": "UCAB00002",
       "name": "Identidad, Liderazgo y Compromiso II",
+      "credits": 3,
       "semester": 2,
-      "area": "integral",
-      "planCredits": 3,
       "requires": [
         "Identidad, Liderazgo y Compromiso I"
-      ]
+      ],
+      "area": "integral",
+      "row": 5
     },
     {
-      "code": "FING02004",
+      "id": "FING02004",
       "name": "Cálculo Integral",
+      "credits": 5,
       "semester": 3,
-      "area": "fundamentos",
       "requires": [
         "Cálculo Diferencial"
-      ]
+      ],
+      "area": "fundamentos",
+      "row": 0
     },
     {
-      "code": "FING02115",
+      "id": "FING02115",
       "name": "Mecánica",
+      "credits": 6,
       "semester": 3,
-      "area": "fundamentos"
+      "requires": [
+        "Cálculo Diferencial"
+      ],
+      "area": "fundamentos",
+      "row": 1
     },
     {
-      "code": "INFO02005",
+      "id": "INFO02005",
       "name": "Organización del Computador",
+      "credits": 5,
       "semester": 3,
-      "area": "telematica"
+      "requires": [
+        "Matemáticas Discretas"
+      ],
+      "area": "telematica",
+      "row": 2
     },
     {
-      "code": null,
+      "id": "FACE00024",
       "name": "Contabilidad Financiera",
+      "credits": 5,
       "semester": 3,
+      "creditGate": 40,
       "area": "gerencial",
-      "planCredits": 5,
-      "creditGate": 40
+      "row": 3
     },
     {
-      "code": "INFO02002",
+      "id": "INFO02002",
       "name": "Algoritmos y Estructuras de Datos",
+      "credits": 7,
       "semester": 3,
-      "area": "programacion",
       "requires": [
         "Algoritmos y Programación"
-      ]
+      ],
+      "area": "programacion",
+      "row": 4
     },
     {
-      "code": "INFO02004",
+      "id": "INFO02004",
       "name": "Sistemas de Información",
+      "credits": 4,
       "semester": 3,
-      "area": "software"
+      "requires": [
+        "Estrategia y Proyección Profesional"
+      ],
+      "area": "software",
+      "row": 5
     },
     {
-      "code": null,
-      "name": "Ecología, Ambiente y Sustentabilidad",
-      "semester": 4,
-      "area": "integral",
-      "planCredits": 3,
-      "creditGate": 72
-    },
-    {
-      "code": "FING02105",
+      "id": "FING02105",
       "name": "Cálculo Vectorial",
+      "credits": 6,
       "semester": 4,
+      "requires": [
+        "Cálculo Integral",
+        "Álgebra Lineal"
+      ],
       "area": "fundamentos",
+      "row": 0
+    },
+    {
+      "id": "FING02011",
+      "name": "Probabilidad y Estadística",
+      "credits": 5,
+      "semester": 4,
       "requires": [
         "Cálculo Integral"
-      ]
+      ],
+      "area": "fundamentos",
+      "row": 1
     },
     {
-      "code": "FING02011",
-      "name": "Probabilidad y Estadística",
-      "semester": 4,
-      "area": "fundamentos"
-    },
-    {
-      "code": "INFO02010",
+      "id": "INFO02010",
       "name": "Sistemas Operativos",
+      "credits": 5,
       "semester": 4,
-      "area": "telematica",
       "requires": [
         "Organización del Computador"
-      ]
+      ],
+      "area": "telematica",
+      "row": 2
     },
     {
-      "code": "FING02016",
+      "id": "FING02016",
       "name": "Ingeniería Económica",
+      "credits": 4,
       "semester": 4,
-      "area": "gerencial",
       "requires": [
         "Contabilidad Financiera"
-      ]
+      ],
+      "area": "gerencial",
+      "row": 3
     },
     {
-      "code": "INFO02003",
+      "id": "INFO02003",
       "name": "Programación Orientada a Objetos",
+      "credits": 5,
       "semester": 4,
-      "area": "programacion",
       "requires": [
         "Algoritmos y Estructuras de Datos"
-      ]
+      ],
+      "area": "programacion",
+      "row": 4
     },
     {
-      "code": "INFO02007",
+      "id": "INFO02007",
       "name": "Ingeniería de Software",
+      "credits": 5,
       "semester": 4,
-      "area": "software",
       "requires": [
         "Sistemas de Información"
-      ]
-    },
-    {
-      "code": "INFO02012",
-      "name": "Sistemas de Bases de Datos",
-      "semester": 5,
+      ],
+      "coreq": [
+        "Programación Orientada a Objetos"
+      ],
       "area": "software",
-      "creditGate": 105
+      "row": 5
     },
     {
-      "code": null,
-      "name": "Curso Servicio Comunitario",
+      "id": "UCAB00003",
+      "name": "Ecología, Ambiente y Sustentabilidad",
+      "credits": 3,
       "semester": 4,
-      "area": "extension",
-      "planCredits": 0,
-      "creditGate": 120
+      "creditGate": 72,
+      "area": "integral",
+      "row": 6
     },
     {
-      "code": "FING02006",
+      "id": "FING02006",
       "name": "Ecuaciones Diferenciales Ordinarias",
+      "credits": 4,
       "semester": 5,
-      "area": "fundamentos",
       "requires": [
-        "Cálculo Vectorial"
-      ]
+        "Cálculo Integral"
+      ],
+      "area": "fundamentos",
+      "row": 0
     },
     {
-      "code": "FING02107",
+      "id": "FING02107",
       "name": "Electricidad y Magnetismo",
+      "credits": 6,
       "semester": 5,
-      "area": "fundamentos"
+      "requires": [
+        "Mecánica"
+      ],
+      "area": "fundamentos",
+      "row": 1
     },
     {
-      "code": "INFO02016",
+      "id": "INFO02016",
       "name": "Redes de Comunicación de Datos",
+      "credits": 6,
       "semester": 5,
-      "area": "telematica",
       "requires": [
         "Sistemas Operativos"
-      ]
+      ],
+      "area": "telematica",
+      "row": 2
     },
     {
-      "code": "INFO02013",
+      "id": "INFO02013",
       "name": "Gestión de Proyectos de Software",
+      "credits": 4,
       "semester": 5,
-      "area": "software"
+      "requires": [
+        "Ingeniería Económica",
+        "Ingeniería de Software"
+      ],
+      "area": "software",
+      "row": 3
     },
     {
-      "code": "INFO02011",
+      "id": "INFO02011",
       "name": "Tópicos Especiales de Programación",
+      "credits": 4,
       "semester": 5,
-      "area": "programacion",
       "requires": [
         "Programación Orientada a Objetos"
-      ]
+      ],
+      "area": "programacion",
+      "row": 4
     },
     {
-      "code": "INFO02104",
+      "id": "INFO02104",
       "name": "Diseño de Experiencia de Usuario",
+      "credits": 4,
       "semester": 5,
-      "area": "software"
+      "coreq": [
+        "Ingeniería de Software"
+      ],
+      "area": "software",
+      "row": 5
     },
     {
-      "code": "FING02010",
-      "name": "Métodos Numéricos",
-      "semester": 6,
-      "area": "fundamentos",
+      "id": "INFO02012",
+      "name": "Sistemas de Bases de Datos",
+      "credits": 5,
+      "semester": 5,
+      "creditGate": 105,
+      "area": "software",
+      "row": 6
+    },
+    {
+      "id": "CUSC",
+      "name": "Curso Servicio Comunitario",
+      "credits": 0,
+      "semester": 5,
+      "creditGate": 120,
+      "area": "extension",
+      "row": 7
+    },
+    {
+      "id": "IISC",
+      "name": "Servicio Comunitario",
+      "credits": 0,
+      "semester": 5,
       "requires": [
-        "Ecuaciones Diferenciales Ordinarias"
-      ]
+        "Curso Servicio Comunitario"
+      ],
+      "area": "extension",
+      "row": 8
     },
     {
-      "code": "INFO02015",
+      "id": "FING02010",
+      "name": "Métodos Numéricos",
+      "credits": 2,
+      "semester": 6,
+      "requires": [
+        "Cálculo Vectorial"
+      ],
+      "area": "fundamentos",
+      "row": 0
+    },
+    {
+      "id": "INFO02015",
       "name": "Arquitectura del Computador Aplicada",
+      "credits": 5,
       "semester": 6,
-      "area": "telematica"
+      "requires": [
+        "Electricidad y Magnetismo"
+      ],
+      "area": "telematica",
+      "row": 1
     },
     {
-      "code": "INFO02102",
+      "id": "INFO02102",
       "name": "Ciberseguridad Ofensiva",
+      "credits": 5,
       "semester": 6,
-      "area": "telematica",
       "requires": [
         "Redes de Comunicación de Datos"
-      ]
+      ],
+      "area": "telematica",
+      "row": 2
     },
     {
-      "code": "INFO02019",
+      "id": "INFO02019",
       "name": "Aseguramiento de la Calidad del Software",
+      "credits": 4,
       "semester": 6,
-      "area": "software",
       "requires": [
         "Gestión de Proyectos de Software"
-      ]
+      ],
+      "area": "software",
+      "row": 3
     },
     {
-      "code": "INFO02018",
+      "id": "INFO02018",
       "name": "Ingeniería de Requisitos",
+      "credits": 4,
       "semester": 6,
-      "area": "software"
-    },
-    {
-      "code": "INFO02024",
-      "name": "Inteligencia de Negocios",
-      "semester": 6,
-      "area": "software"
-    },
-    {
-      "code": "INFO02017",
-      "name": "Tópicos Especiales para la Gestión de Datos",
-      "semester": 6,
-      "area": "software"
-    },
-    {
-      "code": null,
-      "name": "Innovación y Emprendimiento",
-      "semester": 6,
-      "area": "integral",
-      "planCredits": 3,
-      "creditGate": 138
-    },
-    {
-      "code": "INFO02022",
-      "name": "Investigación de Operaciones",
-      "semester": 7,
-      "area": "fundamentos",
       "requires": [
-        "Métodos Numéricos"
-      ]
+        "Sistemas de Bases de Datos",
+        "Gestión de Proyectos de Software"
+      ],
+      "area": "software",
+      "row": 4
     },
     {
-      "code": "INFO02020",
+      "id": "INFO02024",
+      "name": "Inteligencia de Negocios",
+      "credits": 3,
+      "semester": 6,
+      "coreq": [
+        "Tópicos Especiales para la Gestión de Datos"
+      ],
+      "area": "software",
+      "row": 5
+    },
+    {
+      "id": "INFO02017",
+      "name": "Tópicos Especiales para la Gestión de Datos",
+      "credits": 4,
+      "semester": 6,
+      "requires": [
+        "Sistemas de Bases de Datos"
+      ],
+      "area": "software",
+      "row": 6
+    },
+    {
+      "id": "UCAB00008",
+      "name": "Innovación y Emprendimiento",
+      "credits": 3,
+      "semester": 6,
+      "creditGate": 139,
+      "area": "integral",
+      "row": 7
+    },
+    {
+      "id": "INFO02022",
+      "name": "Investigación de Operaciones",
+      "credits": 5,
+      "semester": 7,
+      "requires": [
+        "Métodos Numéricos",
+        "Probabilidad y Estadística"
+      ],
+      "area": "fundamentos",
+      "row": 0
+    },
+    {
+      "id": "INFO02020",
       "name": "Inteligencia Artificial: Aprendizaje Automático",
+      "credits": 4,
       "semester": 7,
+      "creditGate": 167,
       "area": "programacion",
-      "creditGate": 167
+      "row": 1
     },
     {
-      "code": null,
+      "id": "INFO02103",
       "name": "Ciberseguridad Defensiva",
+      "credits": 5,
       "semester": 7,
-      "area": "telematica",
-      "planCredits": 5,
       "requires": [
         "Ciberseguridad Ofensiva"
-      ]
+      ],
+      "area": "telematica",
+      "row": 2
     },
     {
-      "code": "INFO02028",
+      "id": "INFO02028",
       "name": "Computación en la Nube",
+      "credits": 5,
       "semester": 7,
-      "area": "telematica"
+      "coreq": [
+        "Ciberseguridad Defensiva"
+      ],
+      "area": "telematica",
+      "row": 3
     },
     {
-      "code": "INFO02025",
+      "id": "INFO02025",
       "name": "Desarrollo de Software",
+      "credits": 5,
       "semester": 7,
       "area": "software",
+      "row": 4
+    },
+    {
+      "id": "INFO00192",
+      "name": "Pasantía",
+      "credits": 4,
+      "semester": 7,
       "requires": [
         "Ingeniería de Requisitos"
-      ]
+      ],
+      "area": "practicas",
+      "row": 5
     },
     {
-      "code": "INFO00192",
-      "name": "Pasantía",
-      "semester": 7,
-      "area": "practicas"
-    },
-    {
-      "code": null,
+      "id": "FINGRANGO-electiva-informatica",
       "name": "Electiva (Informática)",
+      "credits": 3,
       "semester": 7,
+      "creditGate": 172,
       "area": "electivas",
-      "planCredits": 3,
-      "creditGate": 172
+      "row": 6
     },
     {
-      "code": null,
+      "id": "FINGRANGO-electiva-complementaria",
       "name": "Electiva (Complementaria)",
+      "credits": 3,
       "semester": 7,
+      "creditGate": 138,
       "area": "electivas",
-      "planCredits": 3,
-      "creditGate": 139
+      "row": 7
     },
     {
-      "code": "INFO02027",
+      "id": "INFO02027",
       "name": "Evaluación de Sistemas Informáticos",
+      "credits": 4,
       "semester": 8,
-      "area": "fundamentos",
       "requires": [
         "Investigación de Operaciones"
-      ]
+      ],
+      "area": "fundamentos",
+      "row": 0
     },
     {
-      "code": "FING02014",
+      "id": "FING02014",
       "name": "Ética Profesional",
+      "credits": 3,
       "semester": 8,
+      "creditGate": 207,
       "area": "integral",
-      "creditGate": 207
+      "row": 1
     },
     {
-      "code": "INFO02029",
+      "id": "INFO02029",
       "name": "Arquitecturas Empresariales",
+      "credits": 4,
       "semester": 8,
+      "creditGate": 207,
       "area": "software",
-      "creditGate": 207
+      "row": 2
     },
     {
-      "code": "INFOIILCT",
+      "id": "INFOIILCT",
       "name": "Curso de Trabajo de Grado",
+      "credits": 0,
       "semester": 8,
-      "area": "practicas",
       "requires": [
         "Desarrollo de Software"
-      ]
+      ],
+      "area": "practicas",
+      "row": 4
     },
     {
-      "code": null,
+      "id": "INFOIILTG",
       "name": "Trabajo de Grado (TG)",
+      "credits": 12,
       "semester": 8,
-      "area": "practicas",
-      "planCredits": 12,
       "requires": [
-        "Pasantía"
-      ]
+        "Curso de Trabajo de Grado"
+      ],
+      "area": "practicas",
+      "row": 5
     }
-  ],
-  "note": "semester y area salen de la malla impresa. Los creditos salen de public/courses.json (Banner); planCredits solo existe para las materias que no aparecen en las paginas FING/INFO descargadas.",
-  "semesterCredits": {
-    "1": 25,
-    "2": 31,
-    "3": 32,
-    "4": 33,
-    "5": 33,
-    "6": 30,
-    "7": 34,
-    "8": 23
-  },
-  "prerequisiteNote": "Solo estan transcritas las flechas horizontales entre casillas contiguas, que se leen sin ambiguedad. Las flechas diagonales y cruzadas de la malla NO estan: falta un arco, no sobra uno equivocado."
+  ]
 }

@@ -6,6 +6,10 @@ const read = async path => JSON.parse(await readFile(new URL(path, import.meta.u
 
 const courses = await read('../../../public/courses.json');
 const malla = await read('../../../data/malla-informatica.json');
+const diagram = await read('../../../data/diagrama-informatica.json');
+
+const plan = courses.plan.subjects;
+const byId = new Map(plan.map(subject => [subject.id, subject]));
 
 const titleKey = text =>
   (text ?? '')
@@ -14,98 +18,134 @@ const titleKey = text =>
     .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9]/g, '');
 
-const byTitle = new Map(courses.subjects.map(subject => [titleKey(subject.title), subject]));
-
 /**
- * Diferencia conocida entre el plan impreso y lo que Banner ofrece este período.
- * No es un error de transcripción: son dos fuentes que discrepan de verdad.
+ * Diferencia conocida entre el plan oficial y lo que Banner ofrece este período.
+ * No es un error de lectura: son dos fuentes que discrepan de verdad.
  * Si aparece otra, el test debe fallar para que alguien la mire.
  */
 const KNOWN_GAPS = [{ name: 'Álgebra Lineal', plan: 5, banner: 6 }];
 
-test('cada materia del plan que se dicta quedó ubicada en su semestre', () => {
-  const placed = courses.subjects.filter(subject => subject.semester !== undefined);
-  const inPlan = malla.subjects.filter(entry => byTitle.has(titleKey(entry.name)));
-
-  assert.equal(placed.length, inPlan.length);
-  assert.ok(placed.every(subject => subject.semester >= 1 && subject.semester <= malla.semesters));
+test('el plan publicado tiene todas las materias del PDF', () => {
+  assert.equal(plan.length, malla.subjects.length);
+  assert.equal(plan.length, 55);
 });
 
-test('cada materia ubicada tiene un área conocida y su tono', () => {
-  for (const subject of courses.subjects.filter(entry => entry.semester !== undefined)) {
-    assert.ok(malla.areas[subject.area], `área desconocida en ${subject.id}: ${subject.area}`);
-    assert.equal(subject.hue, malla.areas[subject.area].hue);
-  }
-});
-
-test('el plan publicado tiene las 54 materias, marcadas según se dicten o no', () => {
-  assert.equal(courses.plan.subjects.length, malla.subjects.length);
-
-  const missing = malla.subjects.filter(entry => !byTitle.has(titleKey(entry.name)));
-  const notOffered = courses.plan.subjects.filter(entry => !entry.offered);
-
-  assert.equal(notOffered.length, missing.length);
-  assert.ok(
-    notOffered.every(entry => entry.id.startsWith('plan:')),
-    'las que no se dictan usan un identificador propio, no uno de Banner'
-  );
-});
-
-test('cada materia del plan aporta créditos, se dicte o no', () => {
-  for (const subject of courses.plan.subjects) {
-    assert.equal(typeof subject.credits, 'number', `${subject.name} sin créditos`);
-  }
-
-  const total = courses.plan.subjects.reduce((sum, entry) => sum + entry.credits, 0);
-
-  // 242 y no 241 por la discrepancia conocida de Álgebra Lineal
-  const allowed = KNOWN_GAPS.reduce((sum, gap) => sum + (gap.banner - gap.plan), 0);
-
-  assert.equal(total, malla.totalCredits + allowed);
-});
-
-test('los créditos por semestre cuadran con los declarados en la malla', () => {
-  const gaps = [];
-
+test('los créditos por semestre cuadran con los que declara el PDF', () => {
   for (const [semester, expected] of Object.entries(malla.semesterCredits)) {
-    const actual = courses.plan.subjects
-      .filter(entry => entry.semester === Number(semester))
-      .reduce((sum, entry) => sum + entry.credits, 0);
+    const actual = plan
+      .filter(subject => subject.semester === Number(semester))
+      .reduce((sum, subject) => sum + subject.credits, 0);
 
-    if (actual !== expected) gaps.push({ semester: Number(semester), actual, expected });
+    assert.equal(actual, expected, `semestre ${semester}`);
   }
-
-  // Solo el semestre 2 puede diferir, y solo por la discrepancia conocida
-  const allowed = KNOWN_GAPS.reduce((sum, gap) => sum + (gap.banner - gap.plan), 0);
-
-  assert.deepEqual(
-    gaps,
-    [{ semester: 2, actual: 31 + allowed, expected: 31 }],
-    `descuadre inesperado: ${JSON.stringify(gaps)}`
-  );
 });
 
-test('la discrepancia conocida sigue siendo la que creemos', () => {
-  for (const gap of KNOWN_GAPS) {
-    const subject = byTitle.get(titleKey(gap.name));
+test('el total de la carrera son 241 UC', () => {
+  assert.equal(plan.reduce((sum, subject) => sum + subject.credits, 0), 241);
+  assert.equal(courses.plan.totalCredits, 241);
+});
 
-    assert.ok(subject, `${gap.name} debería existir en los datos`);
-    assert.equal(
-      subject.credits,
-      gap.banner,
-      `${gap.name} cambió de créditos en Banner; revisa si la discrepancia con la malla se resolvió`
+test('cada materia tiene área conocida, tono y fila del diagrama', () => {
+  for (const subject of plan) {
+    assert.ok(courses.plan.areas[subject.area], `área desconocida en ${subject.name}`);
+    assert.equal(subject.hue, courses.plan.areas[subject.area].hue);
+    assert.equal(typeof subject.row, 'number', `${subject.name} sin fila`);
+  }
+});
+
+test('el diagrama nombra exactamente las materias del plan', () => {
+  const placed = new Set(Object.keys(diagram.subjects));
+
+  assert.equal(placed.size, plan.length);
+  for (const subject of plan) {
+    assert.ok(placed.has(subject.name), `${subject.name} no está en el diagrama`);
+  }
+});
+
+test('cada fila del diagrama tiene una sola materia por semestre', () => {
+  const seen = new Set();
+
+  for (const subject of plan) {
+    const cell = `${subject.row}:${subject.semester}`;
+
+    assert.equal(seen.has(cell), false, `dos materias en fila ${subject.row}, semestre ${subject.semester}`);
+    seen.add(cell);
+  }
+});
+
+test('todo requisito apunta a una materia del plan', () => {
+  for (const subject of plan) {
+    for (const id of [...(subject.requires ?? []), ...(subject.coreq ?? [])]) {
+      assert.ok(byId.has(id), `${subject.name} referencia ${id}, que no existe`);
+    }
+  }
+});
+
+test('ningún prerrequisito está en un semestre posterior', () => {
+  for (const subject of plan) {
+    for (const id of subject.requires ?? []) {
+      assert.ok(
+        byId.get(id).semester <= subject.semester,
+        `${subject.name} (sem ${subject.semester}) requiere ${byId.get(id).name} (sem ${byId.get(id).semester})`
+      );
+    }
+  }
+});
+
+test('el PDF y Banner coinciden en el código de cada materia que se dicta', () => {
+  const byTitle = new Map(courses.subjects.map(subject => [titleKey(subject.title), subject]));
+
+  for (const subject of plan.filter(entry => entry.offered)) {
+    assert.equal(byTitle.get(titleKey(subject.name))?.id, subject.id, subject.name);
+  }
+});
+
+test('la única discrepancia de créditos con Banner es la conocida', () => {
+  const byTitle = new Map(courses.subjects.map(subject => [titleKey(subject.title), subject]));
+
+  const gaps = plan
+    .filter(entry => entry.offered)
+    .map(entry => ({ name: entry.name, plan: entry.credits, banner: byTitle.get(titleKey(entry.name)).credits }))
+    .filter(entry => entry.plan !== entry.banner);
+
+  assert.deepEqual(gaps, KNOWN_GAPS);
+});
+
+test('el caso que reportó el usuario: Organización del Computador exige Matemáticas Discretas', () => {
+  const subject = plan.find(entry => entry.name === 'Organización del Computador');
+
+  assert.deepEqual(subject.requires.map(id => byId.get(id).name), ['Matemáticas Discretas']);
+});
+
+test('las cadenas transcritas a mano sobreviven a la lectura del PDF', () => {
+  const chain = [
+    ['Cálculo Diferencial', 'Álgebra y Trigonometría'],
+    ['Cálculo Integral', 'Cálculo Diferencial'],
+    ['Programación Orientada a Objetos', 'Algoritmos y Estructuras de Datos']
+  ];
+
+  for (const [name, required] of chain) {
+    const subject = plan.find(entry => entry.name === name);
+
+    assert.ok(
+      subject.requires.map(id => byId.get(id).name).includes(required),
+      `${name} debería requerir ${required}`
     );
   }
 });
 
-test('cada materia del plan aporta créditos de una sola fuente', () => {
-  for (const entry of malla.subjects) {
-    const offered = byTitle.has(titleKey(entry.name));
+test('el PDF aporta requisitos que la transcripción a mano no tenía', () => {
+  const withRequirements = plan.filter(subject => subject.requires).length;
 
-    assert.equal(
-      entry.planCredits !== undefined,
-      !offered,
-      `${entry.name}: planCredits solo debe existir para las materias que no se dictan`
-    );
-  }
+  assert.ok(withRequirements >= 33, `solo ${withRequirements} materias con prerrequisitos`);
+  assert.ok(plan.some(subject => subject.coreq), 'el plan tiene correquisitos');
+  assert.ok(plan.filter(subject => subject.requires?.length > 1).length >= 4, 'hay requisitos múltiples');
+});
+
+test('los identificadores del plan son únicos', () => {
+  // El PDF codifica ambas electivas como "FING RANGO": si la desambiguación se
+  // rompe, Svelte falla al renderizar la malla por claves repetidas.
+  const ids = plan.map(subject => subject.id);
+
+  assert.equal(new Set(ids).size, ids.length, `repetidos: ${ids.filter((id, i) => ids.indexOf(id) !== i)}`);
 });

@@ -1,0 +1,263 @@
+{
+  "note": "Area de formacion (el color) y fila (la posicion vertical) de cada materia en el diagrama impreso de la malla. El PDF oficial no trae ninguno de los dos: su primera pagina es una tabla. Se mantiene a mano y scripts/parse-plan-pdf.js solo lo lee, nunca lo escribe.",
+  "areas": {
+    "fundamentos": {
+      "label": "Fundamentos de Ingeniería",
+      "hue": 255
+    },
+    "programacion": {
+      "label": "Lógica y Programación",
+      "hue": 145
+    },
+    "software": {
+      "label": "Ingeniería de Software",
+      "hue": 350
+    },
+    "telematica": {
+      "label": "Telemática",
+      "hue": 45
+    },
+    "gerencial": {
+      "label": "Formación Gerencial",
+      "hue": 195
+    },
+    "integral": {
+      "label": "Formación Integral",
+      "hue": 90
+    },
+    "practicas": {
+      "label": "Prácticas Profesionales",
+      "hue": 315
+    },
+    "electivas": {
+      "label": "Electivas",
+      "hue": 285
+    },
+    "extension": {
+      "label": "Extensión Social",
+      "hue": 265
+    }
+  },
+  "subjects": {
+    "Álgebra y Trigonometría": {
+      "area": "fundamentos",
+      "row": 0
+    },
+    "Cálculo Diferencial": {
+      "area": "fundamentos",
+      "row": 0
+    },
+    "Cálculo Integral": {
+      "area": "fundamentos",
+      "row": 0
+    },
+    "Cálculo Vectorial": {
+      "area": "fundamentos",
+      "row": 0
+    },
+    "Ecuaciones Diferenciales Ordinarias": {
+      "area": "fundamentos",
+      "row": 0
+    },
+    "Métodos Numéricos": {
+      "area": "fundamentos",
+      "row": 0
+    },
+    "Investigación de Operaciones": {
+      "area": "fundamentos",
+      "row": 0
+    },
+    "Evaluación de Sistemas Informáticos": {
+      "area": "fundamentos",
+      "row": 0
+    },
+    "Competencia Textual en Español": {
+      "area": "integral",
+      "row": 1
+    },
+    "Álgebra Lineal": {
+      "area": "fundamentos",
+      "row": 1
+    },
+    "Mecánica": {
+      "area": "fundamentos",
+      "row": 1
+    },
+    "Probabilidad y Estadística": {
+      "area": "fundamentos",
+      "row": 1
+    },
+    "Electricidad y Magnetismo": {
+      "area": "fundamentos",
+      "row": 1
+    },
+    "Arquitectura del Computador Aplicada": {
+      "area": "telematica",
+      "row": 1
+    },
+    "Inteligencia Artificial: Aprendizaje Automático": {
+      "area": "programacion",
+      "row": 1
+    },
+    "Ética Profesional": {
+      "area": "integral",
+      "row": 1
+    },
+    "Inglés": {
+      "area": "integral",
+      "row": 2
+    },
+    "Inglés Técnico": {
+      "area": "integral",
+      "row": 2
+    },
+    "Organización del Computador": {
+      "area": "telematica",
+      "row": 2
+    },
+    "Sistemas Operativos": {
+      "area": "telematica",
+      "row": 2
+    },
+    "Redes de Comunicación de Datos": {
+      "area": "telematica",
+      "row": 2
+    },
+    "Ciberseguridad Ofensiva": {
+      "area": "telematica",
+      "row": 2
+    },
+    "Ciberseguridad Defensiva": {
+      "area": "telematica",
+      "row": 2
+    },
+    "Arquitecturas Empresariales": {
+      "area": "software",
+      "row": 2
+    },
+    "Lógica": {
+      "area": "programacion",
+      "row": 3
+    },
+    "Matemáticas Discretas": {
+      "area": "programacion",
+      "row": 3
+    },
+    "Contabilidad Financiera": {
+      "area": "gerencial",
+      "row": 3
+    },
+    "Ingeniería Económica": {
+      "area": "gerencial",
+      "row": 3
+    },
+    "Gestión de Proyectos de Software": {
+      "area": "software",
+      "row": 3
+    },
+    "Aseguramiento de la Calidad del Software": {
+      "area": "software",
+      "row": 3
+    },
+    "Computación en la Nube": {
+      "area": "telematica",
+      "row": 3
+    },
+    "Estrategia y Proyección Profesional": {
+      "area": "software",
+      "row": 4
+    },
+    "Algoritmos y Programación": {
+      "area": "programacion",
+      "row": 4
+    },
+    "Algoritmos y Estructuras de Datos": {
+      "area": "programacion",
+      "row": 4
+    },
+    "Programación Orientada a Objetos": {
+      "area": "programacion",
+      "row": 4
+    },
+    "Tópicos Especiales de Programación": {
+      "area": "programacion",
+      "row": 4
+    },
+    "Ingeniería de Requisitos": {
+      "area": "software",
+      "row": 4
+    },
+    "Desarrollo de Software": {
+      "area": "software",
+      "row": 4
+    },
+    "Curso de Trabajo de Grado": {
+      "area": "practicas",
+      "row": 4
+    },
+    "Identidad, Liderazgo y Compromiso I": {
+      "area": "integral",
+      "row": 5
+    },
+    "Identidad, Liderazgo y Compromiso II": {
+      "area": "integral",
+      "row": 5
+    },
+    "Sistemas de Información": {
+      "area": "software",
+      "row": 5
+    },
+    "Ingeniería de Software": {
+      "area": "software",
+      "row": 5
+    },
+    "Diseño de Experiencia de Usuario": {
+      "area": "software",
+      "row": 5
+    },
+    "Inteligencia de Negocios": {
+      "area": "software",
+      "row": 5
+    },
+    "Pasantía": {
+      "area": "practicas",
+      "row": 5
+    },
+    "Trabajo de Grado (TG)": {
+      "area": "practicas",
+      "row": 5
+    },
+    "Ecología, Ambiente y Sustentabilidad": {
+      "area": "integral",
+      "row": 6
+    },
+    "Sistemas de Bases de Datos": {
+      "area": "software",
+      "row": 6
+    },
+    "Tópicos Especiales para la Gestión de Datos": {
+      "area": "software",
+      "row": 6
+    },
+    "Electiva (Informática)": {
+      "area": "electivas",
+      "row": 6
+    },
+    "Curso Servicio Comunitario": {
+      "area": "extension",
+      "row": 7
+    },
+    "Innovación y Emprendimiento": {
+      "area": "integral",
+      "row": 7
+    },
+    "Electiva (Complementaria)": {
+      "area": "electivas",
+      "row": 7
+    },
+    "Servicio Comunitario": {
+      "area": "extension",
+      "row": 8
+    }
+  }
+}

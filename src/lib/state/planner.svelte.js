@@ -1,5 +1,11 @@
 import { generateSchedules, parseTime } from '../domain/schedule.js';
-import { approvedCredits, availableNow, eligibility, expandApproved } from '../domain/progress.js';
+import {
+  approvedCredits,
+  availableNow,
+  eligibility,
+  expandApproved,
+  withoutApproved
+} from '../domain/progress.js';
 
 const PLAN_KEY = 'horarios:plan';
 const PRESETS_KEY = 'horarios:presets';
@@ -15,7 +21,7 @@ const DEFAULT_FILTERS = {
   semester: '',
   campus: '',
   availability: 'open',
-  eligibleOnly: false,
+  progress: '',
   avoidDays: [],
   earliest: '',
   latest: ''
@@ -167,9 +173,13 @@ class Planner {
     return this.data.subjects.filter(subject => {
       if (this.filters.department && subject.subject !== this.filters.department) return false;
 
-      if (this.filters.eligibleOnly) {
+      if (this.filters.progress) {
         const check = this.eligibilityOf(subject);
-        if (!check || !check.ok) return false;
+        if (!check) return false;
+
+        if (this.filters.progress === 'aprobadas' && !check.alreadyApproved) return false;
+        if (this.filters.progress === 'pendientes' && check.alreadyApproved) return false;
+        if (this.filters.progress === 'inscribibles' && !check.ok) return false;
       }
 
       if (this.filters.semester) {
@@ -295,13 +305,11 @@ class Planner {
    * @param {String} id - Identificador de materia
    */
   toggleApproved(id) {
-    if (this.approvedIds.includes(id)) {
-      // Al desmarcar también se sueltan las deducciones que dependían de ella;
-      // lo que siga deducido por otra vía vuelve a aparecer solo.
-      this.approvedIds = this.approvedIds.filter(current => current !== id);
-    } else {
-      this.approvedIds = [...this.approvedIds, id];
-    }
+    // Marcar sube por los prerrequisitos; desmarcar baja por lo que depende.
+    // Son la misma regla leída en las dos direcciones.
+    this.approvedIds = this.progress.approved.has(id)
+      ? withoutApproved(this.approvedIds, id, this.planSubjects)
+      : [...this.approvedIds, id];
 
     this.#save(APPROVED_KEY, this.approvedIds);
   }
@@ -396,6 +404,20 @@ class Planner {
   /** Devuelve los filtros a su estado inicial, sin tocar la selección */
   resetFilters() {
     this.filters = { ...DEFAULT_FILTERS };
+    this.optionIndex = 0;
+  }
+
+  /** Cantidad de secciones fijadas a mano */
+  lockedCount = $derived(Object.values(this.sectionLocks).reduce((sum, list) => sum + list.length, 0));
+
+  /**
+   * Suelta todas las secciones fijadas sin tocar la selección de materias.
+   *
+   * Abrir un horario guardado fija cada sección, y sin esto el resultado queda
+   * clavado en "1 de 1" sin forma de volver a explorar.
+   */
+  unlockAll() {
+    this.sectionLocks = {};
     this.optionIndex = 0;
   }
 

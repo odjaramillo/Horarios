@@ -27,6 +27,7 @@
     "preview": "vite preview",
     "test": "node --test \"src/**/*.test.js\"",
     "merge": "node scripts/merge-search-results.js",
+    "plan": "node scripts/parse-plan-pdf.js",
     "deploy": "npm run build && npx gh-pages -d dist -m \"chore: deploy to GitHub Pages\""
   },
   "devDependencies": {

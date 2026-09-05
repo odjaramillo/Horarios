@@ -6,9 +6,15 @@
 
   let dialog;
   let scroller = $state(null);
+  let grid = $state(null);
+
   let scrollLeft = $state(0);
   let scrollWidth = $state(0);
   let clientWidth = $state(0);
+
+  /** Medidas del lienzo de flechas y las cajas de cada materia */
+  let canvas = $state({ width: 0, height: 0 });
+  let boxes = $state(new Map());
 
   /** Un movimiento menor a esto sigue siendo un clic, no un arrastre */
   const DRAG_THRESHOLD = 5;
@@ -18,16 +24,11 @@
   let startX = 0;
   let startScroll = 0;
 
-  const bySemester = $derived.by(() => {
-    const groups = new Map();
+  const semesters = $derived(
+    [...new Set(planner.planSubjects.map(subject => subject.semester))].sort((a, b) => a - b)
+  );
 
-    for (const subject of planner.planSubjects) {
-      if (!groups.has(subject.semester)) groups.set(subject.semester, []);
-      groups.get(subject.semester).push(subject);
-    }
-
-    return [...groups.entries()].sort(([a], [b]) => a - b);
-  });
+  const rows = $derived(Math.max(...planner.planSubjects.map(subject => subject.row), 0) + 1);
 
   const total = $derived(planner.data.plan?.totalCredits ?? 0);
   const percent = $derived(total > 0 ? Math.round((planner.earnedCredits / total) * 100) : 0);
@@ -35,13 +36,101 @@
   const atStart = $derived(scrollLeft <= 1);
   const atEnd = $derived(scrollLeft + clientWidth >= scrollWidth - 1);
 
+  /**
+   * Créditos de un semestre
+   * @param {Number} semester - Semestre
+   * @return {Number} Suma de unidades de crédito
+   */
+  const creditsOf = semester =>
+    planner.planSubjects
+      .filter(subject => subject.semester === semester)
+      .reduce((sum, subject) => sum + subject.credits, 0);
+
+  /**
+   * Indica si un semestre está aprobado por completo
+   * @param {Number} semester - Semestre
+   * @return {Boolean} true si no queda nada por aprobar
+   */
+  const isDone = semester =>
+    planner.planSubjects
+      .filter(subject => subject.semester === semester)
+      .every(subject => planner.progress.approved.has(subject.id));
+
+  /**
+   * Las flechas se calculan midiendo las cajas ya dibujadas, no adivinando
+   * posiciones: así siguen alineadas aunque cambien los tamaños o el zoom.
+   */
+  const edges = $derived.by(() => {
+    if (boxes.size === 0) return [];
+
+    const lines = [];
+
+    for (const subject of planner.planSubjects) {
+      const to = boxes.get(subject.id);
+      if (!to) continue;
+
+      for (const [kind, ids] of [
+        ['requires', subject.requires ?? []],
+        ['coreq', subject.coreq ?? []]
+      ]) {
+        for (const id of ids) {
+          const from = boxes.get(id);
+          if (!from) continue;
+
+          // Ruta ortogonal, como en la malla impresa: sale por la derecha,
+          // cambia de fila a mitad de camino y entra por la izquierda.
+          const x1 = from.x + from.width;
+          const y1 = from.y + from.height / 2;
+          const x2 = to.x;
+          const y2 = to.y + to.height / 2;
+          const mid = x1 + Math.max(10, (x2 - x1) / 2);
+
+          lines.push({
+            key: `${id}->${subject.id}`,
+            kind,
+            hue: planner.planSubjects.find(entry => entry.id === id)?.hue ?? 260,
+            d:
+              Math.abs(y1 - y2) < 2
+                ? `M ${x1} ${y1} L ${x2} ${y2}`
+                : `M ${x1} ${y1} H ${mid} V ${y2} H ${x2}`,
+            head: `${x2} ${y2}`
+          });
+        }
+      }
+    }
+
+    return lines;
+  });
+
   /** Anota la posición del carrusel para saber si quedan columnas a los lados */
-  function measure() {
+  function measureScroll() {
     if (!scroller) return;
 
     scrollLeft = scroller.scrollLeft;
     scrollWidth = scroller.scrollWidth;
     clientWidth = scroller.clientWidth;
+  }
+
+  /** Mide dónde quedó cada materia, para poder trazar las flechas */
+  function measureBoxes() {
+    if (!grid) return;
+
+    const origin = grid.getBoundingClientRect();
+    const next = new Map();
+
+    for (const node of grid.querySelectorAll('[data-subject]')) {
+      const box = node.getBoundingClientRect();
+
+      next.set(node.dataset.subject, {
+        x: box.x - origin.x,
+        y: box.y - origin.y,
+        width: box.width,
+        height: box.height
+      });
+    }
+
+    boxes = next;
+    canvas = { width: grid.scrollWidth, height: grid.scrollHeight };
   }
 
   /**
@@ -57,9 +146,11 @@
    * @param {Number} semester - Semestre al que saltar
    */
   function jumpTo(semester) {
-    const column = scroller?.querySelector(`[data-semester="${semester}"]`);
-
-    column?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    scroller?.querySelector(`[data-column="${semester}"]`)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'start'
+    });
   }
 
   /**
@@ -81,7 +172,6 @@
     if (!dragging) return;
 
     const delta = event.clientX - startX;
-
     if (!dragged && Math.abs(delta) < DRAG_THRESHOLD) return;
 
     dragged = true;
@@ -135,12 +225,18 @@
   });
 
   $effect(() => {
-    if (!scroller) return;
+    if (!scroller || !grid) return;
 
-    measure();
+    measureScroll();
+    measureBoxes();
 
-    const observer = new ResizeObserver(measure);
+    const observer = new ResizeObserver(() => {
+      measureScroll();
+      measureBoxes();
+    });
+
     observer.observe(scroller);
+    observer.observe(grid);
 
     return () => observer.disconnect();
   });
@@ -156,8 +252,8 @@
     aria-modal="true"
     aria-labelledby="avance-titulo"
     tabindex="-1"
-    class="flex max-h-[92vh] w-full min-w-0 max-w-7xl flex-col overflow-hidden rounded-t-2xl border border-line
-           bg-panel shadow-panel outline-none sm:rounded-2xl"
+    class="flex max-h-[92vh] w-full min-w-0 max-w-7xl flex-col overflow-hidden rounded-t-2xl border
+           border-line bg-panel shadow-panel outline-none sm:rounded-2xl"
   >
     <header class="flex flex-none items-start gap-3 border-b border-line p-4">
       <div class="min-w-0 flex-1">
@@ -169,8 +265,8 @@
             Marca lo que <strong class="font-semibold">ya aprobaste</strong> y la app te dirá qué puedes
             inscribir. Puedes saltarlo y hacerlo después.
           {:else}
-            Marca lo que <strong class="font-semibold">ya aprobaste</strong>. Al marcar una materia se
-            marcan también las que hacen falta para llegar a ella.
+            Marca lo que <strong class="font-semibold">ya aprobaste</strong>. Marcar sube por las
+            prelaciones; desmarcar baja por lo que dependía.
           {/if}
         </p>
       </div>
@@ -185,18 +281,22 @@
       </button>
     </header>
 
-    <nav class="flex flex-none flex-wrap items-center gap-1.5 border-b border-line px-4 py-2" aria-label="Ir a un semestre">
+    <nav
+      class="flex flex-none flex-wrap items-center gap-1.5 border-b border-line px-4 py-2"
+      aria-label="Ir a un semestre"
+    >
       <span class="mr-1 hidden text-[11px] font-bold uppercase tracking-wider text-ink-faint sm:block">
         Semestre
       </span>
-      {#each bySemester as [semester, subjects] (semester)}
-        {@const done = subjects.every(subject => planner.progress.approved.has(subject.id))}
+      {#each semesters as semester (semester)}
         <button
           type="button"
           onclick={() => jumpTo(semester)}
           class="tabular grid size-7 place-items-center rounded-lg border text-xs font-bold transition-colors
-                 {done ? 'border-ok/50 bg-ok-soft text-ok' : 'border-line text-ink-soft hover:bg-panel-soft'}"
-          aria-label="Ir al semestre {semester}{done ? ', completo' : ''}"
+                 {isDone(semester)
+            ? 'border-ok/50 bg-ok-soft text-ok'
+            : 'border-line text-ink-soft hover:bg-panel-soft'}"
+          aria-label="Ir al semestre {semester}{isDone(semester) ? ', completo' : ''}"
         >
           {semester}
         </button>
@@ -210,75 +310,95 @@
         role="group"
         aria-label="Materias por semestre"
         tabindex="0"
-        onscroll={measure}
+        onscroll={measureScroll}
         onpointerdown={onPointerDown}
         onpointermove={onPointerMove}
         onpointerup={onPointerUp}
         onpointercancel={onPointerUp}
         onclickcapture={onClickCapture}
         onkeydown={onKeydown}
-        class="scrollbar-wide flex h-full snap-x snap-proximity gap-3 overflow-auto scroll-p-4 p-4 outline-none
-               touch-pan-x {dragging ? 'cursor-grabbing select-none' : 'lg:cursor-grab'}"
+        class="scrollbar-wide h-full touch-pan-x overflow-auto scroll-p-4 p-4 outline-none
+               {dragging ? 'cursor-grabbing select-none' : 'lg:cursor-grab'}"
       >
-        {#each bySemester as [semester, subjects] (semester)}
-          {@const credits = subjects.reduce((sum, subject) => sum + subject.credits, 0)}
-          {@const done = subjects.every(subject => planner.progress.approved.has(subject.id))}
-          <section data-semester={semester} class="flex w-56 flex-none snap-start flex-col gap-1.5">
-            <header class="flex items-baseline justify-between gap-2 px-0.5">
+        <div
+          bind:this={grid}
+          class="relative grid w-max gap-x-6 gap-y-2"
+          style="grid-template-columns: repeat({semesters.length}, 13.5rem);
+                 grid-template-rows: auto repeat({rows}, minmax(0, auto))"
+        >
+          <!-- Las flechas van detrás de las cajas y no interceptan el ratón -->
+          <svg
+            class="pointer-events-none absolute inset-0"
+            width={canvas.width}
+            height={canvas.height}
+            aria-hidden="true"
+          >
+            {#each edges as edge (edge.key)}
+              <path
+                d={edge.d}
+                fill="none"
+                stroke="oklch(0.62 0.16 {edge.hue})"
+                stroke-width="1.5"
+                stroke-opacity="0.55"
+                stroke-dasharray={edge.kind === 'coreq' ? '4 3' : null}
+              />
+              <circle cx={edge.head.split(' ')[0]} cy={edge.head.split(' ')[1]} r="2.5"
+                      fill="oklch(0.62 0.16 {edge.hue})" fill-opacity="0.75" />
+            {/each}
+          </svg>
+
+          {#each semesters as semester (semester)}
+            <header
+              data-column={semester}
+              class="relative flex items-baseline justify-between gap-2 px-0.5 pb-1"
+              style="grid-column: {semesters.indexOf(semester) + 1}; grid-row: 1"
+            >
               <h3 class="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
                 Sem {semester}
               </h3>
-              <span class="tabular text-[11px] text-ink-faint">{credits} UC</span>
+              <span class="tabular text-[11px] text-ink-faint">{creditsOf(semester)} UC</span>
             </header>
+          {/each}
 
+          {#each planner.planSubjects as subject (subject.id)}
+            {@const state = planner.approvalOf(subject.id)}
             <button
               type="button"
-              onclick={() => planner.approveUpTo(semester)}
-              disabled={done}
-              class="rounded-lg border border-line py-1 text-[11px] font-semibold text-ink-soft
-                     transition-colors hover:bg-panel-soft disabled:opacity-40"
+              data-subject={subject.id}
+              onclick={() => planner.toggleApproved(subject.id)}
+              aria-pressed={state !== null}
+              class="hued relative rounded-lg border px-2 py-1.5 text-left text-[11px] leading-tight
+                     transition-all {state === null
+                ? 'border-line bg-panel text-ink-soft hover:border-line-strong'
+                : state === 'deducida'
+                  ? 'border-dashed opacity-80'
+                  : ''}"
+              style="grid-column: {semesters.indexOf(subject.semester) + 1}; grid-row: {subject.row + 2};
+                     {state !== null ? `--h: ${subject.hue ?? 260}` : ''}"
             >
-              {done ? 'Completo' : 'Aprobé hasta aquí'}
-            </button>
-
-            {#each subjects as subject (subject.id)}
-              {@const state = planner.approvalOf(subject.id)}
-              <button
-                type="button"
-                onclick={() => planner.toggleApproved(subject.id)}
-                aria-pressed={state !== null}
-                class="hued rounded-lg border px-2 py-1.5 text-left text-[11px] leading-tight transition-all
-                       {state === null
-                  ? 'border-line bg-panel text-ink-soft hover:border-line-strong'
-                  : state === 'deducida'
-                    ? 'border-dashed opacity-80'
-                    : ''}"
-                style={state !== null ? `--h: ${subject.hue ?? 260}` : ''}
-              >
-                <span class="flex items-start gap-1.5">
-                  <span class="mt-px shrink-0">
-                    {#if state !== null}
-                      <Icon name="check" size={12} />
-                    {:else}
-                      <span class="block size-3 rounded-sm border border-current opacity-40"></span>
-                    {/if}
-                  </span>
-                  <span class="min-w-0 flex-1">
-                    <span class="block font-semibold">{subject.name}</span>
-                    <span class="tabular block opacity-70">
-                      {subject.credits} UC{subject.offered ? '' : ' · no se dicta'}
-                    </span>
-                    {#if state === 'deducida'}
-                      <span class="mt-0.5 block text-[10px] font-semibold uppercase tracking-wide opacity-70">
-                        Marcada sola
-                      </span>
-                    {/if}
-                  </span>
+              <span class="flex items-start gap-1.5">
+                <span class="mt-px shrink-0">
+                  {#if state !== null}
+                    <Icon name="check" size={12} />
+                  {:else}
+                    <span class="block size-3 rounded-sm border border-current opacity-40"></span>
+                  {/if}
                 </span>
-              </button>
-            {/each}
-          </section>
-        {/each}
+                <span class="min-w-0 flex-1">
+                  <span class="block font-semibold">{subject.name}</span>
+                  <span class="tabular block opacity-70">
+                    {subject.credits} UC{subject.offered ? '' : ' · no se dicta'}
+                  </span>
+                  {#if state === 'deducida'}
+                    <span class="mt-0.5 block text-[10px] font-semibold uppercase tracking-wide opacity-70">
+                      Marcada sola
+                    </span>
+                  {/if}
+                </span>
+              </span>
+            </button>
+          {/each}
+        </div>
       </div>
 
       <!-- Degradados y flechas: sin ellos nada indica que hay más columnas al lado -->
@@ -321,8 +441,8 @@
           {/if}
         </div>
         <p class="mt-1 text-[11px] leading-snug text-ink-faint">
-          Las prerrelaciones están transcritas de la malla impresa y solo cubren las cadenas
-          directas. Si falta alguna, márcala a mano.
+          Prelaciones tomadas del plan de estudio oficial. Línea continua, prerrequisito; punteada,
+          correquisito.
         </p>
         <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-panel-soft">
           <div class="h-full rounded-full bg-brand transition-all" style="width: {percent}%"></div>
