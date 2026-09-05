@@ -1,5 +1,6 @@
 <script>
   import { planner } from '../state/planner.svelte.js';
+  import { arrowHead, routeEdges } from '../domain/routing.js';
   import Icon from './Icon.svelte';
 
   let { onclose, welcome = false } = $props();
@@ -59,47 +60,29 @@
   /**
    * Las flechas se calculan midiendo las cajas ya dibujadas, no adivinando
    * posiciones: así siguen alineadas aunque cambien los tamaños o el zoom.
+   * El trazado en sí vive en el dominio, donde se puede probar sin navegador.
    */
   const edges = $derived.by(() => {
     if (boxes.size === 0) return [];
 
-    const lines = [];
+    const byId = new Map(planner.planSubjects.map(subject => [subject.id, subject]));
 
-    for (const subject of planner.planSubjects) {
-      const to = boxes.get(subject.id);
-      if (!to) continue;
+    const links = planner.planSubjects.flatMap(subject =>
+      [
+        ...(subject.requires ?? []).map(id => ({ kind: 'requires', id })),
+        ...(subject.coreq ?? []).map(id => ({ kind: 'coreq', id }))
+      ]
+        .filter(({ id }) => byId.has(id))
+        .map(({ kind, id }) => ({
+          key: `${id}->${subject.id}`,
+          kind,
+          hue: byId.get(id).hue ?? 260,
+          from: byId.get(id),
+          to: subject
+        }))
+    );
 
-      for (const [kind, ids] of [
-        ['requires', subject.requires ?? []],
-        ['coreq', subject.coreq ?? []]
-      ]) {
-        for (const id of ids) {
-          const from = boxes.get(id);
-          if (!from) continue;
-
-          // Ruta ortogonal, como en la malla impresa: sale por la derecha,
-          // cambia de fila a mitad de camino y entra por la izquierda.
-          const x1 = from.x + from.width;
-          const y1 = from.y + from.height / 2;
-          const x2 = to.x;
-          const y2 = to.y + to.height / 2;
-          const mid = x1 + Math.max(10, (x2 - x1) / 2);
-
-          lines.push({
-            key: `${id}->${subject.id}`,
-            kind,
-            hue: planner.planSubjects.find(entry => entry.id === id)?.hue ?? 260,
-            d:
-              Math.abs(y1 - y2) < 2
-                ? `M ${x1} ${y1} L ${x2} ${y2}`
-                : `M ${x1} ${y1} H ${mid} V ${y2} H ${x2}`,
-            head: `${x2} ${y2}`
-          });
-        }
-      }
-    }
-
-    return lines;
+    return routeEdges({ edges: links, boxes, nodes: planner.planSubjects, gapX: 24 });
   });
 
   /** Anota la posición del carrusel para saber si quedan columnas a los lados */
@@ -322,7 +305,7 @@
       >
         <div
           bind:this={grid}
-          class="relative grid w-max gap-x-6 gap-y-2"
+          class="relative grid w-max gap-x-6 gap-y-4"
           style="grid-template-columns: repeat({semesters.length}, 13.5rem);
                  grid-template-rows: auto repeat({rows}, minmax(0, auto))"
         >
@@ -334,16 +317,17 @@
             aria-hidden="true"
           >
             {#each edges as edge (edge.key)}
+              {@const color = `oklch(0.62 0.16 ${edge.hue})`}
               <path
                 d={edge.d}
                 fill="none"
-                stroke="oklch(0.62 0.16 {edge.hue})"
+                stroke={color}
                 stroke-width="1.5"
-                stroke-opacity="0.55"
+                stroke-opacity="0.6"
+                stroke-linejoin="round"
                 stroke-dasharray={edge.kind === 'coreq' ? '4 3' : null}
               />
-              <circle cx={edge.head.split(' ')[0]} cy={edge.head.split(' ')[1]} r="2.5"
-                      fill="oklch(0.62 0.16 {edge.hue})" fill-opacity="0.75" />
+              <polygon points={arrowHead(edge.arrow)} fill={color} fill-opacity="0.8" />
             {/each}
           </svg>
 
