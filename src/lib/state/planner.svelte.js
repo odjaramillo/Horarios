@@ -244,7 +244,12 @@ class Planner {
    */
   async load() {
     try {
-      const response = await fetch(`${import.meta.env.BASE_URL}courses.json`);
+      // `no-cache` revalida en cada carga en vez de servir lo guardado a ciegas.
+      // El bundle lleva huella en el nombre, pero courses.json no: sin esto el
+      // navegador puede juntar código nuevo con datos viejos durante los diez
+      // minutos que Pages deja cachear el archivo, y faltarían campos.
+      // Con ETag el servidor responde 304 y no se descarga nada de más.
+      const response = await fetch(`${import.meta.env.BASE_URL}courses.json`, { cache: 'no-cache' });
 
       if (!response.ok) throw new Error(`El servidor respondió ${response.status}`);
 
