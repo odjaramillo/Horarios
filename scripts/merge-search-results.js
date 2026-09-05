@@ -402,7 +402,7 @@ async function applyUcabSchedules(subjects) {
 
   if (report.skipped > 0) console.warn(`\u26a0\ufe0f  ${report.skipped} filas de la Escuela sin NRC.`);
 
-  return { fetchedAt: file.fetchedAt, term: file.term, ...report };
+  return { fetchedAt: file.fetchedAt, term: file.term, ...report, pairings: file.pairings ?? [] };
 }
 
 const { sections: rawSections, files } = await readPages();
@@ -428,9 +428,12 @@ const plan = await attachPlan(subjects, ucab !== null);
 
 // Va después de unir el plan: la práctica hereda el semestre de su teoría, y
 // la teoría solo lo tiene una vez cruzada con la malla.
-const practices = linkPractices(subjects);
+const practices = linkPractices(subjects, ucab?.pairings ?? []);
 
-console.log(`\ud83e\uddea ${practices.linked} prácticas atadas a su teoría`);
+console.log(
+  `\ud83e\uddea ${practices.linked} prácticas atadas a su teoría, ` +
+    `${practices.paired} secciones con su teoría fijada`
+);
 for (const id of practices.orphans) {
   console.warn(`\u26a0\ufe0f  ${id}: es una práctica y su teoría no se dicta este período.`);
 }
@@ -446,7 +449,8 @@ await writeFile(
     term: { code: termCode, label: termLabel, start, end },
     plan,
     sourceFiles: files,
-    ucab,
+    // Las tablas se quedan fuera: ya viajan en cada sección como `theoryCrns`
+    ucab: ucab && { ...ucab, pairings: undefined },
     subjects
   })
 );

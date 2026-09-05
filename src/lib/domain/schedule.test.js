@@ -11,6 +11,7 @@ import {
   sectionsClash,
   totalCredits,
   parseTime,
+  pairingAllows,
   usableSections,
   weeklyHours,
   MAX_SCHEDULES
@@ -389,4 +390,75 @@ test('un horario formado solo por opcionales que no caben no se devuelve vacío'
 
   assert.deepEqual(result.schedules, []);
   assert.deepEqual(result.droppedOptional.map(entry => entry.id), ['FING00002']);
+});
+
+
+const wed9to11 = [{ day: 2, start: 540, end: 650, room: null }];
+
+test('pairingAllows solo ata cuando la Escuela nombró las dos secciones', () => {
+  const teoria = section('15660', monday9to11, { practiceCrns: ['15683'] });
+  const suya = section('15683', tuesday9to11, { theoryCrns: ['15660'] });
+  const ajena = section('16974', tuesday9to11, { theoryCrns: ['16973'] });
+  const sinTabla = section('99999', tuesday9to11);
+  const teoria401 = section('17153', monday9to11);
+
+  assert.equal(pairingAllows(teoria, suya), true);
+  assert.equal(pairingAllows(teoria, ajena), false);
+  assert.equal(pairingAllows(teoria, sinTabla), true, 'práctica que la tabla no nombra');
+  assert.equal(pairingAllows(teoria401, suya), true, 'teoría que la tabla no nombra');
+});
+
+test('el horario nunca junta una teoría con la práctica de otra sección', () => {
+  const teoria = subject('INFO02028', [
+    section('15660', monday9to11, { practiceCrns: ['15683'] }),
+    section('16973', tuesday9to11, { practiceCrns: ['16974'] })
+  ]);
+  const practica = {
+    ...subject('INFOP2028', [
+      section('15683', wed9to11, { theoryCrns: ['15660'] }),
+      section('16974', wed9to11, { theoryCrns: ['16973'] })
+    ]),
+    practiceOf: 'INFO02028'
+  };
+
+  const { schedules } = generateSchedules([teoria, practica]);
+
+  assert.equal(schedules.length, 2, 'una combinación por sección de teoría');
+
+  for (const combo of schedules) {
+    const t = combo.find(entry => entry.subject.id === 'INFO02028').section.crn;
+    const p = combo.find(entry => entry.subject.id === 'INFOP2028').section.crn;
+
+    assert.equal(p, t === '15660' ? '15683' : '16974', `${t} no va con ${p}`);
+  }
+});
+
+test('la restricción funciona en los dos órdenes de recorrido', () => {
+  // La práctica va primero por tener menos alternativas: el emparejamiento
+  // tiene que comprobarse igual cuando la teoría llega después.
+  const teoria = subject('INFO02028', [
+    section('15660', monday9to11, { practiceCrns: ['15683'] }),
+    section('16973', tuesday9to11, { practiceCrns: ['16974'] })
+  ]);
+  const practica = {
+    ...subject('INFOP2028', [section('16974', wed9to11, { theoryCrns: ['16973'] })]),
+    practiceOf: 'INFO02028'
+  };
+
+  const { schedules } = generateSchedules([teoria, practica]);
+
+  assert.equal(schedules.length, 1);
+  assert.equal(schedules[0].find(entry => entry.subject.id === 'INFO02028').section.crn, '16973');
+});
+
+test('una sección de teoría fuera de la tabla acepta cualquier práctica', () => {
+  const teoria = subject('INFO02028', [section('17153', monday9to11)]);
+  const practica = {
+    ...subject('INFOP2028', [section('15683', wed9to11, { theoryCrns: ['15660'] })]),
+    practiceOf: 'INFO02028'
+  };
+
+  const { schedules } = generateSchedules([teoria, practica]);
+
+  assert.equal(schedules.length, 1, 'sin dato no se descarta la combinación');
 });

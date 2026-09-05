@@ -125,6 +125,38 @@ export function usableSections(subject, options = {}) {
 }
 
 /**
+ * Indica si una sección de teoría y una de práctica pueden cursarse juntas.
+ *
+ * La Escuela publica qué práctica va con qué teoría, y no vale cualquier
+ * combinación. Pero su tabla no nombra todas las secciones: la 401 de
+ * Computación en la Nube no aparece. Cuando falta una de las dos en la tabla no
+ * lo sabemos, y no saber no es lo mismo que no.
+ *
+ * @param {Object} theory - Sección de teoría
+ * @param {Object} practice - Sección de práctica
+ * @return {Boolean} true si la Escuela no lo prohíbe
+ */
+export function pairingAllows(theory, practice) {
+  if (!theory?.practiceCrns || !practice?.theoryCrns) return true;
+
+  return practice.theoryCrns.includes(String(theory.crn));
+}
+
+/**
+ * Comprueba el emparejamiento entre una sección ya elegida y una candidata
+ * @param {Object} taken - Elección previa {subject, section}
+ * @param {Object} subject - Materia de la candidata
+ * @param {Object} section - Sección candidata
+ * @return {Boolean} true si pueden convivir
+ */
+function pairingOk(taken, subject, section) {
+  if (subject.practiceOf === taken.subject.id) return pairingAllows(taken.section, section);
+  if (taken.subject.practiceOf === subject.id) return pairingAllows(section, taken.section);
+
+  return true;
+}
+
+/**
  * Busca pares de materias que nunca pueden cursarse juntas, porque cada sección
  * de una choca con todas las de la otra. Es la explicación que le falta al
  * usuario cuando no sale ningún horario.
@@ -213,7 +245,12 @@ export function generateSchedules(subjects, options = {}) {
     const entry = ordered[index];
 
     for (const section of entry.options) {
-      if (chosen.some(taken => sectionsClash(taken.section, section))) continue;
+      const incompatible = chosen.some(
+        taken =>
+          sectionsClash(taken.section, section) || !pairingOk(taken, entry.subject, section)
+      );
+
+      if (incompatible) continue;
 
       chosen.push({ subject: entry.subject, section });
       walk(index + 1, chosen);

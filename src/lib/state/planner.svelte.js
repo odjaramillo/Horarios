@@ -121,6 +121,15 @@ class Planner {
 
   #subjectsById = $derived(new Map(this.data.subjects.map(subject => [subject.id, subject])));
 
+  /** Práctica que corresponde a cada teoría, cuando se dicta este período */
+  #practiceByTheory = $derived(
+    new Map(
+      this.data.subjects
+        .filter(subject => subject.practiceOf)
+        .map(subject => [subject.practiceOf, subject.id])
+    )
+  );
+
   departments = $derived([...new Set(this.data.subjects.map(subject => subject.subject))].sort());
 
   /** Áreas de formación del plan, para colorear y etiquetar */
@@ -269,14 +278,20 @@ class Planner {
   toggle(id) {
     const wasSelected = this.selectedIds.includes(id);
 
+    // Teoría y práctica se inscriben juntas, así que se eligen juntas. Quitar
+    // la práctica por su cuenta sigue siendo posible: es una decisión suya.
+    const practice = this.#practiceByTheory.get(id);
+    const ids = practice ? [id, practice] : [id];
+
     this.selectedIds = wasSelected
-      ? this.selectedIds.filter(current => current !== id)
-      : [...this.selectedIds, id];
+      ? this.selectedIds.filter(current => !ids.includes(current))
+      : [...this.selectedIds, ...ids.filter(current => !this.selectedIds.includes(current))];
 
     if (wasSelected) {
-      const { [id]: _removed, ...rest } = this.sectionLocks;
-      this.sectionLocks = rest;
-      this.optionalIds = this.optionalIds.filter(current => current !== id);
+      this.sectionLocks = Object.fromEntries(
+        Object.entries(this.sectionLocks).filter(([key]) => !ids.includes(key))
+      );
+      this.optionalIds = this.optionalIds.filter(current => !ids.includes(current));
     }
 
     this.optionIndex = 0;

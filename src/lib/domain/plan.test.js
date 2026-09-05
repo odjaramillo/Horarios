@@ -2,6 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
+import { generateSchedules, pairingAllows } from './schedule.js';
+
 const read = async path => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 
 const courses = await read('../../../public/courses.json');
@@ -171,5 +173,34 @@ test('ninguna práctica se cuela entre las materias del plan', () => {
 
   for (const practice of courses.subjects.filter(subject => subject.practiceOf)) {
     assert.ok(!planIds.has(practice.id), `${practice.id} no debería estar en el plan`);
+  }
+});
+
+test('ningún horario junta una teoría con la práctica de otra sección', () => {
+  const byId = new Map(courses.subjects.map(subject => [subject.id, subject]));
+
+  const paired = courses.subjects.filter(subject =>
+    subject.practiceOf && subject.sections.some(section => section.theoryCrns)
+  );
+
+  assert.ok(paired.length >= 5, `solo ${paired.length} prácticas con correspondencia declarada`);
+
+  for (const practice of paired) {
+    const theory = byId.get(practice.practiceOf);
+    const { schedules } = generateSchedules([theory, practice], { availability: 'all' });
+
+    assert.ok(schedules.length > 0, `${practice.id} no produce ningún horario`);
+
+    for (const combo of schedules) {
+      const t = combo.find(entry => entry.subject.id === theory.id)?.section;
+      const p = combo.find(entry => entry.subject.id === practice.id)?.section;
+
+      if (!t || !p) continue;
+
+      assert.ok(
+        pairingAllows(t, p),
+        `${theory.id} ${t.crn} quedó con la práctica ${p.crn}, que no le corresponde`
+      );
+    }
   }
 });
