@@ -243,6 +243,10 @@ async function attachPlan(subjects) {
   const byTitle = new Map(subjects.map(subject => [titleKey(subject.title), subject]));
   const idOf = new Map(plan.subjects.map(entry => [entry.name, entry.id]));
 
+  // El plan reserva dos ranuras de electiva sin nombre propio. Banner ofrece
+  // electivas concretas que las llenan, pero que no figuran en el plan.
+  const isElective = name => /^electiva/i.test(name.trim());
+
   const creditGaps = [];
   const codeGaps = [];
 
@@ -278,6 +282,7 @@ async function attachPlan(subjects) {
       hue: plan.areas[entry.area]?.hue ?? null,
       credits: entry.credits,
       offered: Boolean(match),
+      ...(isElective(entry.name) ? { electiveSlot: true } : {}),
       ...(requires.length > 0 ? { requires } : {}),
       ...(coreq.length > 0 ? { coreq } : {}),
       ...(entry.creditGate ? { creditGate: entry.creditGate } : {})
@@ -318,6 +323,16 @@ async function attachPlan(subjects) {
   for (const gap of creditGaps) {
     console.warn(`⚠️  ${gap.name}: el plan dice ${gap.plan} UC y Banner ${gap.banner}.`);
   }
+
+  // Una electiva concreta no está en el plan, pero cuenta para sus ranuras:
+  // sin esta marca quedaría fuera de los filtros por avance.
+  for (const subject of subjects) {
+    if (subject.semester === undefined && isElective(subject.title)) subject.elective = true;
+  }
+
+  const electives = subjects.filter(subject => subject.elective).length;
+  const slots = planSubjects.filter(entry => entry.electiveSlot).length;
+  console.log(`ℹ️  ${electives} electivas concretas para ${slots} ranuras del plan`);
 
   const orphans = subjects.filter(subject => subject.semester === undefined).length;
   if (orphans > 0) {

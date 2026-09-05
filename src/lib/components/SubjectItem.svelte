@@ -82,6 +82,16 @@
       <Icon name="check" size={13} />
       Ya la aprobaste
     </p>
+  {:else if check?.slotsFilled}
+    <p class="flex items-center gap-1.5 border-t border-line/70 bg-ok-soft px-3 py-1.5 text-xs font-medium text-ok">
+      <Icon name="check" size={13} />
+      Ya cubriste tus dos electivas
+    </p>
+  {:else if check?.ok && check.slot}
+    <p class="flex items-center gap-1.5 border-t border-line/70 px-3 py-1.5 text-xs text-ink-soft">
+      <Icon name="check" size={13} class="text-ok" />
+      Te sirve para «{check.slot.name}»
+    </p>
   {:else if check && !check.ok}
     <p class="flex items-start gap-1.5 border-t border-line/70 bg-accent-soft px-3 py-1.5 text-xs text-accent">
       <Icon name="warning" size={13} class="mt-px shrink-0" />
@@ -91,7 +101,9 @@
         {/if}
         {#if check.missing.length > 0 && check.creditsShort > 0}·{/if}
         {#if check.creditsShort > 0}
-          Te faltan {check.creditsShort} UC para poder inscribirla
+          Te faltan {check.creditsShort} UC para poder inscribirla{check.slot
+            ? ` como «${check.slot.name}»`
+            : ''}
         {/if}
       </span>
     </p>
