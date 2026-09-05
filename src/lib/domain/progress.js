@@ -132,28 +132,28 @@ export function openElectiveSlots(planSubjects, approved) {
 /**
  * Comprueba si una electiva concreta se puede inscribir.
  *
- * El plan reserva ranuras ("Electiva (Informática)", "Electiva
- * (Complementaria)") sin decir qué asignatura las llena; Banner ofrece
- * electivas concretas que no figuran en el plan. Una concreta sirve para
- * cualquier ranura libre, así que se mide contra la menos exigente: decir que
- * no puedes inscribirla cuando sí puedes es peor que lo contrario.
+ * El plan reserva dos ranuras sin decir qué asignatura las llena, y cada una
+ * pide un número distinto de créditos: 172 la de Informática, 138 la
+ * Complementaria. Una electiva no sirve para cualquiera de las dos: las de
+ * INFO y FING van a la de Informática, las del resto de escuelas a la
+ * Complementaria. Medir contra la ranura equivocada habilitaría materias 34 UC
+ * antes de tiempo.
  *
  * @param {Array} slots - Ranuras de electiva libres
  * @param {Number} credits - Créditos acumulados
- * @return {Object} Motivos del bloqueo, con la ranura elegida
+ * @param {String} kind - Clase de la electiva: 'informatica' o 'complementaria'
+ * @return {Object} Motivos del bloqueo, con la ranura que le toca
  */
-export function electiveEligibility(slots, credits) {
-  if (slots.length === 0) {
+export function electiveEligibility(slots, credits, kind) {
+  const slot = slots.find(entry => entry.electiveKind === kind);
+
+  if (!slot) {
     return { ok: false, missing: [], creditsShort: 0, slotsFilled: true };
   }
 
-  const cheapest = slots.reduce((best, slot) =>
-    (slot.creditGate ?? 0) < (best.creditGate ?? 0) ? slot : best
-  );
+  const creditsShort = Math.max(0, (slot.creditGate ?? 0) - credits);
 
-  const creditsShort = Math.max(0, (cheapest.creditGate ?? 0) - credits);
-
-  return { ok: creditsShort === 0, missing: [], creditsShort, slot: cheapest };
+  return { ok: creditsShort === 0, missing: [], creditsShort, slot };
 }
 
 /**

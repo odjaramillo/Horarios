@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { applyUcabRows, parseUcabMeetings } from './ucab.js';
+import { applyUcabRows, electiveKindOf, parseUcabMeetings } from './ucab.js';
 
 /**
  * Una fila del RPC de la Escuela, con lo mínimo que necesita el cruce
@@ -164,4 +164,53 @@ test('una fila sin NRC no rompe el cruce', () => {
 
   assert.equal(report.skipped, 1);
   assert.equal(report.withProfessor, 1);
+});
+
+test('electiveKindOf manda INFO y FING a la ranura de Informática', () => {
+  assert.equal(electiveKindOf('INFO82001'), 'informatica');
+  assert.equal(electiveKindOf('FING80425'), 'informatica', 'Fintech va con código de facultad');
+});
+
+test('electiveKindOf manda el resto de escuelas a la Complementaria', () => {
+  for (const id of ['TELE82003', 'INDU82001', 'UCAB80011', 'ADCO00444', 'FACE80491']) {
+    assert.equal(electiveKindOf(id), 'complementaria', id);
+  }
+});
+
+test('el catálogo marca la electiva y su clase, aunque Banner ya la trajera', () => {
+  const subjects = [{ id: 'INFO82001', title: 'Electiva: Videojuegos', sections: [section()] }];
+
+  applyUcabRows({
+    subjects,
+    rows: [row({ type: 'ELECT', subject_id: 'INFO-82001', crn: '15660' })]
+  });
+
+  assert.equal(subjects[0].elective, true);
+  assert.equal(subjects[0].electiveKind, 'informatica');
+});
+
+test('una fila que no es del catálogo no convierte la materia en electiva', () => {
+  const subjects = [{ id: 'INFO02028', title: 'Computación en la Nube', sections: [section()] }];
+
+  applyUcabRows({ subjects, rows: [row()] });
+
+  assert.equal(subjects[0].elective, undefined);
+});
+
+test('el catálogo cuenta las electivas que marcó', () => {
+  const subjects = [];
+  const report = applyUcabRows({
+    subjects,
+    rows: [
+      row({ type: 'ELECT', subject_id: 'INFO-82002', crn: 1 }),
+      row({ type: 'ELECT', subject_id: 'UCAB-80011', crn: 2 }),
+      row({ type: 'OBLIG', subject_id: 'INFO-02028', crn: 3 })
+    ]
+  });
+
+  assert.equal(report.electives, 2);
+  assert.deepEqual(
+    subjects.filter(entry => entry.elective).map(entry => entry.electiveKind),
+    ['informatica', 'complementaria']
+  );
 });

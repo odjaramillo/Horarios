@@ -11,7 +11,7 @@
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 
-import { applyUcabRows } from '../src/lib/domain/ucab.js';
+import { applyUcabRows, electiveKindOf } from '../src/lib/domain/ucab.js';
 
 const DATA_DIR = 'data';
 const UCAB_FILE = join('data', 'ucab-schedules.json');
@@ -231,9 +231,10 @@ function titleKey(text) {
  * en vez de elegir en silencio.
  *
  * @param {Array} subjects - Materias ya agrupadas
+ * @param {Boolean} hasCatalog - Si la Escuela ya marcó cuáles son electivas
  * @return {Promise<Object>} Datos del plan para incluir en la salida
  */
-async function attachPlan(subjects) {
+async function attachPlan(subjects, hasCatalog) {
   let plan;
 
   try {
@@ -249,6 +250,9 @@ async function attachPlan(subjects) {
   // El plan reserva dos ranuras de electiva sin nombre propio. Banner ofrece
   // electivas concretas que las llenan, pero que no figuran en el plan.
   const isElective = name => /^electiva/i.test(name.trim());
+
+  // Las dos ranuras se distinguen por su propio nombre en el plan
+  const slotKind = name => (/inform[áa]tica/i.test(name) ? 'informatica' : 'complementaria');
 
   const creditGaps = [];
   const codeGaps = [];
@@ -285,7 +289,9 @@ async function attachPlan(subjects) {
       hue: plan.areas[entry.area]?.hue ?? null,
       credits: entry.credits,
       offered: Boolean(match),
-      ...(isElective(entry.name) ? { electiveSlot: true } : {}),
+      ...(isElective(entry.name)
+        ? { electiveSlot: true, electiveKind: slotKind(entry.name) }
+        : {}),
       ...(requires.length > 0 ? { requires } : {}),
       ...(coreq.length > 0 ? { coreq } : {}),
       ...(entry.creditGate ? { creditGate: entry.creditGate } : {})
@@ -329,13 +335,24 @@ async function attachPlan(subjects) {
 
   // Una electiva concreta no está en el plan, pero cuenta para sus ranuras:
   // sin esta marca quedaría fuera de los filtros por avance.
-  for (const subject of subjects) {
-    if (subject.semester === undefined && isElective(subject.title)) subject.elective = true;
+  // Sin el catálogo de la Escuela solo queda el título, que se equivoca en las
+  // dos direcciones: cuela electivas de otras carreras y deja fuera las que no
+  // se llaman "Electiva: algo".
+  if (!hasCatalog) {
+    for (const subject of subjects) {
+      if (subject.semester === undefined && isElective(subject.title)) {
+        subject.elective = true;
+        subject.electiveKind = electiveKindOf(subject.id);
+      }
+    }
   }
 
-  const electives = subjects.filter(subject => subject.elective).length;
-  const slots = planSubjects.filter(entry => entry.electiveSlot).length;
-  console.log(`ℹ️  ${electives} electivas concretas para ${slots} ranuras del plan`);
+  const electives = subjects.filter(subject => subject.elective);
+  const own = electives.filter(subject => subject.electiveKind === 'informatica').length;
+  console.log(
+    `ℹ️  ${electives.length} electivas concretas: ${own} para la ranura de Informática, ` +
+      `${electives.length - own} para la Complementaria`
+  );
 
   const orphans = subjects.filter(subject => subject.semester === undefined).length;
   if (orphans > 0) {
@@ -406,7 +423,7 @@ const ucab = await applyUcabSchedules(subjects);
 
 // El cruce va antes de unir el plan a propósito: si la Escuela publica una
 // materia que Banner no trajo, el plan tiene que verla como dictada.
-const plan = await attachPlan(subjects);
+const plan = await attachPlan(subjects, ucab !== null);
 const termCode = unique[0]?.term ?? '';
 const termLabel = decodeEntities(terms[0] ?? '').replace(/^\d+\s*/, '');
 const { start, end } = termDates(unique);

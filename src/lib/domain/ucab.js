@@ -18,6 +18,12 @@ const BLOCK = /(\d{2}):(\d{2})_(\d{2}):(\d{2})\s+(\S+)/g;
 /** La Escuela escribe así lo que todavía no tiene asignado */
 const UNASSIGNED = 'por asignar';
 
+/** Las filas del catálogo de electivas vienen marcadas con este tipo */
+const ELECTIVE = 'ELECT';
+
+/** Códigos que llenan la ranura "Electiva (Informática)" del plan */
+const OWN_SCHOOL = /^(INFO|FING)/;
+
 /**
  * Convierte "P/A" y variantes en ausencia de dato
  * @param {String} room - Aula tal como la publica la Escuela
@@ -67,6 +73,21 @@ function toProfessors(professor) {
  */
 function toSubjectId(subjectId) {
   return String(subjectId ?? '').replace(/-/g, '');
+}
+
+/**
+ * A cuál de las dos ranuras del plan va una electiva.
+ *
+ * El plan reserva "Electiva (Informática)" y "Electiva (Complementaria)" sin
+ * decir qué asignatura llena cada una. La regla de la Escuela es el origen:
+ * lo que ofrece Informática — con código INFO, o FING cuando lo publica la
+ * facultad — cuenta como la propia; el resto de escuelas, como complementaria.
+ *
+ * @param {String} subjectId - Código de la materia, ya sin guion
+ * @return {String} 'informatica' o 'complementaria'
+ */
+export function electiveKindOf(subjectId) {
+  return OWN_SCHOOL.test(String(subjectId ?? '')) ? 'informatica' : 'complementaria';
 }
 
 /**
@@ -120,7 +141,7 @@ function toSubject(row) {
  * @param {Object} params - Parámetros
  * @param {Array} params.subjects - Materias agrupadas desde Banner
  * @param {Array} params.rows - Filas de los RPC de la Escuela
- * @return {Object} Recuento {matched, withProfessor, added, newSubjects, skipped}
+ * @return {Object} Recuento {matched, withProfessor, added, newSubjects, electives, skipped}
  */
 export function applyUcabRows({ subjects, rows }) {
   const byId = new Map(subjects.map(subject => [subject.id, subject]));
@@ -130,8 +151,24 @@ export function applyUcabRows({ subjects, rows }) {
     for (const section of subject.sections) byCrn.set(String(section.crn), section);
   }
 
-  const report = { matched: 0, withProfessor: 0, added: 0, newSubjects: 0, skipped: 0 };
+  const report = { matched: 0, withProfessor: 0, added: 0, newSubjects: 0, electives: 0, skipped: 0 };
   const touched = new Set();
+
+  /**
+   * El catálogo de la Escuela decide qué es electiva y de qué clase. Por
+   * título entraban electivas de otras carreras que un informático no puede
+   * cursar, como "Electiva: Gerencia de la Construcción".
+   * @param {Object} subject - Materia a marcar
+   * @param {Object} row - Fila del RPC
+   * @return {void}
+   */
+  const markElective = (subject, row) => {
+    if (row.type !== ELECTIVE || subject.elective) return;
+
+    subject.elective = true;
+    subject.electiveKind = electiveKindOf(subject.id);
+    report.electives++;
+  };
 
   for (const row of rows) {
     if (row?.crn === null || row?.crn === undefined) {
@@ -141,6 +178,7 @@ export function applyUcabRows({ subjects, rows }) {
 
     const professors = toProfessors(row.professor);
     const existing = byCrn.get(String(row.crn));
+    const id = toSubjectId(row.subject_id);
 
     if (existing) {
       report.matched++;
@@ -149,10 +187,10 @@ export function applyUcabRows({ subjects, rows }) {
         report.withProfessor++;
       }
       if (row.modality) existing.modality = row.modality;
+      if (byId.has(id)) markElective(byId.get(id), row);
       continue;
     }
 
-    const id = toSubjectId(row.subject_id);
     let subject = byId.get(id);
 
     if (!subject) {
@@ -162,6 +200,7 @@ export function applyUcabRows({ subjects, rows }) {
       report.newSubjects++;
     }
 
+    markElective(subject, row);
     subject.sections.push(toSection(row));
     touched.add(subject);
     report.added++;

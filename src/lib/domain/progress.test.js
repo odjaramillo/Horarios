@@ -170,8 +170,8 @@ test('un ciclo en los datos no cuelga el desmarcado', () => {
 
 const electivePlan = [
   ...plan,
-  { id: 'SLOT-A', name: 'Electiva (Informática)', semester: 7, credits: 3, offered: false, electiveSlot: true, creditGate: 172 },
-  { id: 'SLOT-B', name: 'Electiva (Complementaria)', semester: 7, credits: 3, offered: false, electiveSlot: true, creditGate: 138 }
+  { id: 'SLOT-A', name: 'Electiva (Informática)', semester: 7, credits: 3, offered: false, electiveSlot: true, electiveKind: 'informatica', creditGate: 172 },
+  { id: 'SLOT-B', name: 'Electiva (Complementaria)', semester: 7, credits: 3, offered: false, electiveSlot: true, electiveKind: 'complementaria', creditGate: 138 }
 ];
 
 test('openElectiveSlots devuelve las ranuras que faltan por cubrir', () => {
@@ -180,29 +180,36 @@ test('openElectiveSlots devuelve las ranuras que faltan por cubrir', () => {
   assert.deepEqual(openElectiveSlots(electivePlan, new Set(['SLOT-A', 'SLOT-B'])), []);
 });
 
-test('una electiva concreta se mide contra la ranura menos exigente', () => {
+test('cada electiva se mide contra la ranura de su propia clase', () => {
   const slots = openElectiveSlots(electivePlan, new Set());
 
-  assert.equal(electiveEligibility(slots, 140).ok, true, '140 UC pasan la ranura de 138');
-  assert.equal(electiveEligibility(slots, 100).ok, false);
-  assert.equal(electiveEligibility(slots, 100).creditsShort, 38);
-  assert.equal(electiveEligibility(slots, 100).slot.id, 'SLOT-B');
+  assert.equal(electiveEligibility(slots, 140, 'complementaria').ok, true, '140 UC pasan las 138');
+  assert.equal(electiveEligibility(slots, 140, 'informatica').ok, false, 'una de INFO pide 172');
+  assert.equal(electiveEligibility(slots, 140, 'informatica').creditsShort, 32);
+  assert.equal(electiveEligibility(slots, 140, 'informatica').slot.id, 'SLOT-A');
 });
 
-test('cubierta la ranura barata, la electiva se mide contra la que queda', () => {
-  const slots = openElectiveSlots(electivePlan, new Set(['SLOT-B']));
+test('la ranura ajena no sirve de sustituta cuando la propia está cubierta', () => {
+  const slots = openElectiveSlots(electivePlan, new Set(['SLOT-A']));
+  const result = electiveEligibility(slots, 240, 'informatica');
 
-  assert.equal(electiveEligibility(slots, 140).ok, false, 'ahora hay que llegar a 172');
-  assert.equal(electiveEligibility(slots, 140).creditsShort, 32);
+  assert.equal(result.ok, false);
+  assert.equal(result.slotsFilled, true, 'quedan 138 UC libres, pero no son de su clase');
+});
+
+test('cubierta una ranura, la otra sigue disponible para su clase', () => {
+  const slots = openElectiveSlots(electivePlan, new Set(['SLOT-A']));
+
+  assert.equal(electiveEligibility(slots, 140, 'complementaria').ok, true);
 });
 
 test('sin ranuras libres la electiva ya no aporta nada', () => {
-  const result = electiveEligibility([], 240);
+  const result = electiveEligibility([], 240, 'informatica');
 
   assert.equal(result.ok, false);
   assert.equal(result.slotsFilled, true);
 });
 
 test('una electiva nunca se bloquea por prerrequisitos', () => {
-  assert.deepEqual(electiveEligibility(openElectiveSlots(electivePlan, new Set()), 200).missing, []);
+  assert.deepEqual(electiveEligibility(openElectiveSlots(electivePlan, new Set()), 200, 'informatica').missing, []);
 });

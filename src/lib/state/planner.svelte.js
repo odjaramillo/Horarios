@@ -362,8 +362,11 @@ class Planner {
 
     if (entry) return eligibility(entry, this.progress.approved, this.earnedCredits);
 
-    // Una electiva concreta no figura en el plan, pero llena una de sus ranuras
-    if (subject.elective) return electiveEligibility(this.openElectives, this.earnedCredits);
+    // Una electiva concreta no figura en el plan, pero llena la ranura de su
+    // clase: las de INFO y FING la de Informática, el resto la Complementaria.
+    if (subject.elective) {
+      return electiveEligibility(this.openElectives, this.earnedCredits, subject.electiveKind);
+    }
 
     return null;
   }
