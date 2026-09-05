@@ -140,6 +140,22 @@
   }
 
   /* Barra ancha y con contraste: la fina de por defecto no se ve ni se agarra */
+  /* La grilla del horario encoge en el teléfono: con las medidas de escritorio
+     solo caben dos días y las tarjetas cortan el nombre de la materia. */
+  .schedule-grid {
+    --gutter: 2.25rem;
+    --col: 5.25rem;
+    --hour: 48px;
+  }
+
+  @media (min-width: 640px) {
+    .schedule-grid {
+      --gutter: 3.5rem;
+      --col: 8.5rem;
+      --hour: 64px;
+    }
+  }
+
   .scrollbar-wide {
     scrollbar-width: auto;
     scrollbar-color: var(--line-strong) var(--panel-soft);
